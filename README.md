@@ -37,12 +37,6 @@ Our natural surroundings are abundant with plants and crops, yet many remain uni
 
 ---
 
-## Contribution Guidelines 🤝  
-
-We believe in the power of collaboration! Contributions are welcome, whether you're adding more plant species, improving recognition models, or enhancing scraping functionality. 💡  
-
-Refer to our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.  
-
 ---
 
 ## License 📜  
