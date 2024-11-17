@@ -1,4 +1,5 @@
 # 🌿 Production-Ready-LeafLogic-Internship-Project 🌱  
+Caution: I will start working on this  project soon
 
 Welcome to the **Production-Ready-LeafLogic Internship Project** repository! 🌟 This project is a **comprehensive solution** designed to empower users with accurate plant and crop identification, coupled with detailed, web-sourced information. Developed as part of an internship, it highlights the application of **cutting-edge AI** and **web technologies** to solve real-world challenges. 🚀✨  
 
