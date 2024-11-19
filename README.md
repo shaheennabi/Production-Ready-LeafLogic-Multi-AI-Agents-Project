@@ -54,3 +54,4 @@ The **Production-Ready-LeafLogic Internship Project** envisions a world where **
 Together, let’s create a greener, more informed future by combining the power of innovation with a passion for nature. 🌱🌾  
 
 ---
+🌱
