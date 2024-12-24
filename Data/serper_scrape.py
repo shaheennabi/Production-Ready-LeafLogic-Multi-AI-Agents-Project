@@ -7,8 +7,7 @@ import time
 API_KEY = "223164d728141e12aa1d0eadf1ad0dc7c61b2eed9c441b4d93c2f452ca36312f"
 
 # List of plants/crops to search for
-plant_names = [ "Mustard Crop", "Sunflower",  "Groundnut(Peanut)", "Cotton"]  # Add more plant names as needed
-
+plant_names = [ "Mustard Crop", "Sunflower",  "Groundnut(Peanut)", "Cotton"]  #adding  5 after  5
 # Output directory to save images
 output_dir = "plant_images"
 os.makedirs(output_dir, exist_ok=True)
