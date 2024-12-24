@@ -4,7 +4,7 @@ import os
 import time
 
 # Your SerpApi API key
-API_KEY = "223164d728141e12aa1d0eadf1ad0dc7c61b2eed9c441b4d93c2f452ca36312f"
+API_KEY = ""
 
 # List of plants/crops to search for
 plant_names = ["apple fruit"]  #adding  5 after  5
