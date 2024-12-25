@@ -8,6 +8,7 @@ API_KEY = ""
 
 # List of 100 plants/crops to search for
 plant_names = [
+      
     # Herbs and Spices
     "Thyme", "Sage Herb", "Oregano", "Parsley", "Mint", "Basil", "Coriander", "Dill", 
     "Fennel", "Rosemary", "Chives", "Lemongrass", "Tarragon", "Marjoram", "Lovage",
@@ -21,7 +22,7 @@ plant_names = [
     "Cauliflower", "Cabbage", "Spinach", "Kale", "Broccoli", "Okra", "Zucchini",
     
     # Trees and Palms
-    "Bamboo", "Coconut", "Areca Nut", "Rubber Plant", "Vanilla", "Date Palm", 
+    "Bamboo", "Coconut", "Areca Nut", "Rubber Plant", "Vanilla orchids", "Date Palm", 
     "Neem Tree", "Teak Tree", "Sal Tree", "Eucalyptus", "Pine Tree", "Oak Tree", 
     "Maple Tree", "Birch Tree", "Spruce Tree", "Cedar Tree",
     
@@ -35,6 +36,7 @@ plant_names = [
     # Other Crops
     "Soybean", "Sugarcane", "Cotton", "Jute", "Coffee", "Tea", "Tobacco", "Sunflower",
     "Peanut", "Sesame", "Mustard", "Chickpea", "Lentil", "Pea", "Black Gram", "Green Gram"
+    
 ]
 
 # Output directory to save images
@@ -110,3 +112,4 @@ for plant in plant_names:
     download_images_for_plant(plant, num_images=100)
 
 print("Image collection complete.")
+
