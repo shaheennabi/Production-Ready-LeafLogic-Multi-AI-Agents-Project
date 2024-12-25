@@ -4,10 +4,39 @@ import os
 import time
 
 # Your SerpApi API key
-API_KEY = "1fffd555109c343fa424eba659768b5cfe389891aab44e924a523cf9db4c89f0"
+API_KEY = ""
 
-# List of plants/crops to search for
-plant_names = ["Thyme", "sage herb",  "Oregano", "Parsley", "Bamboo",  "Coconut",  "Areca Nut", "Rubber Plant",  "Vanilla", "Date Palm"]  #adding  5 after  5
+# List of 100 plants/crops to search for
+plant_names = [
+    # Herbs and Spices
+    "Thyme", "Sage Herb", "Oregano", "Parsley", "Mint", "Basil", "Coriander", "Dill", 
+    "Fennel", "Rosemary", "Chives", "Lemongrass", "Tarragon", "Marjoram", "Lovage",
+    
+    # Fruits
+    "Mango", "Papaya", "Pineapple", "Apple", "Orange", "Banana", "Grapes", "Watermelon", 
+    "Cantaloupe", "Lemon", "Peach", "Plum", "Guava", "Lychee", "Fig",
+    
+    # Vegetables
+    "Tomato", "Potato", "Cucumber", "Carrot", "Radish", "Beetroot", "Pumpkin", "Eggplant",
+    "Cauliflower", "Cabbage", "Spinach", "Kale", "Broccoli", "Okra", "Zucchini",
+    
+    # Trees and Palms
+    "Bamboo", "Coconut", "Areca Nut", "Rubber Plant", "Vanilla", "Date Palm", 
+    "Neem Tree", "Teak Tree", "Sal Tree", "Eucalyptus", "Pine Tree", "Oak Tree", 
+    "Maple Tree", "Birch Tree", "Spruce Tree", "Cedar Tree",
+    
+    # Grains and Cereals
+    "Rice", "Wheat", "Barley", "Maize", "Sorghum", "Millet", "Quinoa", "Rye",
+    
+    # Medicinal Plants
+    "Aloe Vera", "Turmeric", "Ginger", "Ashwagandha", "Tulsi", "Ginseng", "Chamomile", 
+    "Lavender", "Peppermint", "Echinacea", "Calendula", "Fenugreek",
+    
+    # Other Crops
+    "Soybean", "Sugarcane", "Cotton", "Jute", "Coffee", "Tea", "Tobacco", "Sunflower",
+    "Peanut", "Sesame", "Mustard", "Chickpea", "Lentil", "Pea", "Black Gram", "Green Gram"
+]
+
 # Output directory to save images
 output_dir = "plant_images"
 os.makedirs(output_dir, exist_ok=True)
