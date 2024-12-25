@@ -4,10 +4,10 @@ import os
 import time
 
 # Your SerpApi API key
-API_KEY = ""
+API_KEY = "1fffd555109c343fa424eba659768b5cfe389891aab44e924a523cf9db4c89f0"
 
 # List of plants/crops to search for
-plant_names = ["apple fruit"]  #adding  5 after  5
+plant_names = ["Thyme", "sage herb",  "Oregano", "Parsley", "Bamboo",  "Coconut",  "Areca Nut", "Rubber Plant",  "Vanilla", "Date Palm"]  #adding  5 after  5
 # Output directory to save images
 output_dir = "plant_images"
 os.makedirs(output_dir, exist_ok=True)
