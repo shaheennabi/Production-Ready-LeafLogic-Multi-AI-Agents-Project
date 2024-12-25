@@ -1,8 +1,8 @@
-import cv2
 import os
+import cv2
 
 # Root directory containing all plant categories
-root_dir = "data/plant_names"
+root_dir = "data/plant_images"
 
 # Font settings for OpenCV
 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -10,9 +10,14 @@ font_scale = 1
 font_color = (0, 0, 255)  # Red color in BGR format
 font_thickness = 2
 
-# Iterate over all categories inside the plant_names folder
+# Print the root directory for debugging
+print(f"Root directory: {root_dir}")
+
+# Iterate over all categories inside the plant_images folder
 for category in os.listdir(root_dir):
     category_path = os.path.join(root_dir, category)
+    print(f"Category path: {category_path}")
+    
     if os.path.isdir(category_path):  # Check if it's a directory
         print(f"Processing category: {category}")
         for image_name in os.listdir(category_path):
