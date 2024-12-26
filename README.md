@@ -48,11 +48,3 @@ Feel free to use, modify, and share it with proper attribution. For more details
 
 ---
 
-## 🌟 A Bright Future with LeafLogic 🌟  
-
-The **Production-Ready-LeafLogic Internship Project** envisions a world where **plant and crop knowledge is accessible to everyone**. From farmers to students and hobbyists, this project bridges the gap between **nature and technology**. 🌍✨  
-
-Together, let’s create a greener, more informed future by combining the power of innovation with a passion for nature. 🌱🌾  
-
----
-🌱
