@@ -14,37 +14,11 @@ Our natural surroundings are abundant with plants and crops, yet many remain uni
 
 ---
 
-## Objectives 🎯  
-
-1. **Accurate Identification**: Recognize over **100 types of plants and crops** using advanced image recognition. 📸  
-2. **Web-Based Knowledge Retrieval**: Scrape detailed information about identified plants from the internet. 🌐  
-3. **Informative Summaries**: Provide clear, concise descriptions for easy user understanding. 📝  
-
----
-
-## Key Features ✨  
-
-- **AI-Powered Plant Recognition**: Classifies plants and crops with high precision. 🌿🤖  
-- **Dynamic Web Scraping**: Extracts comprehensive information from reliable online sources. 🔍📚  
-- **Compact Descriptions**: Summarizes plant details in a clear and accessible format. 🌱✨  
-- **Production-Ready Approach**: Built using **scalable, modular, and industry-standard coding practices** for real-world deployment. ⚙️💡  
-
----
-
-## Goals 🌟  
-
-1. **Educate & Empower**: Offer an intuitive system to make plant identification seamless. 🌱  
-2. **Combat Market Misuse**: Provide accurate details to prevent misinformation. 💬  
-3. **Inspire Innovation**: Highlight AI and web scraping's potential in solving practical issues. 🚀  
-
----
-
----
 
 ## License 📜  
 
 This project is licensed under the **MIT License**.  
 Feel free to use, modify, and share it with proper attribution. For more details, see the [LICENSE](LICENSE) file. 🌟  
 
----
+
 
