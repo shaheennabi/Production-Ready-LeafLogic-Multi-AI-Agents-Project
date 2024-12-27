@@ -2,7 +2,6 @@
 Caution: This project will be started from Jan 2025.
 I will try to use every mlops tool here
 
-Welcome to the **Production-Ready-LeafLogic Internship Project** repository! 🌟 This project is a **comprehensive solution** designed to empower users with accurate plant 
 
 ---
 
