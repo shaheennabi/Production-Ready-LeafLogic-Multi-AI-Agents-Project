@@ -4,6 +4,8 @@ I will try to use every mlops tool here
 
 Readme will be updated soon
 
+This will be end to end project 
+
 ---
 
 
