@@ -5,7 +5,7 @@ I will try to use every mlops tool here
 Note: Readme will be updated soon
 
 This will be end to end project 
-
+This project will take some time
 ---
 
 
