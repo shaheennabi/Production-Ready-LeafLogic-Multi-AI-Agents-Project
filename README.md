@@ -2,8 +2,10 @@
 Caution: This project will be started from Jan 2025.
 I will try to use every mlops tool here
 
-Readme will be updated soon
+Note: Readme will be updated soon
 
+This will be end to end project 
+This project will take some time
 ---
 
 
