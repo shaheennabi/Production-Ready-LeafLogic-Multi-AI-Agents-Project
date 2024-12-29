@@ -1,6 +1,5 @@
 # 🌿 Production-Ready-LeafLogic-Internship-Project 🌱  
 Caution: This project will be started from Jan 2025.
-I will try to use every mlops tool here
 
 Note: Readme will be updated soon
 
