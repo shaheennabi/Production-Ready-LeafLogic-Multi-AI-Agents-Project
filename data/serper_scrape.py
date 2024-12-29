@@ -7,36 +7,7 @@ import time
 API_KEY = ""
 
 # List of 100 plants/crops to search for
-plant_names = [
-      
-    # Herbs and Spices
-    "Thyme", "Sage Herb", "Oregano", "Parsley", "Mint", "Basil", "Coriander", "Dill", 
-    "Fennel", "Rosemary", "Chives", "Lemongrass", "Tarragon", "Marjoram", "Lovage",
-    
-    # Fruits
-    "Mango", "Papaya", "Pineapple", "Apple", "Orange", "Banana", "Grapes", "Watermelon", 
-    "Cantaloupe", "Lemon", "Peach", "Plum", "Guava", "Lychee", "Fig",
-    
-    # Vegetables
-    "Tomato", "Potato", "Cucumber", "Carrot", "Radish", "Beetroot", "Pumpkin", "Eggplant",
-    "Cauliflower", "Cabbage", "Spinach", "Kale", "Broccoli", "Okra", "Zucchini",
-    
-    # Trees and Palms
-    "Bamboo", "Coconut", "Areca Nut", "Rubber Plant", "Vanilla orchids", "Date Palm", 
-    "Neem Tree", "Teak Tree", "Sal Tree", "Eucalyptus", "Pine Tree", "Oak Tree", 
-    "Maple Tree", "Birch Tree", "Spruce Tree", "Cedar Tree",
-    
-    # Grains and Cereals
-    "Rice", "Wheat", "Barley", "Maize", "Sorghum", "Millet", "Quinoa", "Rye",
-    
-    # Medicinal Plants
-    "Aloe Vera", "Turmeric", "Ginger", "Ashwagandha", "Tulsi", "Ginseng", "Chamomile", 
-    "Lavender", "Peppermint", "Echinacea", "Calendula", "Fenugreek",
-    
-    # Other Crops
-    "Soybean", "Sugarcane", "Cotton", "Jute", "Coffee", "Tea", "Tobacco", "Sunflower",
-    "Peanut", "Sesame", "Mustard", "Chickpea", "Lentil", "Pea", "Black Gram", "Green Gram"
-    
+plant_names = [ "cassava","indian cinnamon"
 ]
 
 # Output directory to save images
@@ -44,7 +15,7 @@ output_dir = "plant_images"
 os.makedirs(output_dir, exist_ok=True)
 
 # Function to scrape and download images for a plant/crop
-def download_images_for_plant(plant_name, num_images=100):
+def download_images_for_plant(plant_name, num_images=250):
     print(f"Fetching images for: {plant_name}")
     
     # Create a subdirectory for the plant
@@ -109,6 +80,6 @@ def download_images_for_plant(plant_name, num_images=100):
 
 # Loop through the list of plants and fetch images
 for plant in plant_names:
-    download_images_for_plant(plant, num_images=100)
+    download_images_for_plant(plant, num_images=250)
 
 print("Image collection complete.")
