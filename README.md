@@ -1,5 +1,5 @@
 # 🌿 Production-Ready-LeafLogic-Internship-Project 🌱  
-Caution: This project will be started from Jan 2025.
+Caution: This project will be started from Jan 2025
 
 Note: Readme will be updated soon
 
