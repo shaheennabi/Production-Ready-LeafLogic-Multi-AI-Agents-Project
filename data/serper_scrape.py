@@ -7,7 +7,7 @@ import time
 API_KEY = ""
 
 # List of 100 plants/crops to search for
-plant_names = [ "cassava","indian cinnamon"
+plant_names = [ "aloe vera","Apricot",  "Areca Nut", "Bamboo",  "Ashwagandha"
 ]
 
 # Output directory to save images
