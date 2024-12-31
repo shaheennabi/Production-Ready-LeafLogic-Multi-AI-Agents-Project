@@ -64,8 +64,8 @@ def main(input_base_folder, output_base_folder, target_count=250):
         augment_category(input_folder, output_folder, target_count)
 
 # Define paths
-input_base_folder = "data/plant_images"  # Path to original categories
-output_base_folder = "data/augmented_plant_images"  # Path to save augmented data
+input_base_folder = "plant_images"  # Path to original categories
+output_base_folder = "augmented_plant_images"  # Path to save augmented data
 target_count = 250  # Target number of images per category
 
 # Execute
