@@ -7,8 +7,10 @@ import time
 API_KEY = ""
 
 # List of 100 plants/crops to search for
-plant_names = [ "Lychee plant",
-               "Maize", "mango", "mint herb", "Muskmelon", "Mustard Crop", "Oats"
+plant_names = [      "potato", "pumpkin", "Radish", "Raspberry fruit", "Rice", "Rosemary", "Rubber Plant", "Safflower",
+                "Sesame", "Sorghum", "Soybean", "Spinach", "Strawberry", "Sugarcane", "Sunflower", "sweet potato",
+                "Tea leaves", "tomato", "Turmeric", "Watermelon", "Wheat"
+           
 ]
 
 # Output directory to save images
