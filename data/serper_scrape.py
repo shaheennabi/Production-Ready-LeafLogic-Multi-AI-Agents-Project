@@ -9,7 +9,7 @@ API_KEY = ""
 # List of 100 plants/crops to search for
 plant_names = [   
                  
-              "Wheat"
+              "Raw Cauliflower"
            
 ]
 
