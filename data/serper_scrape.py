@@ -7,9 +7,9 @@ import time
 API_KEY = ""
 
 # List of 100 plants/crops to search for
-plant_names = [      "potato", "pumpkin", "Radish", "Raspberry fruit", "Rice", "Rosemary", "Rubber Plant", "Safflower",
-                "Sesame", "Sorghum", "Soybean", "Spinach", "Strawberry", "Sugarcane", "Sunflower", "sweet potato",
-                "Tea leaves", "tomato", "Turmeric", "Watermelon", "Wheat"
+plant_names = [   
+                 
+              "Wheat"
            
 ]
 
