@@ -6,7 +6,7 @@ import numpy as np
 
 
 """This code is for data augmentation of images, because data is low in quantity we have to add augmentation technique, 
-below the python code will randomly pick images from the original image dataset and flip, rotatate, add noise etc to images ..
+below the python code will randomly pick images from the original image dataset... and flip, rotate, add add noise etc to images ..
 
 """
 
@@ -50,7 +50,7 @@ def zoom_image(image):
     return cv2.resize(cropped, (w, h))
 
 # Main function for augmentation
-def augment_category(input_folder, output_folder, target_count=250):
+def augment_category(input_folder, output_folder, target_count=180):
     """Augment images in a specific category to reach the target count."""
     os.makedirs(output_folder, exist_ok=True)
     valid_extensions = ('.jpg', '.png', '.jpeg', '.bmp', '.tiff')
@@ -95,9 +95,9 @@ def main(input_base_folder, output_base_folder, target_count=250):
         augment_category(input_folder, output_folder, target_count)
 
 # Define paths
-input_base_folder = "plant_images"  # Path to original categories
+input_base_folder = "combined_images"  # Path to original categories
 output_base_folder = "augmented_plant_images"  # Path to save augmented data
-target_count = 250  # Target number of images per category
+target_count = 180  # Target number of images per category
 
 # Execute
 if __name__ == "__main__":
