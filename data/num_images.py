@@ -7,8 +7,7 @@ This python script was written to check the number of images in each category af
 
 
 
-def count_images_in_combined_folder
-(combined_dir):
+def count_images_in_combined_folder(combined_dir):
     image_count = defaultdict(int)
 
     for category in os.listdir(combined_dir):
