@@ -161,6 +161,5 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 .env/
-data/plant_images/
-data/augmented_plant_images/
-data/combined_images/
+
+data/final_dataset/
