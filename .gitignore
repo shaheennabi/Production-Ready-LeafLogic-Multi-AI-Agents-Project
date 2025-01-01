@@ -162,3 +162,4 @@ cython_debug/
 #.idea/
 .env/
 data/plant_images/
+data/augmented_plant_images/
