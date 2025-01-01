@@ -4,7 +4,7 @@ import cv2
 """
 This code was written to write the name of the category of images on top left of the images for clear visibility of image
 category on Roboflow platform... later unused....
-""""
+"""
 
 
 # Root directory containing all plant categories

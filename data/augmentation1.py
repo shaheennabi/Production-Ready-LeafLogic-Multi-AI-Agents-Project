@@ -2,10 +2,17 @@ import cv2
 import os
 import random
 import numpy as np
+
+
+
 """This code is for data augmentation of images, because data is low in quantity we have to add augmentation technique, 
 below the python code will randomly pick images from the original image dataset and flip, rotatate, add noise etc to images ..
 
 """
+
+
+
+
 # Define augmentation functions
 def flip_image(image):
     """Flip the image randomly along x, y, or both axes."""

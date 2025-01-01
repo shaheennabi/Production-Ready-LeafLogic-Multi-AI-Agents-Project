@@ -1,10 +1,15 @@
 import os
 import shutil
 from collections import defaultdict
+
+
 """
 This python code will combine the augmented images saved in different folder with original dataset, that will later be annotated 
 on Roboflow platform by contributors of this project...
 """
+
+
+
 def combine_images(src_augmented_dir, src_plant_dir, dest_combined_dir):
     if not os.path.exists(dest_combined_dir):
         os.makedirs(dest_combined_dir)
