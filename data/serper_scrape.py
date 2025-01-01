@@ -3,6 +3,12 @@ import requests
 import os
 import time
 
+"""
+This python script was used to download images of each category from the google images..via serper api...(it's free for 100 searches)...
+"""
+
+
+
 # Your SerpApi API key
 API_KEY = ""
 

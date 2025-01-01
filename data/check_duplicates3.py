@@ -2,7 +2,9 @@ import os
 import cv2
 import numpy as np
 from PIL import Image
-
+"""
+This code will check the duplicate images in the data, that is going to be annotated on Roboflow platform...
+"""
 def compute_image_hash(image_path, hash_size=8):
     image = Image.open(image_path).convert('L')
     resized_image = cv2.resize(np.array(image), (hash_size, hash_size))
