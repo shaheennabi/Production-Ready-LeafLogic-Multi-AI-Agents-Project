@@ -163,3 +163,4 @@ cython_debug/
 .env/
 data/plant_images/
 data/augmented_plant_images/
+data/combined_images/
