@@ -40,6 +40,6 @@ def find_and_remove_duplicates(dataset_path):
                     print(f"Removed duplicate: {duplicate_path}")
 
 # Path to your dataset
-dataset_path = '
+dataset_path = 
 
 find_and_remove_duplicates(dataset_path)
