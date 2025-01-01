@@ -1,11 +1,9 @@
 import os
 from collections import defaultdict
+
 """
-This python script was written to check the number of images in each category after removing duplicates and combining augmented images with original dataset....
+This python script was written to check the number of images in each category after removing duplicates and combining augmented images with the original dataset.
 """
-
-
-
 
 def count_images_in_combined_folder(combined_dir):
     image_count = defaultdict(int)
@@ -23,7 +21,11 @@ def main(combined_dir):
     for category, count in image_count.items():
         print(f"{category}: {count} images")
 
+    # Calculate and print the total number of images
+    total_images = sum(image_count.values())
+    print(f"\nTotal number of images across all categories: {total_images}")
+
 # Path to your combined images directory
-combined_dir = r''
+combined_dir = r''  
 
 main(combined_dir)
