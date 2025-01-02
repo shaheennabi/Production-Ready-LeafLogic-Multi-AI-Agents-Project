@@ -1,49 +1,51 @@
 import os
-import cv2
 
-"""
-This code was written to write the name of the category of images on top left of the images for clear visibility of image
-category on Roboflow platform... later unused....
-"""
+def rename_images_in_folders(base_path):
+    """
+    Rename images inside folders based on their folder (category) name.
 
+    Parameters:
+        base_path (str): Path to the main folder containing category folders.
+    """
+    # Ensure the base_path exists
+    if not os.path.exists(base_path):
+        print(f"Error: Path '{base_path}' does not exist.")
+        return
 
-# Root directory containing all plant categories
-root_dir = "data/plant_images"
+    # Iterate over each category folder in the base path
+    for category_folder in os.listdir(base_path):
+        category_path = os.path.join(base_path, category_folder)
 
-# Font settings for OpenCV
-font = cv2.FONT_HERSHEY_SIMPLEX
-font_scale = 1
-font_color = (0, 0, 255)  # Red color in BGR format
-font_thickness = 2
+        # Check if it's a directory
+        if os.path.isdir(category_path):
+            print(f"Processing folder: {category_folder}")
 
-# Print the root directory for debugging
-print(f"Root directory: {root_dir}")
+            # Initialize counter for naming images
+            counter = 1
 
-# Iterate over all categories inside the plant_images folder
-for category in os.listdir(root_dir):
-    category_path = os.path.join(root_dir, category)
-    print(f"Category path: {category_path}")
-    
-    if os.path.isdir(category_path):  # Check if it's a directory
-        print(f"Processing category: {category}")
-        for image_name in os.listdir(category_path):
-            image_path = os.path.join(category_path, image_name)
-            if image_name.endswith(('.jpg', '.png', '.jpeg')):  # Check for valid image extensions
-                try:
-                    # Read the image
-                    img = cv2.imread(image_path)
-                    if img is None:
-                        print(f"Could not read image: {image_name}")
-                        continue
-                    
-                    # Add the category name to the top-left corner
-                    position = (10, 30)  # Top-left corner position (x, y)
-                    cv2.putText(img, category, position, font, font_scale, font_color, font_thickness)
+            # Iterate over each file in the category folder
+            for file_name in os.listdir(category_path):
+                file_path = os.path.join(category_path, file_name)
 
-                    # Save the updated image
-                    cv2.imwrite(image_path, img)
-                    print(f"Updated image: {image_path}")
-                except Exception as e:
-                    print(f"Error processing {image_name}: {e}")
+                # Check if it's a file
+                if os.path.isfile(file_path):
+                    # Get the file extension
+                    _, ext = os.path.splitext(file_name)
 
-print("Processing complete!")
+                    # Construct new name with category and counter
+                    new_name = f"{category_folder}{counter}{ext}"
+                    new_file_path = os.path.join(category_path, new_name)
+
+                    # Rename the file
+                    os.rename(file_path, new_file_path)
+                    print(f"Renamed: {file_name} -> {new_name}")
+
+                    # Increment counter
+                    counter += 1
+
+if __name__ == "__main__":
+    # Define the base folder path (update this to your actual folder path)
+    base_folder_path = ""
+
+    # Call the function to rename images
+    rename_images_in_folders(base_folder_path)
