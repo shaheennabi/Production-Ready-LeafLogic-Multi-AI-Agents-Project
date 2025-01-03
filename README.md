@@ -1,6 +1,6 @@
 # 🌿 Production-Ready-LeafLogic-Internship-Project 🌱  
 ### Discussions box is open, you can ask anything & i will accept any pull request feel free to contribute (you can later use this project in your resume etc..) thanks
-This project will take some time..
+This project will take some time...
 ---
 
 
