@@ -2,6 +2,7 @@
 ### Discussions box is open, you can ask anything & i will accept any pull request feel free to contribute (you can later use this project in your resume etc..) thanks
 In progress.
 This project will be ready soon...
+We will use lot of mlops tools here...
 ---
 
 
