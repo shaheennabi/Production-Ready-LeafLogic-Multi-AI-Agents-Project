@@ -1,17 +1,12 @@
-import cv2
 import os
+import cv2
 import random
 import numpy as np
 
-
-
-"""This code is for data augmentation of images, because data is low in quantity we have to add augmentation technique, 
-below the python code will randomly pick images from the original image dataset... and flip, rotate, add add noise etc to images ..
-
 """
-
-
-
+This code is for data augmentation of images. 
+When data quantity is low, augmentation techniques like flipping, rotating, and adding noise can increase dataset size.
+"""
 
 # Define augmentation functions
 def flip_image(image):
@@ -55,6 +50,12 @@ def augment_category(input_folder, output_folder, target_count=180):
     os.makedirs(output_folder, exist_ok=True)
     valid_extensions = ('.jpg', '.png', '.jpeg', '.bmp', '.tiff')
     images = [f for f in os.listdir(input_folder) if f.lower().endswith(valid_extensions)]
+    images = [os.path.join(input_folder, img) for img in images]  # Full path for each image
+
+    if not images:
+        print(f"No valid images found in folder: {input_folder}. Skipping...")
+        return
+
     existing_count = len(images)
 
     if existing_count >= target_count:
@@ -62,11 +63,10 @@ def augment_category(input_folder, output_folder, target_count=180):
         return
 
     augment_functions = [flip_image, rotate_image, change_brightness, add_noise, zoom_image]
-    images = [os.path.join(input_folder, img) for img in images]
     random.shuffle(images)
 
     augmented_count = 0
-    while len(images) + augmented_count < target_count:
+    while existing_count + augmented_count < target_count:
         original_image_path = random.choice(images)
         original_image = cv2.imread(original_image_path)
 
@@ -76,7 +76,7 @@ def augment_category(input_folder, output_folder, target_count=180):
 
         try:
             augmented_image = random.choice(augment_functions)(original_image)
-            new_filename = f"aug_{len(images) + augmented_count + 1}.jpg"
+            new_filename = f"aug_{existing_count + augmented_count + 1}.jpg"
             output_path = os.path.join(output_folder, new_filename)
             cv2.imwrite(output_path, augmented_image)
             augmented_count += 1
@@ -95,7 +95,7 @@ def main(input_base_folder, output_base_folder, target_count=250):
         augment_category(input_folder, output_folder, target_count)
 
 # Define paths
-input_base_folder = "combined_images"  # Path to original categories
+input_base_folder = r""  # Path to original categories
 output_base_folder = "augmented_plant_images"  # Path to save augmented data
 target_count = 180  # Target number of images per category
 
