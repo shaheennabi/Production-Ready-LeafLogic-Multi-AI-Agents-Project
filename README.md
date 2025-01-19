@@ -5,7 +5,7 @@ In progress...
 Annotated dataset will be open-sourced on huggingface(almost 30k images).
 
 This project will be ready soon..
-We will use lot of mlops tools here...
+We will use lot of mlops tools here..
 Data annotation in progress ...(we have to get data from different sources)..
 
 ---
