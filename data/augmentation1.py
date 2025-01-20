@@ -45,7 +45,7 @@ def zoom_image(image):
     return cv2.resize(cropped, (w, h))
 
 # Main function for augmentation
-def augment_category(input_folder, output_folder, target_count=180):
+def augment_category(input_folder, output_folder, target_count=120):
     """Augment images in a specific category to reach the target count."""
     os.makedirs(output_folder, exist_ok=True)
     valid_extensions = ('.jpg', '.png', '.jpeg', '.bmp', '.tiff')
@@ -86,7 +86,7 @@ def augment_category(input_folder, output_folder, target_count=180):
     print(f"Augmented '{os.path.basename(input_folder)}' to {target_count} images.")
 
 # Run the augmentation process
-def main(input_base_folder, output_base_folder, target_count=250):
+def main(input_base_folder, output_base_folder, target_count=50):
     """Augment all categories in the input base folder."""
     categories = [d for d in os.listdir(input_base_folder) if os.path.isdir(os.path.join(input_base_folder, d))]
     for category in categories:
@@ -96,8 +96,8 @@ def main(input_base_folder, output_base_folder, target_count=250):
 
 # Define paths
 input_base_folder = r""  # Path to original categories
-output_base_folder = "augmented_plant_images"  # Path to save augmented data
-target_count = 180  # Target number of images per category
+output_base_folder = ""  # Path to save augmented data
+target_count = 103 # Target number of images per category
 
 # Execute
 if __name__ == "__main__":
