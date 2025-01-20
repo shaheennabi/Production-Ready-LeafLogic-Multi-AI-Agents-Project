@@ -15,7 +15,7 @@ API_KEY = ""
 # List of 100 plants/crops to search for
 plant_names = [   
                  
-              "Raw oats"
+              "pngimg high resolution transparent wheat png"
            
 ]
 
@@ -24,7 +24,7 @@ output_dir = "plant_images"
 os.makedirs(output_dir, exist_ok=True)
 
 # Function to scrape and download images for a plant/crop
-def download_images_for_plant(plant_name, num_images=250):
+def download_images_for_plant(plant_name, num_images=60):
     print(f"Fetching images for: {plant_name}")
     
     # Create a subdirectory for the plant
@@ -89,6 +89,6 @@ def download_images_for_plant(plant_name, num_images=250):
 
 # Loop through the list of plants and fetch images
 for plant in plant_names:
-    download_images_for_plant(plant, num_images=250)
+    download_images_for_plant(plant, num_images=60)
 
 print("Image collection complete.")
