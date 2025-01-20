@@ -163,3 +163,4 @@ cython_debug/
 .env/
 
 data/final_dataset/
+data/New folder/
