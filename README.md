@@ -2,7 +2,7 @@
 ### Discussions box is open, you can ask anything & i will accept any pull request feel free to contribute (you can later use this project in your resume etc..) thanks
 In progress..
 
-Annotated dataset will be open-sourced on huggingface(almost 30k images)..
+Annotated dataset will be open-sourced on huggingface(almost 30k images)...
 
 This project will be ready soon..
 We will use lot of mlops tools here..
