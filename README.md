@@ -1,7 +1,7 @@
 # 🌿 Production-Ready-LeafLogic-Internship-Project 🌱  
 ### Discussions box is open, you can ask anything & i will accept any pull request feel free to contribute (you can later use this project in your resume etc..) thanks
 In progress..
-
+fixing data imbalance issue
 Annotated dataset will be open-sourced on huggingface(almost 30k images)...
 
 After data annotation, we will do some mlops experimentation.
