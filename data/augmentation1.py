@@ -96,8 +96,8 @@ def main(input_base_folder, output_base_folder, target_count=50):
 
 # Define paths
 input_base_folder = r""  # Path to original categories
-output_base_folder = ""  # Path to save augmented data
-target_count = 103 # Target number of images per category
+output_base_folder = "augmented_images"  # Path to save augmented data
+target_count = 100 # Target number of images per category
 
 # Execute
 if __name__ == "__main__":
