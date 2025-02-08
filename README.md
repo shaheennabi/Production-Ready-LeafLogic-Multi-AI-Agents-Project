@@ -1,7 +1,7 @@
 # 🌿 Production-Ready-LeafLogic-Internship-Project 🌱  
 ### Discussions box is open, you can ask anything & i will accept any pull request feel free to contribute (you can later use this project in your resume etc..) thanks
 In progress...
-25k annotated image dataset will be open
+25k annotated image dataset will be open-sourced on HuggingFace.
 
 ---
 
