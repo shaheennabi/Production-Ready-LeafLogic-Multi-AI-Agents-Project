@@ -162,5 +162,5 @@ cython_debug/
 #.idea/
 .env/
 
-data/final_dataset/
-data/New folder/
+
+data_preparation/leaflogic_dataset_25k.zip
