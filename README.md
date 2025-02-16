@@ -12,6 +12,8 @@ modular training workflow:
 
 * update constants
 * update entity
+     -  config
+     -  artifacts
 * update component
 * update pipeline
 
