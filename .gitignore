@@ -170,3 +170,4 @@ model/
 .env
 
 env/
+yolov5/

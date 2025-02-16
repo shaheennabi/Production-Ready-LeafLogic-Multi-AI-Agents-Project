@@ -15,44 +15,52 @@ class DataIngestion:
         Initializes the DataIngestion class with the provided config.
         """
         try:
+            logging.info("🔧 Initializing DataIngestion...")
+
             self.data_ingestion_config = data_ingestion_config
+
+            # Ensure data ingestion directory exists
+            os.makedirs(self.data_ingestion_config.data_ingestion_dir, exist_ok=True)
+
+            logging.info("✅ DataIngestion initialized successfully.")
+
         except Exception as e:
-            logging.error(f"Error initializing DataIngestion: {e}")
+            logging.error(f"❌ Error initializing DataIngestion: {e}")
             raise CustomException(e, sys)
 
     def download_data(self) -> str:
         """
         Download the dataset zip file from S3 to the specified data ingestion directory.
         """
-        logging.info("Entered download_data method")
-        try:
-            # Define the data ingestion directory from config
-            data_ingestion_dir = self.data_ingestion_config.data_ingestion_dir
-            os.makedirs(data_ingestion_dir, exist_ok=True)
+        logging.info("📥 Starting data download...")
 
+        try:
             # Define the local path for the downloaded zip file
-            zip_file_path = os.path.join(data_ingestion_dir, "leaflogic_dataset.zip")
+            zip_file_path = os.path.join(self.data_ingestion_config.data_ingestion_dir, "leaflogic_dataset.zip")
 
             # Download the file using S3FileDownloader
-            s3_downloader = S3FileDownloader(local_file_path=zip_file_path)
-            success = s3_downloader.run()
+            s3_downloader = S3FileDownloader(
+                bucket_name=self.data_ingestion_config.s3_bucket_name,
+                s3_key=self.data_ingestion_config.s3_data_key,
+                local_file_path=zip_file_path
+            )
+            
+            if not s3_downloader.run():
+                raise CustomException("❌ Data download failed.")
 
-            if success:
-                logging.info(f"✅ Data successfully downloaded to {zip_file_path}")
-                return zip_file_path
-            else:
-                logging.error("❌ Data download failed.")
-                raise CustomException("Data download failed.")
+            logging.info(f"✅ Data successfully downloaded to: {zip_file_path}")
+            return zip_file_path
 
         except Exception as e:
-            logging.error(f"Exception in download_data: {e}")
+            logging.error(f"❌ Error in download_data: {e}")
             raise CustomException(e, sys)
 
     def extract_zip_file(self, zip_file_path: str) -> str:
         """
         Extracts the zip file into the feature_store directory.
         """
-        logging.info(f"Extracting {zip_file_path} into feature store")
+        logging.info(f"📦 Extracting dataset from {zip_file_path}...")
+
         try:
             # Define the feature store directory
             feature_store_path = self.data_ingestion_config.feature_store_file_path
@@ -62,7 +70,7 @@ class DataIngestion:
             unzipper = Zipper(zip_file_path=zip_file_path, extract_to_folder=feature_store_path)
             unzipper.unzip()
 
-            logging.info(f"✅ Extraction completed. Files are stored in {feature_store_path}")
+            logging.info(f"✅ Extraction completed. Files stored in: {feature_store_path}")
             return feature_store_path
 
         except Exception as e:
@@ -73,21 +81,22 @@ class DataIngestion:
         """
         Orchestrates the data ingestion process: downloading and extracting the zip file.
         """
-        logging.info("Entered initiate_data_ingestion method of DataIngestion class")
+        logging.info("🚀 Initiating data ingestion...")
+
         try:
             # Step 1: Download the zip file
             zip_file_path = self.download_data()
 
-            # Step 2: Extract the zip file into the feature store directory
+            # Step 2: Extract the zip file
             feature_store_path = self.extract_zip_file(zip_file_path)
 
-            # Step 3: Create a DataIngestionArtifact object to track paths
+            # Step 3: Create and return DataIngestionArtifact
             data_ingestion_artifact = DataIngestionArtifact(
                 data_zip_file_path=zip_file_path,
                 feature_store_path=feature_store_path
             )
 
-            logging.info(f"✅ Data ingestion completed successfully: {data_ingestion_artifact}")
+            logging.info(f"🏁 Data ingestion completed successfully: {data_ingestion_artifact}")
             return data_ingestion_artifact
 
         except Exception as e:

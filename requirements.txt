@@ -2,3 +2,4 @@ google-search-results
 requests 
 from_root
 boto3
+ultralytics==8.0.145

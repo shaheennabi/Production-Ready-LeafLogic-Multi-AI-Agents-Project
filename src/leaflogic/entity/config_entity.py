@@ -26,3 +26,19 @@ class DataIngestionConfig:
         data_ingestion_dir, DATA_INGESTION_FEATURE_STORE_DIR
     )
 
+
+@dataclass
+class PrepareBaseModelConfig:
+    prepare_basemodel_dir: str = os.path.join(
+        training_pipeline_config.artifacts_dir, PREPARE_BASEMODEL_DIR_NAME
+    )
+    base_model_name = PREPARE_BASE_MODEL_NAME
+
+
+@dataclass
+class ModelTrainerConfig: 
+    model_trainer__dir: str = os.path.join(training_pipeline_config.artifacts_dir, MODEL_TRAINER_DIR_NAME)
+
+    no_epochs = MODEL_TRAINER_NO_EPOCHS
+    
+    batch_size = MODEL_TRAINER_BATCH_SIZE
