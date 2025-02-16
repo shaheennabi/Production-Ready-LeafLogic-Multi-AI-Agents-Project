@@ -19,11 +19,11 @@ class PrepareBaseModel:
             self.prepare_base_model_config = prepare_base_model_config
             self.data_ingestion_artifacts = data_ingestion_artifacts
 
-            # Validate if data.yaml exists
-            self.data_yaml_path = self.data_ingestion_artifacts.data_yaml_path
+            # Corrected: Construct the correct path for data.yaml
+            self.data_yaml_path = os.path.join(self.data_ingestion_artifacts.feature_store_path, "data.yaml")
 
             if not os.path.exists(self.data_yaml_path):
-                raise FileNotFoundError(f"❌ data.yaml not found at {self.data_yaml_path}")
+                raise FileNotFoundError(f"❌ data.yaml not found at: {self.data_yaml_path}")
 
             logging.info(f"✅ PrepareBaseModel initialized successfully. Using data.yaml: {self.data_yaml_path}")
 
@@ -51,7 +51,7 @@ class PrepareBaseModel:
             model_config_path = os.path.join("yolov5/models", f"{model_config_file_name}.yaml")
 
             if not os.path.exists(model_config_path):
-                raise FileNotFoundError(f"❌ Base model config file not found at {model_config_path}")
+                raise FileNotFoundError(f"❌ Base model config file not found at: {model_config_path}")
 
             config = read_yaml_file(model_config_path)
 
