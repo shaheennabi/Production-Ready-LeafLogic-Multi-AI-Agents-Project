@@ -168,3 +168,5 @@ demo1.py
 notebooks/leaflogic_detection.ipynb
 model/
 .env
+
+env/
