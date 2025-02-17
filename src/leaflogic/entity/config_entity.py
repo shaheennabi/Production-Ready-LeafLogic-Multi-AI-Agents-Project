@@ -39,10 +39,11 @@ class PrepareBaseModelConfig:
 
 @dataclass
 class ModelTrainerConfig: 
-    model_trainer__dir: str = os.path.join(training_pipeline_config.artifacts_dir, MODEL_TRAINER_DIR_NAME)
+    model_trainer_dir: str = os.path.join(training_pipeline_config.artifacts_dir, MODEL_TRAINER_DIR_NAME)
 
     no_epochs = MODEL_TRAINER_NO_EPOCHS
     
     batch_size = MODEL_TRAINER_BATCH_SIZE
 
+    weight_name = MODEL_TRAINER_WEIGHT_NAME
 
