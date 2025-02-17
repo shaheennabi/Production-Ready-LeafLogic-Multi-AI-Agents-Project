@@ -163,7 +163,7 @@ cython_debug/
 .env/
 
 
-data_preparation/leaflogic_dataset_25k.zip
+data_preparation/leaflogic_dataset.zip
 demo1.py
 notebooks/leaflogic_detection.ipynb
 model/
@@ -171,3 +171,4 @@ model/
 
 env/
 yolov5/
+artifacts/

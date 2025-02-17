@@ -40,8 +40,7 @@ class DataIngestion:
 
             # Download the file using S3FileDownloader
             s3_downloader = S3FileDownloader(
-                bucket_name=self.data_ingestion_config.s3_bucket_name,
-                s3_key=self.data_ingestion_config.s3_data_key,
+               
                 local_file_path=zip_file_path
             )
             

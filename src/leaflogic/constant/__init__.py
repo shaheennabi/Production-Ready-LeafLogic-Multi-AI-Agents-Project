@@ -10,6 +10,10 @@ DATA_INGESTION_DIR_NAME: str = "data_ingestion"
 
 DATA_INGESTION_FEATURE_STORE_DIR: str = "feature_store"
 
+S3_BUCKET_NAME: str = "leaflogic1"
+
+S3_DATA_KEY: str = "leaflogic_dataset.zip"
+
 """
 Prepare BaseModel related constant  here
 """
@@ -28,3 +32,7 @@ MODEL_TRAINER_DIR_NAME: str = "model_trainer"
 MODEL_TRAINER_NO_EPOCHS: int = 1
 
 MODEL_TRAINER_BATCH_SIZE: int = 16  
+
+
+
+

@@ -25,6 +25,8 @@ class DataIngestionConfig:
     feature_store_file_path: str = os.path.join(
         data_ingestion_dir, DATA_INGESTION_FEATURE_STORE_DIR
     )
+    s3_bucket_name = S3_BUCKET_NAME
+    s3_data_key = S3_DATA_KEY
 
 
 @dataclass
@@ -42,3 +44,5 @@ class ModelTrainerConfig:
     no_epochs = MODEL_TRAINER_NO_EPOCHS
     
     batch_size = MODEL_TRAINER_BATCH_SIZE
+
+
