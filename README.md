@@ -8,14 +8,7 @@ https://huggingface.co/datasets/devshaheen/100_crops_plants_object_detection_25k
 ```
 
 ---
-modular training workflow:
-
-* update constants
-* update entity
-     -  config
-     -  artifacts
-* update component
-* update pipeline
+model training completed...
 
 ## License 📜  
 
