@@ -130,19 +130,16 @@ class ModelTrainer:
             # Execute the training command
             os.system(training_command)
 
-            # Check if training was successful, after training, check for the model in 'yolov5/runs/train/yolov5_results/weights'
+            # Check if training was successful
             best_model_path = os.path.join(os.getcwd(), "yolov5", "runs", "train", "yolov5_results", "weights", "best.pt")
             if not os.path.exists(best_model_path):
                 logging.error(f"❌ Best model weights not found after training at {best_model_path}")
                 raise FileNotFoundError("❌ Best model weights not found after training.")
-            
-            # Ensure the target directory exists to store the best model outside yolov5
-            os.makedirs(self.model_trainer_dir, exist_ok=True)
 
-            # Copy best model weights to the target directory outside yolov5
-            shutil.copy(best_model_path, self.model_trainer_dir)
-
-            logging.info(f"✅ Best model copied to: {self.model_trainer_dir}")
+            # Move the best model to the current working directory
+            target_path = os.path.join(os.getcwd(), "best.pt")
+            shutil.copy(best_model_path, target_path)
+            logging.info(f"✅ Best model saved to current working directory: {target_path}")
 
             # Cleanup the 'runs' folder after training is done
             shutil.rmtree(os.path.join(os.getcwd(), "yolov5", "runs"), ignore_errors=True)
@@ -150,9 +147,9 @@ class ModelTrainer:
             # Delete the data files from the root directory after training
             self.delete_data_files_from_root()
 
-            # Create artifact
+            # Create artifact with the path to the model in current working directory
             model_trainer_artifact = ModelTrainerArtifacts(
-                trained_model_file_path=os.path.join(self.model_trainer_dir, "best.pt")
+                trained_model_file_path=target_path
             )
             
             logging.info("🏁 Model Training completed successfully.")

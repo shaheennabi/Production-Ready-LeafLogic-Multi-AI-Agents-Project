@@ -122,11 +122,20 @@ def write_yaml_file(file_path: str, content: object, replace: bool = False) -> N
 
 
 
-def decodeImage(imgstring, fileName):
-    imgdata = base64.b64decode(imgstring)
-    with open("./data/" + fileName, 'wb') as f:
-        f.write(imgdata)
-        f.close()
+
+
+def decodeImage(image, fileName):
+    try:
+        imgdata = base64.b64decode(image)
+        # Use os.path.join for platform-independent path construction
+        full_path = os.path.join("data", fileName)  # Or if data is in parent: os.path.join("..", "data", fileName)
+        print(f"Full Path in decodeImage: {full_path}") # Print the path for debugging.
+        with open(full_path, 'wb') as f:
+            f.write(imgdata)
+        logging.info(f"Image successfully decoded and saved at: {full_path}")
+    except Exception as e:
+        logging.error(f"Error in decodeImage: {str(e)}")
+        raise  # Re-raise the exception to be caught in app.py
 
 
 def encodeImageIntoBase64(croppedImagePath):
