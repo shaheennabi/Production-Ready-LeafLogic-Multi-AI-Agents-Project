@@ -151,6 +151,9 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
+
+
+
 # Cython debug symbols
 cython_debug/
 
@@ -172,3 +175,7 @@ model/
 env/
 yolov5/
 artifacts/
+
+.venv_new/
+deployment/data/
+best.pt
