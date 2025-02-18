@@ -4,5 +4,5 @@ boto3
 python-dotenv
 flask
 flask-cors
-
+ultralytics
 -e .
