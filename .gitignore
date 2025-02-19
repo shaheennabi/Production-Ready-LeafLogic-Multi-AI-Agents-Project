@@ -179,3 +179,4 @@ artifacts/
 .venv_new/
 deployment/data/
 best.pt
+data/
