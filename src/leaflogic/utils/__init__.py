@@ -150,3 +150,27 @@ def encodeImageIntoBase64(filepath):
     except Exception as e:
         print(f"Error encoding image: {e}")
         return None
+    
+
+
+"""
+labels = [
+    'Zingiber officinale -ginger-', 'almonds', 'aloe vera', 'apple fruit', 'apricot', 'areca nut', 'ashwagandha', 'avacado', 'bamboo', 'banana',
+    'beetroot', 'bell pepper -capsicum-', 'bitter gourd', 'black pepper', 'blackberry fruit', 'blackgram', 'blueberry fruit', 'bottle gourd', 'brinjal', 'brocoli',
+    'cabbage', 'cactus', 'cardamom', 'carrot', 'cashew', 'cassava', 'cauliflower', 'chamomile', 'cherry', 'chilli pepper', 'cinnamon', 'coconut', 'coffee beans', 'coriander', 'cotton', 'cucumber', 'date palm', 'dates', 'dragon fruit', 'figs -anjeer-',
+    'garlic', 'grapes', 'green gram -mung bean-', 'groundnut-peanut-', 'guava', 'jaggery', 'jute', 'kidney bean', 'kiwi fruit', 'lavender plant',
+    'lemon', 'lychee', 'maize', 'mango', 'mint herb', 'mushroom', 'muskmelon', 'mustard crop', 'oats', 'okra -ladyfinger-', 'onion',
+    'orange', 'orchid orchidaceae', 'papaya', 'pea', 'peach', 'pear fruit', 'pineapple', 'pista -pistachio-', 'plum fruit', 'pomegranate',
+    'pomelo', 'potato', 'pumpkin', 'radish', 'raspberry fruit', 'rice', 'rose', 'rosemary', 'rubber plant', 'safflower',
+    'saffron', 'sesame', 'sorghum', 'soursop', 'soybean', 'spinach', 'starfruit -carambola-', 'strawberry', 'sugar apple', 'sugarcane',
+    'sunflower', 'sweet potato', 'tea', 'tomato', 'tulip', 'turmeric', 'walnut', 'watermelon', 'wheat'
+]
+
+label_mapping = {label: idx for idx, label in enumerate(labels)}
+
+# Print to verify
+print(label_mapping)
+
+
+
+"""

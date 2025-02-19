@@ -33,9 +33,9 @@ def predictRoute():
 
         output_dir = os.path.join(yolov5_path, "runs", "detect", "exp")
         os.makedirs(output_dir, exist_ok=True)  # Create output directory if it doesn't exist
-
-        os.system(f"python \"{os.path.join(yolov5_path, 'detect.py')}\" --weights \"{weights_path}\" --img 416 --conf 0.5 --source \"{input_image_path}\" --save-txt --save-dir \"{output_dir}\"")
-
+        logging.info("Entering detect.py")
+        os.system(f"python \"{os.path.join(yolov5_path, 'detect.py')}\" --weights \"{weights_path}\" --img 416 --conf 0.5 --source \"{input_image_path}\" --save-txt")
+        logging.info("Exiting detect.py")
         output_image_path = os.path.join(output_dir, clApp.filename)
 
         if os.path.exists(output_image_path):
