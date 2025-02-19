@@ -124,20 +124,29 @@ def write_yaml_file(file_path: str, content: object, replace: bool = False) -> N
 
 
 
-def decodeImage(image, fileName):
+from PIL import Image
+import base64
+import os
+import io
+
+def decodeImage(base64_string, filename):
     try:
-        imgdata = base64.b64decode(image)
-        # Use os.path.join for platform-independent path construction
-        full_path = os.path.join("data", fileName)  # Or if data is in parent: os.path.join("..", "data", fileName)
-        print(f"Full Path in decodeImage: {full_path}") # Print the path for debugging.
-        with open(full_path, 'wb') as f:
-            f.write(imgdata)
-        logging.info(f"Image successfully decoded and saved at: {full_path}")
+        imgdata = base64.b64decode(base64_string)
+        image = Image.open(io.BytesIO(imgdata))
+        file_path = os.path.join("data", filename)
+        if not os.path.exists("data"):
+            os.makedirs("data")
+        image.save(file_path)
+        return file_path
     except Exception as e:
-        logging.error(f"Error in decodeImage: {str(e)}")
-        raise  # Re-raise the exception to be caught in app.py
+        print(f"Error decoding image: {e}")
+        return None
 
-
-def encodeImageIntoBase64(croppedImagePath):
-    with open(croppedImagePath, "rb") as f:
-        return base64.b64encode(f.read())
+def encodeImageIntoBase64(filepath):
+    try:
+        with open(filepath, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode("utf-8")
+        return encoded_string
+    except Exception as e:
+        print(f"Error encoding image: {e}")
+        return None
