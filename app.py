@@ -31,7 +31,7 @@ def predictRoute():
         yolov5_path = "yolov5"  # Relative path (in the same directory)
         weights_path = "best.pt"  # Relative path (in the same directory)
 
-        output_dir = os.path.join(yolov5_path, "runs", "detect", "my_output")
+        output_dir = os.path.join(yolov5_path, "runs", "detect", "exp")
         os.makedirs(output_dir, exist_ok=True)  # Create output directory if it doesn't exist
 
         os.system(f"python \"{os.path.join(yolov5_path, 'detect.py')}\" --weights \"{weights_path}\" --img 416 --conf 0.5 --source \"{input_image_path}\" --save-txt --save-dir \"{output_dir}\"")
