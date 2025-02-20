@@ -153,7 +153,6 @@ def encodeImageIntoBase64(filepath):
     
 
 
-"""
 labels = [
     'Zingiber officinale -ginger-', 'almonds', 'aloe vera', 'apple fruit', 'apricot', 'areca nut', 'ashwagandha', 'avacado', 'bamboo', 'banana',
     'beetroot', 'bell pepper -capsicum-', 'bitter gourd', 'black pepper', 'blackberry fruit', 'blackgram', 'blueberry fruit', 'bottle gourd', 'brinjal', 'brocoli',
@@ -166,11 +165,11 @@ labels = [
     'sunflower', 'sweet potato', 'tea', 'tomato', 'tulip', 'turmeric', 'walnut', 'watermelon', 'wheat'
 ]
 
-label_mapping = {label: idx for idx, label in enumerate(labels)}
+def get_label_by_index(index):
+    if 0 <= index < len(labels):
+        return labels[index]
+    return "Unknown"
 
-# Print to verify
-print(label_mapping)
 
 
 
-"""

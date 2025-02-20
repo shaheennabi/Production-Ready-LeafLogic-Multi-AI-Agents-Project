@@ -1,214 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Leaf Disease Detection</title>
-
-    <!-- Bootstrap & FontAwesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Object Detection</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
-            background: linear-gradient(to right, #00c6ff, #0072ff);
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: white;
             font-family: 'Arial', sans-serif;
-            color: #fff;
         }
-
-        .header {
-            padding: 2rem 0;
-            text-align: center;
-            border-bottom: 5px solid #0056b3;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            font-weight: 300;
-            font-size: 2.5rem;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .upload-btn, .btn-success {
-            margin: 10px 0;
-            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-            border-radius: 50px;
-            border: 2px solid #0072ff;
-        }
-
-        .upload-btn:hover, .btn-success:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
+        .container { margin-top: 50px; }
         .card {
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .img-container {
-            height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.2);
             border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 2px solid #0072ff;
-            overflow: hidden;
-        }
-
-        .img-container video, .img-container img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: cover;
-            border-radius: 15px;
-        }
-
-        .results {
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
             padding: 20px;
-            text-align: center;
-            border-top: 2px solid #0072ff;
         }
-
-        .loading {
+        .img-box { 
+            width: 100%; height: 300px; display: flex; 
+            justify-content: center; align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px; border: 2px dashed #00c6ff;
+            overflow: hidden;
+            position: relative;
+        }
+        .img-box img { max-width: 100%; max-height: 100%; display: none; }
+        .btn-custom { background: #0072ff; color: white; border-radius: 50px; }
+        .btn-custom:hover { background: #0056b3; transform: scale(1.05); }
+        .loading { display: none; margin-top: 10px; text-align: center; }
+        .detected-objects {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #00c6ff;
+            text-align: center;
+        }
+        video {
             display: none;
-            position: fixed;
-            left: 0;
-            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 9999;
-            color: white;
-            font-size: 1.2rem;
-            text-align: center;
-            padding-top: 20%;
+            border-radius: 10px;
+            object-fit: cover;
         }
-
-        .loader {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #00c6ff;
+        #countdown {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 15px;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            margin: 0 auto;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            padding: 20px 0;
-            font-size: 0.9rem;
-            opacity: 0.8;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            z-index: 100;
+            display: none;
         }
     </style>
 </head>
-
 <body>
-    <!-- Header -->
-    <div class="header">
-        <h1>Leaflogic Internship Project</h1>
-    </div>
-
-    <!-- Main Content -->
-    <div class="container mt-4">
+    <div class="container">
+        <h2 class="text-center mb-4">Object Detection</h2>
         <div class="row">
-            <!-- Upload Section -->
+            <!-- Upload Box -->
             <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-body text-center">
-                        <h5 class="card-title"><i class="fas fa-upload"></i> Upload Image</h5>
-                        <div class="img-container">
-                            <img src="" id="photo" style="display:none;">
-                        </div>
-                        <button type="button" class="btn btn-primary upload-btn" id="upload"><i class="fas fa-file-upload"></i> Upload Image</button>
+                <div class="card text-center">
+                    <h5><i class="fas fa-upload"></i> Upload Image</h5>
+                    <div class="img-box" id="upload-box">
+                        <img id="photo">
+                        <div id="countdown"></div>
                     </div>
+                    <form id="upload-form" enctype="multipart/form-data">
+                        <label for="fileinput" class="btn btn-custom mt-3">Choose Image</label>
+                        <input type="file" id="fileinput" name="image" accept="image/*" style="display: none;">
+                    </form>
+                    <button class="btn btn-secondary mt-3" id="camera"><i class="fas fa-camera"></i> Take Photo</button>
                 </div>
             </div>
-
-            <!-- Prediction Results -->
+            <!-- Prediction Box -->
             <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title text-center"><i class="fas fa-brain"></i> Prediction Results</h5>
-                        <div class="results res-part2"></div>
-                        <button id="predict" type="button" class="btn btn-success btn-block"><i class="fas fa-play"></i> Predict</button>
+                <div class="card text-center">
+                    <h5><i class="fas fa-brain"></i> Prediction Results</h5>
+                    <div class="img-box" id="result-box">
+                        <img id="result-image" style="display: none; border-radius: 10px;">
+                    </div>
+                    <button id="predict" class="btn btn-success mt-3"><i class="fas fa-play"></i> Predict</button>
+                    <div class="loading" id="loading">
+                        <div class="spinner-border text-primary"></div>
+                        <p>Processing... Please wait.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <input type="hidden" id="url" value="../predict" />
-        <input type="file" id="fileinput" style="display: none;" />
-
-        <div class="loading" id="loading">
-            <div class="loader"></div>
-            <p>Processing... Please wait.</p>
+        <!-- Detected Objects Section Below Both Boxes -->
+        <div class="row">
+            <div class="col-12">
+                <div class="detected-objects">
+                    <h4>Detected Objects:</h4>
+                    <p id="detected-labels">No objects detected yet.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="footer">
-        <footer>
-            <p>&copy; Leaflogic Internship Project. <strong>Developed by Shaheen Nabi</strong></p>
-        </footer>
-    </div>
+    <!-- Video Stream for Camera -->
+    <video id="camera-stream" autoplay></video>
+    <canvas id="camera-canvas" style="display:none;"></canvas>
 
-    <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         var base_data = "";
 
-        function sendRequest(base64Data) {
-            if (base64Data) {
-                var url = $("#url").val();
+        function sendRequest(route) {
+            if (base_data) {
                 $("#loading").show();
                 $.ajax({
-                    url: url,
+                    url: route,
                     type: "POST",
-                    cache: false,
-                    async: true,
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    data: JSON.stringify({ image: base64Data }),
+                    contentType: "application/json",
+                    data: JSON.stringify({ image: base_data }),
                     success: function (res) {
-                        $(".res-part2").html("");
-                        var imageData = res.image;
-                        $(".res-part2").append("<img class='resp-img' src='data:image/jpeg;base64," + imageData + "' alt='' style='max-width: 100%; border-radius: 15px;' />");
                         $("#loading").hide();
+                        if (res.image) {
+                            $("#result-image").attr("src", "data:image/jpeg;base64," + res.image).show();
+                        }
+                        if (res.labels_text) {
+                            $("#detected-labels").html(res.labels_text);
+                        } else {
+                            $("#detected-labels").html("No objects detected.");
+                        }
                     },
                     error: function () {
-                        alert("Error processing request");
                         $("#loading").hide();
+                        alert("Error processing request");
                     }
                 });
             }
         }
-
-        $("#upload").click(function () {
-            $("#fileinput").click();
-        });
 
         $("#fileinput").change(function () {
             var reader = new FileReader();
@@ -218,11 +148,8 @@
             }
             reader.readAsDataURL(this.files[0]);
         });
-
-        $("#predict").click(function () {
-            sendRequest(base_data);
-        });
+        $("#predict").click(function () { sendRequest("/predict"); });
     </script>
-</body>
 
+</body>
 </html>
