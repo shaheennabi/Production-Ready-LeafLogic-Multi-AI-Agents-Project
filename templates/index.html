@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Object Detection</title>
+    <title>Leaflogic Object Detection</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -148,8 +148,36 @@
             }
             reader.readAsDataURL(this.files[0]);
         });
+
+        $("#camera").click(function () {
+            alert("Photo will be taken automatically after 5 seconds of hitting OK, so station your object near.");
+            let video = document.getElementById("camera-stream");
+            let canvas = document.getElementById("camera-canvas");
+            let countdown = document.getElementById("countdown");
+
+            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                video.srcObject = stream;
+                video.style.display = "block";
+                let count = 5;
+                countdown.style.display = "block";
+                let interval = setInterval(() => {
+                    countdown.innerText = count--;
+                    if (count < 0) {
+                        clearInterval(interval);
+                        countdown.style.display = "none";
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        canvas.getContext("2d").drawImage(video, 0, 0);
+                        base_data = canvas.toDataURL("image/jpeg").split(",")[1];
+                        $("#photo").attr("src", canvas.toDataURL("image/jpeg")).show();
+                        stream.getTracks().forEach(track => track.stop());
+                        video.style.display = "none";
+                    }
+                }, 1000);
+            });
+        });
+
         $("#predict").click(function () { sendRequest("/predict"); });
     </script>
-
 </body>
 </html>
