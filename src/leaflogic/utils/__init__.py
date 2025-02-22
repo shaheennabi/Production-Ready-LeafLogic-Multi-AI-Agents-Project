@@ -6,6 +6,15 @@ import os
 import os.path
 import yaml
 import base64
+import re
+from taskflowai import OpenaiModels, set_verbosity
+from dotenv import load_dotenv
+from PIL import Image
+import io
+
+
+
+
 class Zipper:
     
     def __init__(self, zip_file_path, extract_to_folder):
@@ -124,10 +133,7 @@ def write_yaml_file(file_path: str, content: object, replace: bool = False) -> N
 
 
 
-from PIL import Image
-import base64
-import os
-import io
+
 
 def decodeImage(base64_string, filename):
     try:
@@ -169,6 +175,47 @@ def get_label_by_index(index):
     if 0 <= index < len(labels):
         return labels[index]
     return "Unknown"
+
+
+
+"""GenAI implementation related  from now on"""
+
+
+
+# Load environment variables
+load_dotenv()
+
+# Validate required API keys
+required_keys = [
+    "OPENAI_API_KEY"
+]
+
+# Check for missing keys
+missing_keys = [key for key in required_keys if not os.getenv(key)]
+if missing_keys:
+    raise CustomException(sys, "Missing required environment variables: " + ', '.join(missing_keys))
+
+# Set verbosity for taskflowai
+set_verbosity(True)
+
+
+class LoadModel:
+    @staticmethod
+    def load_openai_model(cls):
+        """
+        Load and return the OpenAI GPT-3.5-turbo model.
+        """
+        try:
+            logging.info("Loading OpenAI GPT-3.5-turbo model.")
+            model = OpenaiModels.gpt_3_5_turbo
+            logging.info("OpenAI GPT-3.5-turbo model loaded successfully.")
+            return model
+        except Exception as e:
+            logging.info("Failed to load OpenAI GPT-3.5-turbo model")
+            raise CustomException(sys, e)
+
+
+
 
 
 

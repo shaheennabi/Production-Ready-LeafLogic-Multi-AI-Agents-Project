@@ -19,6 +19,7 @@
             border-radius: 15px;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
             padding: 20px;
+            margin-bottom: 20px;
         }
         .img-box { 
             width: 100%; height: 300px; display: flex; 
@@ -58,11 +59,51 @@
             z-index: 100;
             display: none;
         }
+        .research-section {
+            margin-top: 30px;
+        }
+        .research-card {
+            margin-bottom: 20px;
+        }
+        .research-content {
+            color: #e0e0e0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .research-content img {
+            max-width: 100%;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .summarized-report {
+            margin-top: 30px;
+        }
+        .email-form {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .email-form input {
+            width: 300px;
+            padding: 10px;
+            border-radius: 50px;
+            border: none;
+            margin-right: 10px;
+        }
+        .email-form button {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: none;
+            background: #0072ff;
+            color: white;
+        }
+        .email-form button:hover {
+            background: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2 class="text-center mb-4">Object Detection</h2>
+        <h2 class="text-center mb-4">Leaflogic Internship Object Detection Project</h2>
         <div class="row">
             <!-- Upload Box -->
             <div class="col-md-6">
@@ -95,7 +136,7 @@
             </div>
         </div>
 
-        <!-- Detected Objects Section Below Both Boxes -->
+        <!-- Detected Objects Section -->
         <div class="row">
             <div class="col-12">
                 <div class="detected-objects">
@@ -103,6 +144,58 @@
                     <p id="detected-labels">No objects detected yet.</p>
                 </div>
             </div>
+        </div>
+
+        <!-- Research Results Section -->
+        <div class="research-section">
+            <h3 class="text-center mb-4">Research Results (Multi-AI Agents in Action</h3>
+            <!-- General Information -->
+            <div class="card research-card">
+                <h5><i class="fas fa-info-circle"></i> General Information</h5>
+                <div id="general-research" class="research-content">
+                    No general information available yet.
+                </div>
+            </div>
+            <!-- Health Benefits -->
+            <div class="card research-card">
+                <h5><i class="fas fa-heartbeat"></i> Health Benefits</h5>
+                <div id="health-research" class="research-content">
+                    No health information available yet.
+                </div>
+            </div>
+            <!-- Growing Season -->
+            <div class="card research-card">
+                <h5><i class="fas fa-seedling"></i> Growing Season</h5>
+                <div id="season-research" class="research-content">
+                    No seasonal information available yet.
+                </div>
+            </div>
+            <!-- Market Prices -->
+            <div class="card research-card">
+                <h5><i class="fas fa-tags"></i> Market Prices</h5>
+                <div id="price-research" class="research-content">
+                    No price information available yet.
+                </div>
+            </div>
+        </div>
+
+        <!-- Summarized Report Section -->
+        <div class="summarized-report">
+            <h3 class="text-center mb-4">Summarized Report</h3>
+            <div class="card">
+                <div id="summarized-report-content" class="research-content">
+                    No summarized report available yet.
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Input Section -->
+        <div class="email-form">
+            <h3 class="text-center mb-4">Get the Full Report via Email</h3>
+            <form id="email-form">
+                <input type="email" id="email" placeholder="Enter your email address" required>
+                <button type="submit">Send Report</button>
+            </form>
         </div>
     </div>
 
@@ -128,6 +221,17 @@
                         }
                         if (res.labels_text) {
                             $("#detected-labels").html(res.labels_text);
+                            // Update research results
+                            if (res.research_results) {
+                                $("#general-research").html(res.research_results.general || "No data available");
+                                $("#health-research").html(res.research_results.health || "No data available");
+                                $("#season-research").html(res.research_results.season || "No data available");
+                                $("#price-research").html(res.research_results.price || "No data available");
+                            }
+                            // Update summarized report
+                            if (res.summarized_report) {
+                                $("#summarized-report-content").html(res.summarized_report);
+                            }
                         } else {
                             $("#detected-labels").html("No objects detected.");
                         }
@@ -178,6 +282,35 @@
         });
 
         $("#predict").click(function () { sendRequest("/predict"); });
+
+        // Handle email form submission
+        $("#email-form").submit(function (e) {
+            e.preventDefault();
+            const email = $("#email").val();
+            const summarized_report = $("#summarized-report-content").html();
+
+            if (email && summarized_report) {
+                $.ajax({
+                    url: "/send-report",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ email: email, summarized_report: summarized_report }),
+                    success: function (res) {
+                        if (res.message) {
+                            alert(res.message);
+                        } else {
+                            alert("Failed to send the report.");
+                        }
+                    },
+                    error: function () {
+                        alert("Error sending the report.");
+                    }
+                });
+            } else {
+                alert("Please enter a valid email address.");
+            }
+        });
     </script>
+    <br>
 </body>
 </html>
