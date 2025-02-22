@@ -8,7 +8,7 @@ https://huggingface.co/datasets/devshaheen/100_crops_plants_object_detection_25k
 ```
 
 ---
-model training completed...
+working on Agents currently...
 
 ## License 📜  
 
