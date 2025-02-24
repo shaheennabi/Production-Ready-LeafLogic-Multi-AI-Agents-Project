@@ -13,26 +13,53 @@
             color: white;
             font-family: 'Arial', sans-serif;
         }
-        .container { margin-top: 50px; }
+        .container { 
+            margin-top: 50px; 
+            margin-bottom: 50px;
+        }
         .card {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
             padding: 20px;
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
         }
         .img-box { 
-            width: 100%; height: 300px; display: flex; 
-            justify-content: center; align-items: center;
+            width: 100%; 
+            height: 300px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 15px; border: 2px dashed #00c6ff;
+            border-radius: 15px; 
+            border: 2px dashed #00c6ff;
             overflow: hidden;
             position: relative;
         }
-        .img-box img { max-width: 100%; max-height: 100%; display: none; }
-        .btn-custom { background: #0072ff; color: white; border-radius: 50px; }
-        .btn-custom:hover { background: #0056b3; transform: scale(1.05); }
-        .loading { display: none; margin-top: 10px; text-align: center; }
+        .img-box img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            display: none; 
+        }
+        .btn-custom { 
+            background: #0072ff; 
+            color: white; 
+            border-radius: 50px; 
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover { 
+            background: #0056b3; 
+            transform: scale(1.05); 
+        }
+        .loading { 
+            display: none; 
+            margin-top: 10px; 
+            text-align: center; 
+        }
         .detected-objects {
             margin-top: 20px;
             font-weight: bold;
@@ -64,16 +91,30 @@
         }
         .research-card {
             margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .research-card:hover {
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
         }
         .research-content {
             color: #e0e0e0;
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 16px;  /* Increased font size */
+            line-height: 1.8;  /* Improved line height */
         }
         .research-content img {
             max-width: 100%;
-            margin: 10px 0;
+            margin: 15px auto;  /* Center images with margin */
             border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: block;  /* Ensures images are block-level for proper centering */
+        }
+        .research-content p {
+            margin-bottom: 15px;
+        }
+        .research-card h5 {
+            font-size: 20px;
+            color: #00c6ff;
+            margin-bottom: 15px;
         }
         .summarized-report {
             margin-top: 30px;
@@ -81,23 +122,59 @@
         .email-form {
             margin-top: 30px;
             text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
         }
         .email-form input {
             width: 300px;
-            padding: 10px;
+            padding: 12px 20px;
             border-radius: 50px;
             border: none;
             margin-right: 10px;
+            font-size: 16px;
         }
         .email-form button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 50px;
             border: none;
             background: #0072ff;
             color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
         .email-form button:hover {
             background: #0056b3;
+            transform: scale(1.05);
+        }
+        /* New styles for image galleries in research sections */
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .image-gallery img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .image-gallery img:hover {
+            transform: scale(1.05);
+        }
+        /* Section titles */
+        h3 {
+            color: #00c6ff;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        #detected-labels {
+            font-size: 18px;
         }
     </style>
 </head>
@@ -137,10 +214,10 @@
         </div>
 
         <!-- Detected Objects Section -->
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12">
-                <div class="detected-objects">
-                    <h4>Detected Objects:</h4>
+                <div class="detected-objects card">
+                    <h4><i class="fas fa-search"></i> Detected Objects:</h4>
                     <p id="detected-labels">No objects detected yet.</p>
                 </div>
             </div>
@@ -148,7 +225,7 @@
 
         <!-- Research Results Section -->
         <div class="research-section">
-            <h3 class="text-center mb-4">Research Results (Multi-AI Agents in Action)</h3>
+            <h3 class="text-center mb-4"><i class="fas fa-flask"></i> Research Results (Multi-AI Agents in Action)</h3>
             <!-- General Information -->
             <div class="card research-card">
                 <h5><i class="fas fa-info-circle"></i> General Information</h5>
@@ -181,7 +258,7 @@
 
         <!-- Summarized Report Section -->
         <div class="summarized-report">
-            <h3 class="text-center mb-4">Summarized Report</h3>
+            <h3 class="text-center mb-4"><i class="fas fa-file-alt"></i> Summarized Report</h3>
             <div class="card">
                 <div id="summarized-report-content" class="research-content">
                     No summarized report available yet.
@@ -191,10 +268,10 @@
 
         <!-- Email Input Section -->
         <div class="email-form">
-            <h3 class="text-center mb-4">Get the Full Report via Email</h3>
+            <h3 class="text-center mb-4"><i class="fas fa-envelope"></i> Get the Full Report via Email</h3>
             <form id="email-form">
                 <input type="email" id="email" placeholder="Enter your email address" required>
-                <button type="submit">Send Report</button>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Send Report</button>
             </form>
         </div>
     </div>
@@ -223,14 +300,15 @@
                             $("#detected-labels").html(res.labels_text);
                             // Update research results
                             if (res.research_results) {
-                                $("#general-research").html(res.research_results.general || "No data available");
-                                $("#health-research").html(res.research_results.health || "No data available");
-                                $("#season-research").html(res.research_results.season || "No data available");
-                                $("#price-research").html(res.research_results.price || "No data available");
+                                // Process general information with images
+                                processResearchContent("general-research", res.research_results.general);
+                                processResearchContent("health-research", res.research_results.health);
+                                processResearchContent("season-research", res.research_results.season);
+                                processResearchContent("price-research", res.research_results.price);
                             }
                             // Update summarized report
                             if (res.summarized_report) {
-                                $("#summarized-report-content").html(res.summarized_report);
+                                processResearchContent("summarized-report-content", res.summarized_report);
                             }
                         } else {
                             $("#detected-labels").html("No objects detected.");
@@ -242,6 +320,32 @@
                     }
                 });
             }
+        }
+
+        // Function to process research content and render images properly
+        function processResearchContent(elementId, content) {
+            if (!content) {
+                $(`#${elementId}`).html("No data available");
+                return;
+            }
+            
+            // Replace image URLs with proper img tags if they're not already
+            const processedContent = content.replace(/https?:\/\/\S+\.(jpg|jpeg|png|gif)/gi, function(match) {
+                // Check if this URL is already within an img tag
+                if (match.startsWith('<img')) return match;
+                return `<img src="${match}" alt="Research image" class="img-fluid">`;
+            });
+            
+            $(`#${elementId}`).html(processedContent);
+            
+            // Make sure all images are visible and styled properly
+            $(`#${elementId} img`).css({
+                'display': 'block',
+                'max-width': '100%',
+                'margin': '15px auto',
+                'border-radius': '8px',
+                'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.2)'
+            });
         }
 
         $("#fileinput").change(function () {
@@ -311,6 +415,5 @@
             }
         });
     </script>
-    <br>
 </body>
 </html>

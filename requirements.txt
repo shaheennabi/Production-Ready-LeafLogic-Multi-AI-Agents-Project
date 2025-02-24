@@ -9,6 +9,6 @@ taskflowai
 ipykernel
 openai
 google-search-results
-
+flask-markdown
 
 -e .
