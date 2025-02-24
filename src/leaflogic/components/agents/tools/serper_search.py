@@ -30,7 +30,7 @@ class SerperSearch:
             logging.info(f"Initiating web search for query: '{query}' with {num_results} results.")
 
             # Ensure num_results is an integer
-            search_result = WebTools.serper_search(query=query, num_results=int(num_results))
+            search_result = WebTools.serper_search(query=query,search_type="search", num_results=int(num_results))
 
             if search_result:
                 logging.info(f"Successfully retrieved {len(search_result)} results for query: '{query}'")
