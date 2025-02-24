@@ -6,4 +6,9 @@ flask
 flask-cors
 ultralytics
 taskflowai
+ipykernel
+openai
+google-search-results
+
+
 -e .

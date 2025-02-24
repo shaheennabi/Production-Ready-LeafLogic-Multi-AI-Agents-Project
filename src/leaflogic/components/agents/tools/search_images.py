@@ -1,16 +1,22 @@
 from taskflowai import WikipediaTools
 from src.leaflogic.logger import logging
-from src.leaflogic.exception import CustomException
 import sys
+
 
 class WikiImages:
     @staticmethod
-    def search_images(cls):
+    def search_images(query: str):
+        """Search for images on Wikipedia based on the given query."""
         try:
-            logging.info("Searching images using WikipediaTools.")
-            images = WikipediaTools.search_images
-            logging.info("Images searched successfully.")
+            logging.info(f"Searching for Wikipedia images for query: {query}")
+            images = WikipediaTools.search_images(query=query)
+            
+            if images:
+                logging.info(f"Successfully retrieved {len(images)} images for '{query}'")
+            else:
+                logging.warning(f"No images found for query: {query}")
+
             return images
         except Exception as e:
-            logging.info("Failed to search images from Wikipedia.")
-            raise CustomException(sys, e)
+            logging.error(f"Error fetching Wikipedia images for query '{query}': {e}")
+            raise RuntimeError(f"Error fetching Wikipedia images: {e}") from e

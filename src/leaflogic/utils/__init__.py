@@ -14,7 +14,6 @@ import io
 
 
 
-
 class Zipper:
     
     def __init__(self, zip_file_path, extract_to_folder):
@@ -181,38 +180,43 @@ def get_label_by_index(index):
 """GenAI implementation related  from now on"""
 
 
-
-# Load environment variables
+# ✅ Load environment variables from .env file
 load_dotenv()
 
-# Validate required API keys
-required_keys = [
-    "OPENAI_API_KEY"
-]
-
-# Check for missing keys
-missing_keys = [key for key in required_keys if not os.getenv(key)]
-if missing_keys:
-    raise CustomException(sys, "Missing required environment variables: " + ', '.join(missing_keys))
-
-# Set verbosity for taskflowai
+# ✅ Set verbosity for taskflowai
 set_verbosity(True)
 
+# ✅ Fetch API Keys from environment variables
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+# ✅ Ensure API keys are only checked when they are actually needed
+def validate_api_keys():
+    """Validates API keys before usage."""
+    missing_keys = []
+    if not OPENAI_API_KEY:
+        missing_keys.append("OPENAI_API_KEY")
+    
+
+    if missing_keys:
+        raise RuntimeError(f"❌ Missing environment variables: {', '.join(missing_keys)}. Set them in the .env file.")
 
 class LoadModel:
     @staticmethod
-    def load_openai_model(cls):
+    def load_openai_model():
         """
         Load and return the OpenAI GPT-3.5-turbo model.
+        This will validate API keys only when called.
         """
         try:
+            validate_api_keys()  # Only check when this function is called
             logging.info("Loading OpenAI GPT-3.5-turbo model.")
             model = OpenaiModels.gpt_3_5_turbo
-            logging.info("OpenAI GPT-3.5-turbo model loaded successfully.")
+            logging.info("✅ OpenAI GPT-3.5-turbo model loaded successfully.")
             return model
         except Exception as e:
-            logging.info("Failed to load OpenAI GPT-3.5-turbo model")
-            raise CustomException(sys, e)
+            logging.error("❌ Failed to load OpenAI GPT-3.5-turbo model.")
+            raise RuntimeError(f"Error loading OpenAI model: {e}") from e
+
 
 
 
