@@ -98,18 +98,20 @@
         }
         .research-content {
             color: #e0e0e0;
-            font-size: 16px;  /* Increased font size */
-            line-height: 1.8;  /* Improved line height */
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 10px;
         }
         .research-content img {
             max-width: 100%;
-            margin: 15px auto;  /* Center images with margin */
+            margin: 15px auto;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: block;  /* Ensures images are block-level for proper centering */
+            display: block;
         }
         .research-content p {
             margin-bottom: 15px;
+            text-align: left;
         }
         .research-card h5 {
             font-size: 20px;
@@ -147,7 +149,6 @@
             background: #0056b3;
             transform: scale(1.05);
         }
-        /* New styles for image galleries in research sections */
         .image-gallery {
             display: flex;
             flex-wrap: wrap;
@@ -166,7 +167,6 @@
         .image-gallery img:hover {
             transform: scale(1.05);
         }
-        /* Section titles */
         h3 {
             color: #00c6ff;
             font-weight: bold;
@@ -176,13 +176,86 @@
         #detected-labels {
             font-size: 18px;
         }
+        .section-title {
+            font-weight: bold;
+            color: #00c6ff;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 5px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .modal-content {
+            background: linear-gradient(to right, #141e30, #243b55);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 400px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        .modal-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-continue {
+            background: #0072ff;
+            color: white;
+        }
+        .btn-exit {
+            background: #dc3545;
+            color: white;
+        }
+        .completion-message {
+            display: none;
+            margin: 50px auto;
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 198, 255, 0.1);
+            border-radius: 15px;
+            max-width: 600px;
+        }
+        .completion-message h2 {
+            color: #00c6ff;
+            margin-bottom: 20px;
+        }
+        .completion-message p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .debug-log {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2 class="text-center mb-4">Leaflogic Internship Object Detection Project</h2>
         <div class="row">
-            <!-- Upload Box -->
             <div class="col-md-6">
                 <div class="card text-center">
                     <h5><i class="fas fa-upload"></i> Upload Image</h5>
@@ -197,7 +270,6 @@
                     <button class="btn btn-secondary mt-3" id="camera"><i class="fas fa-camera"></i> Take Photo</button>
                 </div>
             </div>
-            <!-- Prediction Box -->
             <div class="col-md-6">
                 <div class="card text-center">
                     <h5><i class="fas fa-brain"></i> Prediction Results</h5>
@@ -213,7 +285,6 @@
             </div>
         </div>
 
-        <!-- Detected Objects Section -->
         <div class="row mt-4">
             <div class="col-12">
                 <div class="detected-objects card">
@@ -223,31 +294,26 @@
             </div>
         </div>
 
-        <!-- Research Results Section -->
         <div class="research-section">
             <h3 class="text-center mb-4"><i class="fas fa-flask"></i> Research Results (Multi-AI Agents in Action)</h3>
-            <!-- General Information -->
             <div class="card research-card">
                 <h5><i class="fas fa-info-circle"></i> General Information</h5>
                 <div id="general-research" class="research-content">
                     No general information available yet.
                 </div>
             </div>
-            <!-- Health Benefits -->
             <div class="card research-card">
                 <h5><i class="fas fa-heartbeat"></i> Health Benefits</h5>
                 <div id="health-research" class="research-content">
                     No health information available yet.
                 </div>
             </div>
-            <!-- Growing Season -->
             <div class="card research-card">
                 <h5><i class="fas fa-seedling"></i> Growing Season</h5>
                 <div id="season-research" class="research-content">
                     No seasonal information available yet.
                 </div>
             </div>
-            <!-- Market Prices -->
             <div class="card research-card">
                 <h5><i class="fas fa-tags"></i> Market Prices</h5>
                 <div id="price-research" class="research-content">
@@ -256,7 +322,6 @@
             </div>
         </div>
 
-        <!-- Summarized Report Section -->
         <div class="summarized-report">
             <h3 class="text-center mb-4"><i class="fas fa-file-alt"></i> Summarized Report</h3>
             <div class="card">
@@ -266,7 +331,6 @@
             </div>
         </div>
 
-        <!-- Email Input Section -->
         <div class="email-form">
             <h3 class="text-center mb-4"><i class="fas fa-envelope"></i> Get the Full Report via Email</h3>
             <form id="email-form">
@@ -274,18 +338,52 @@
                 <button type="submit"><i class="fas fa-paper-plane"></i> Send Report</button>
             </form>
         </div>
+        
+        <div class="debug-log" id="debug-log">
+            <h5>Debug Log</h5>
+            <pre id="debug-content"></pre>
+        </div>
     </div>
 
-    <!-- Video Stream for Camera -->
     <video id="camera-stream" autoplay></video>
     <canvas id="camera-canvas" style="display:none;"></canvas>
+    
+    <div id="end-program-modal" class="modal">
+        <div class="modal-content">
+            <h4><i class="fas fa-question-circle"></i> Program Execution</h4>
+            <p>Your report has been sent successfully!</p>
+            <p>Would you like to end the program or continue?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-continue" id="continue-btn">Continue</button>
+                <button class="modal-btn btn-exit" id="exit-btn">End Program</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="completion-message" id="completion-message">
+        <h2><i class="fas fa-check-circle"></i> Program Terminated</h2>
+        <p>Thank you for using Leaflogic Object Detection!</p>
+        <p>All processes have been successfully completed.</p>
+        <p>You may close this window now.</p>
+    </div>
 
     <script>
         var base_data = "";
+        var debug = false;
+
+        function log(message, data) {
+            if (debug) {
+                console.log(message, data);
+                let logMsg = typeof data !== 'undefined' ? `${message}: ${JSON.stringify(data)}` : message;
+                $('#debug-content').append(logMsg + '\n');
+                $('#debug-log').show();
+            }
+        }
 
         function sendRequest(route) {
             if (base_data) {
                 $("#loading").show();
+                log("Sending request to", route);
                 $.ajax({
                     url: route,
                     type: "POST",
@@ -293,59 +391,98 @@
                     data: JSON.stringify({ image: base_data }),
                     success: function (res) {
                         $("#loading").hide();
+                        log("Received response", res);
+                        
                         if (res.image) {
                             $("#result-image").attr("src", "data:image/jpeg;base64," + res.image).show();
                         }
+                        
                         if (res.labels_text) {
-                            $("#detected-labels").html(res.labels_text);
-                            // Update research results
+                            $("#detected-labels").html(res.labels_text.replace(/\n/g, '<br>'));
+                            
                             if (res.research_results) {
-                                // Process general information with images
-                                processResearchContent("general-research", res.research_results.general);
-                                processResearchContent("health-research", res.research_results.health);
-                                processResearchContent("season-research", res.research_results.season);
-                                processResearchContent("price-research", res.research_results.price);
+                                log("Processing research results");
+                                processResearchResults(res.research_results);
+                            } else {
+                                log("No research results in response");
                             }
-                            // Update summarized report
+                            
                             if (res.summarized_report) {
-                                processResearchContent("summarized-report-content", res.summarized_report);
+                                $("#summarized-report-content").html(formatResearchContent(res.summarized_report));
+                            } else {
+                                $("#summarized-report-content").html("<p>No summarized report available.</p>");
                             }
                         } else {
                             $("#detected-labels").html("No objects detected.");
+                            $("#general-research").html("No general information available.");
+                            $("#health-research").html("No health information available.");
+                            $("#season-research").html("No seasonal information available.");
+                            $("#price-research").html("No price information available.");
+                            $("#summarized-report-content").html("No summarized report available.");
                         }
                     },
-                    error: function () {
+                    error: function (xhr, status, error) {
                         $("#loading").hide();
-                        alert("Error processing request");
+                        log("Error in request", { status: status, error: error, response: xhr.responseText });
+                        alert("Error processing request: " + error);
                     }
                 });
+            } else {
+                alert("Please upload an image or take a photo first.");
             }
         }
 
-        // Function to process research content and render images properly
-        function processResearchContent(elementId, content) {
-            if (!content) {
-                $(`#${elementId}`).html("No data available");
+        function processResearchResults(results) {
+            if (!results || typeof results !== 'object') {
+                log("Invalid research results format", results);
+                $("#general-research").html("<p>No general information available.</p>");
+                $("#health-research").html("<p>No health information available.</p>");
+                $("#season-research").html("<p>No seasonal information available.</p>");
+                $("#price-research").html("<p>No price information available.</p>");
                 return;
             }
-            
-            // Replace image URLs with proper img tags if they're not already
-            const processedContent = content.replace(/https?:\/\/\S+\.(jpg|jpeg|png|gif)/gi, function(match) {
-                // Check if this URL is already within an img tag
-                if (match.startsWith('<img')) return match;
-                return `<img src="${match}" alt="Research image" class="img-fluid">`;
-            });
-            
-            $(`#${elementId}`).html(processedContent);
-            
-            // Make sure all images are visible and styled properly
-            $(`#${elementId} img`).css({
-                'display': 'block',
-                'max-width': '100%',
-                'margin': '15px auto',
-                'border-radius': '8px',
-                'box-shadow': '0 4px 8px rgba(0, 0, 0, 0.2)'
-            });
+
+            let generalContent = '';
+            let healthContent = '';
+            let seasonContent = '';
+            let priceContent = '';
+
+            for (const plant in results) {
+                const plantData = results[plant];
+                generalContent += `<h6>${plant}</h6>${formatResearchContent(plantData.general)}`;
+                healthContent += `<h6>${plant}</h6>${formatResearchContent(plantData.health)}`;
+                seasonContent += `<h6>${plant}</h6>${formatResearchContent(plantData.season)}`;
+                priceContent += `<h6>${plant}</h6>${formatResearchContent(plantData.price)}`;
+            }
+
+            $("#general-research").html(generalContent || "<p>No general information available.</p>");
+            $("#health-research").html(healthContent || "<p>No health information available.</p>");
+            $("#season-research").html(seasonContent || "<p>No seasonal information available.</p>");
+            $("#price-research").html(priceContent || "<p>No price information available.</p>");
+        }
+
+        function formatResearchContent(content) {
+            if (!content || typeof content !== 'string' || content.trim() === "") {
+                return "<p>No data available.</p>";
+            }
+            try {
+                let paragraphs = content.split(/\n+/);
+                let formattedContent = '';
+                paragraphs.forEach(paragraph => {
+                    paragraph = paragraph.trim();
+                    if (paragraph !== "") {
+                        if (paragraph.match(/https?:\/\/\S+\.(jpg|jpeg|png|gif)/i)) {
+                            formattedContent += `<img src="${paragraph}" alt="Research image" class="img-fluid">`;
+                        } else {
+                            formattedContent += `<p>${paragraph}</p>`;
+                        }
+                    }
+                });
+                return formattedContent;
+            } catch (e) {
+                log("Error formatting content", e);
+                return "<p>Error formatting content.</p>";
+            }
         }
 
         $("#fileinput").change(function () {
@@ -353,6 +490,7 @@
             reader.onload = function (e) {
                 base_data = e.target.result.split(",")[1];
                 $("#photo").attr("src", e.target.result).show();
+                log("Image loaded from file");
             }
             reader.readAsDataURL(this.files[0]);
         });
@@ -380,39 +518,81 @@
                         $("#photo").attr("src", canvas.toDataURL("image/jpeg")).show();
                         stream.getTracks().forEach(track => track.stop());
                         video.style.display = "none";
+                        log("Photo captured from camera");
                     }
                 }, 1000);
+            }).catch(error => {
+                log("Camera error", error);
+                alert("Error accessing camera: " + error.message);
             });
         });
 
-        $("#predict").click(function () { sendRequest("/predict"); });
+        $("#predict").click(function () { 
+            sendRequest("/predict"); 
+        });
 
-        // Handle email form submission
         $("#email-form").submit(function (e) {
             e.preventDefault();
             const email = $("#email").val();
             const summarized_report = $("#summarized-report-content").html();
 
-            if (email && summarized_report) {
+            if (email && summarized_report && summarized_report !== "No summarized report available yet.") {
+                log("Sending email to", email);
                 $.ajax({
                     url: "/send-report",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify({ email: email, summarized_report: summarized_report }),
                     success: function (res) {
+                        log("Email sending response", res);
                         if (res.message) {
-                            alert(res.message);
+                            document.getElementById("end-program-modal").style.display = "block";
                         } else {
                             alert("Failed to send the report.");
                         }
                     },
-                    error: function () {
-                        alert("Error sending the report.");
+                    error: function (xhr, status, error) {
+                        log("Email error", { status, error, response: xhr.responseText });
+                        alert("Error sending the report: " + error);
                     }
                 });
             } else {
-                alert("Please enter a valid email address.");
+                alert("Please make sure you have a valid email address and complete analysis results.");
             }
+        });
+        
+        document.getElementById("continue-btn").addEventListener("click", function() {
+            document.getElementById("end-program-modal").style.display = "none";
+            $("#email").val("");
+            $("#result-image").hide();
+            $("#photo").hide();
+            $("#detected-labels").html("No objects detected yet.");
+            $("#general-research").html("No general information available yet.");
+            $("#health-research").html("No health information available yet.");
+            $("#season-research").html("No seasonal information available yet.");
+            $("#price-research").html("No price information available yet.");
+            $("#summarized-report-content").html("No summarized report available yet.");
+            base_data = "";
+            log("Session reset for new analysis");
+        });
+        
+        document.getElementById("exit-btn").addEventListener("click", function() {
+            document.getElementById("end-program-modal").style.display = "none";
+            log("Exit program requested");
+            $.ajax({
+                url: "/end-program",
+                type: "POST",
+                success: function(response) {
+                    log("Program ending response", response);
+                    $(".container").hide();
+                    document.getElementById("completion-message").style.display = "block";
+                },
+                error: function(xhr, status, error) {
+                    log("Error ending program", { status, error, response: xhr.responseText });
+                    $(".container").hide();
+                    document.getElementById("completion-message").style.display = "block";
+                }
+            });
         });
     </script>
 </body>
