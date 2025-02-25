@@ -113,10 +113,42 @@
             margin-bottom: 15px;
             text-align: left;
         }
+        .research-content h6 {
+            font-weight: bold;
+            color: #ffffff;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        h2 {
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff, #00c6ff);
+            padding: 15px 20px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 198, 255, 0.4);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        h2:hover {
+            transform: scale(1.05);
+        }
         .research-card h5 {
             font-size: 20px;
             color: #00c6ff;
             margin-bottom: 15px;
+        }
+        h3 {
+            color: #00c6ff;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        h4 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #00c6ff;
         }
         .summarized-report {
             margin-top: 30px;
@@ -166,12 +198,6 @@
         }
         .image-gallery img:hover {
             transform: scale(1.05);
-        }
-        h3 {
-            color: #00c6ff;
-            font-weight: bold;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
         }
         #detected-labels {
             font-size: 18px;
@@ -249,6 +275,32 @@
             border-radius: 5px;
             margin-top: 20px;
             display: none;
+        }
+        /* Popup styling */
+        #agent-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            padding: 20px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        #agent-popup p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
         }
     </style>
 </head>
@@ -367,6 +419,11 @@
         <p>You may close this window now.</p>
     </div>
 
+    <!-- Popup for agents running -->
+    <div id="agent-popup">
+        <p>Fasten your seatbelt! Agents are running...</p>
+    </div>
+
     <script>
         var base_data = "";
         var debug = false;
@@ -378,6 +435,14 @@
                 $('#debug-content').append(logMsg + '\n');
                 $('#debug-log').show();
             }
+        }
+
+        function showAgentPopup() {
+            const popup = document.getElementById("agent-popup");
+            popup.style.display = "block";
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 10000); // Hide after 10 seconds
         }
 
         function sendRequest(route) {
@@ -400,8 +465,12 @@
                         if (res.labels_text) {
                             $("#detected-labels").html(res.labels_text.replace(/\n/g, '<br>'));
                             
+                            // Show popup when research starts
+                            if (res.research_results || res.summarized_report) {
+                                showAgentPopup();
+                            }
+
                             if (res.research_results) {
-                                log("Processing research results");
                                 processResearchResults(res.research_results);
                             } else {
                                 log("No research results in response");
@@ -448,11 +517,12 @@
             let priceContent = '';
 
             for (const plant in results) {
+                const capitalizedPlant = plant.charAt(0).toUpperCase() + plant.slice(1);
                 const plantData = results[plant];
-                generalContent += `<h6>${plant}</h6>${formatResearchContent(plantData.general)}`;
-                healthContent += `<h6>${plant}</h6>${formatResearchContent(plantData.health)}`;
-                seasonContent += `<h6>${plant}</h6>${formatResearchContent(plantData.season)}`;
-                priceContent += `<h6>${plant}</h6>${formatResearchContent(plantData.price)}`;
+                generalContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.general)}`;
+                healthContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.health)}`;
+                seasonContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.season)}`;
+                priceContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.price)}`;
             }
 
             $("#general-research").html(generalContent || "<p>No general information available.</p>");
@@ -471,10 +541,20 @@
                 paragraphs.forEach(paragraph => {
                     paragraph = paragraph.trim();
                     if (paragraph !== "") {
-                        if (paragraph.match(/https?:\/\/\S+\.(jpg|jpeg|png|gif)/i)) {
+                        // Handle headings with # or ##
+                        if (paragraph.match(/^#{1,2}\s/)) {
+                            paragraph = paragraph.replace(/^#{1,2}\s/, '');
+                            formattedContent += `<h6>${paragraph}</h6>`;
+                        }
+                        // Handle image URLs
+                        else if (paragraph.match(/^https?:\/\/\S+\.(jpg|jpeg|png|gif)$/i)) {
                             formattedContent += `<img src="${paragraph}" alt="Research image" class="img-fluid">`;
-                        } else {
-                            formattedContent += `<p>${paragraph}</p>`;
+                        }
+                        // Handle Markdown images and bold text
+                        else {
+                            let textWithImages = replaceMarkdownImages(paragraph);
+                            let textWithBold = replaceMarkdownBold(textWithImages);
+                            formattedContent += `<p>${textWithBold}</p>`;
                         }
                     }
                 });
@@ -483,6 +563,16 @@
                 log("Error formatting content", e);
                 return "<p>Error formatting content.</p>";
             }
+        }
+
+        function replaceMarkdownImages(text) {
+            const regex = /!\[([^\]]+)\]\((https?:\/\/\S+)\)/g;
+            return text.replace(regex, '<img src="$2" alt="$1" class="img-fluid">');
+        }
+
+        function replaceMarkdownBold(text) {
+            const regex = /\*\*(.+?)\*\*/g;
+            return text.replace(regex, '<strong>$1</strong>');
         }
 
         $("#fileinput").change(function () {
@@ -552,12 +642,12 @@
                         }
                     },
                     error: function (xhr, status, error) {
-                        log("Email error", { status, error, response: xhr.responseText });
+                        log("Error sending email", { status, error, response: xhr.responseText });
                         alert("Error sending the report: " + error);
                     }
                 });
             } else {
-                alert("Please make sure you have a valid email address and complete analysis results.");
+                alert("Please enter a valid email and ensure analysis is complete.");
             }
         });
         

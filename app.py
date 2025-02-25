@@ -3,6 +3,7 @@ import os
 import base64
 import sys
 import logging
+import time  # Correct import for time.sleep
 from src.leaflogic.logger import logging
 from src.leaflogic.exception import CustomException
 from src.leaflogic.utils import get_label_by_index
@@ -10,7 +11,6 @@ from taskflowai import Task
 from src.leaflogic.components.agents.all_agents.web_research_agent import WebResearchAgent
 from src.leaflogic.components.agents.all_agents.price_fetching_agent import PriceFetchingAgent
 from src.leaflogic.utils.email_utils import SendReport2Email
-from datetime import time
 
 app = Flask(__name__)
 
@@ -28,7 +28,6 @@ send_email = SendReport2Email().send_email_via_smtp
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Function to get the latest experiment folder
 def get_latest_exp_folder():
     try:
         if not os.path.exists(RUNS_DIR):
@@ -46,7 +45,6 @@ def get_latest_exp_folder():
         logger.error(f"Error in get_latest_exp_folder: {str(e)}")
         raise CustomException(sys, e)
 
-# Function to run YOLO detection
 def run_yolo_detection(input_image_path):
     try:
         os.makedirs(RUNS_DIR, exist_ok=True)
@@ -62,26 +60,21 @@ def run_yolo_detection(input_image_path):
         logger.error(f"Error running YOLO detection: {str(e)}")
         raise CustomException(sys, e)
 
-# Function to process prediction
 def process_prediction(image_data, filename):
     try:
-        # Save the uploaded image
         image_path = os.path.join(BASE_DIR, filename)
         with open(image_path, "wb") as f:
             f.write(image_data)
         logger.info(f"Image saved to: {image_path}")
 
-        # Run YOLO detection
         latest_exp_folder = run_yolo_detection(image_path)
         if not latest_exp_folder:
             logger.error("YOLO detection failed. No experiment folder found.")
             return None, "Detection failed", None
 
-        # Get the output image path
         output_image_path = os.path.join(latest_exp_folder, os.path.basename(image_path))
         logger.info(f"Output image path: {output_image_path}")
 
-        # Read detected labels
         label_folder = os.path.join(latest_exp_folder, "labels")
         if not os.path.exists(label_folder):
             logger.info("No labels folder found. No objects detected.")
@@ -97,13 +90,11 @@ def process_prediction(image_data, filename):
                         detected_labels.add(get_label_by_index(index))
         logger.info(f"Detected labels: {detected_labels}")
 
-        # Save detected objects to a text file
         detected_text = "\n".join(detected_labels) if detected_labels else "Sorry, no objects detected"
         with open(DETECTED_OBJECTS_PATH, "w") as txt_file:
             txt_file.write(detected_text)
         logger.info(f"Detected objects saved to: {DETECTED_OBJECTS_PATH}")
 
-        # Encode the output image to base64
         with open(output_image_path, "rb") as img_file:
             image_base64 = base64.b64encode(img_file.read()).decode("utf-8")
         logger.info("Output image encoded to base64.")
@@ -113,13 +104,10 @@ def process_prediction(image_data, filename):
         logger.error(f"Error in process_prediction: {str(e)}")
         raise CustomException(sys, e)
 
-# Function to read detected objects from the text file
 def read_detected_objects(file_path):
-    """Reads detected crop/plant names from the file."""
     if not os.path.exists(file_path):
         logger.info(f"File not found: {file_path}")
         return []
-
     try:
         with open(file_path, "r") as file:
             detected_objects = [line.strip() for line in file.readlines() if line.strip()]
@@ -130,12 +118,10 @@ def read_detected_objects(file_path):
         raise CustomException(sys, e)
 
 def execute_research_and_report(plant_names):
-    """Executes research tasks and generates a structured report for each plant."""
     research_results = {}
     try:
         if not plant_names:
             return research_results
-
         for plant_name in plant_names:
             research_results[plant_name] = {
                 "general": research_overall_web(plant_name),
@@ -143,36 +129,29 @@ def execute_research_and_report(plant_names):
                 "season": research_season(plant_name),
                 "price": research_price(plant_name),
             }
-
         return research_results
     except Exception as e:
         logger.error(f"Error in execute_research_and_report: {str(e)}")
         raise Exception(f"Error in execute_research_and_report: {str(e)}")
 
 def generate_summarized_report(research_results):
-    """Generates a structured and easy-to-read summarized report from research results."""
     try:
         if not research_results:
             return "No research results to summarize."
-
         summarized_report = "🌿 **Plant Research Summary** 🌿\n\n"
-        
         for plant, results in research_results.items():
             summarized_report += f"🌱 **{plant.capitalize()}**\n"
-            # Convert Task objects to strings explicitly
-            summarized_report += f"📌 **General Information:** {str(results.get('general', 'No data available'))}\n"
-            summarized_report += f"🩺 **Health Benefits & Risks:** {str(results.get('health', 'No data available'))}\n"
-            summarized_report += f"🌤 **Growing Season & Conditions:** {str(results.get('season', 'No data available'))}\n"
-            summarized_report += f"💰 **Market Prices & Trends:** {str(results.get('price', 'No data available'))}\n"
+            summarized_report += f"📌 **General Information:** {results.get('general', 'No data available')}\n"
+            summarized_report += f"🩺 **Health Benefits & Risks:** {results.get('health', 'No data available')}\n"
+            summarized_report += f"🌤 **Growing Season & Conditions:** {results.get('season', 'No data available')}\n"
+            summarized_report += f"💰 **Market Prices & Trends:** {results.get('price', 'No data available')}\n"
             summarized_report += "-" * 50 + "\n\n"
-
         return summarized_report
     except Exception as e:
         logger.error(f"Error in generate_summarized_report: {str(e)}")
         raise Exception(f"Error in generate_summarized_report: {str(e)}")
 
 def research_overall_web(plant_name: str):
-    """Conducts web research on a plant."""
     try:
         agent = WebResearchAgent.initialize_web_research_agent()
         task = Task.create(
@@ -192,7 +171,6 @@ def research_overall_web(plant_name: str):
         raise Exception(f"Error in research_overall_web for {plant_name}: {e}")
 
 def research_health(plant_name: str):
-    """Research health-related information about the plant."""
     try:
         agent = WebResearchAgent.initialize_web_research_agent()
         task = Task.create(
@@ -214,7 +192,6 @@ def research_health(plant_name: str):
         raise Exception(f"Error in research_health: {e}")
 
 def research_season(plant_name: str):
-    """Research seasonal growth and farming details of the plant."""
     try:
         agent = WebResearchAgent.initialize_web_research_agent()
         task = Task.create(
@@ -236,7 +213,6 @@ def research_season(plant_name: str):
         raise Exception(f"Error in research_season: {e}")
 
 def research_price(plant_name: str):
-    """Research market price details of the plant."""
     try:
         agent = PriceFetchingAgent.initialize_price_fetching_agent(query=plant_name)
         task = Task.create(
@@ -255,12 +231,10 @@ def research_price(plant_name: str):
         logger.error(f"Error in research_price: {e}")
         raise Exception(f"Error in research_price: {e}")
 
-# Route for the home page
 @app.route("/")
 def index():
     return render_template("index.html")
 
-# Route for prediction
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
@@ -287,7 +261,7 @@ def predict():
             except Exception as e:
                 logger.error(f"Error in research and report generation: {str(e)}")
 
-        # Convert Task objects to strings in research_results for JSON serialization
+        # Convert Task objects to strings for serialization
         serialized_research_results = {
             plant: {key: str(value) for key, value in data.items()}
             for plant, data in research_results.items()
@@ -306,7 +280,6 @@ def predict():
         logger.error(f"Error in predict endpoint: {str(e)}")
         return jsonify({"error": str(e), "image": None}), 500
 
-# Route to handle email submission
 @app.route("/send-report", methods=["POST"])
 def send_report():
     try:
@@ -334,30 +307,23 @@ def send_report():
 
 @app.route("/end-program", methods=["POST"])
 def end_program():
-    """Endpoint to shut down the application."""
     try:
         logger.info("Received request to shut down the application.")
-        
         def shutdown_server():
-            time.sleep(1)
+            time.sleep(1)  # Correct usage of time.sleep
             try:
                 func = request.environ.get('werkzeug.server.shutdown')
                 if func is not None:
                     func()
                     logger.info("Application shutdown via werkzeug function.")
-                    return
-            except:
-                pass
-            try:
-                import os
-                logger.info("Application shutdown via os._exit.")
-                os._exit(0)
-            except:
-                pass
-
+                else:
+                    logger.info("Werkzeug shutdown not available, using sys.exit.")
+                    sys.exit(0)
+            except Exception as e:
+                logger.error(f"Shutdown error: {str(e)}")
+                sys.exit(0)  # Fallback to sys.exit if werkzeug fails
         import threading
         threading.Thread(target=shutdown_server).start()
-        
         return {"message": "Server shutting down..."}, 200
     except Exception as e:
         logger.error(f"Error in end_program endpoint: {str(e)}")
