@@ -10,6 +10,7 @@ from taskflowai import Task
 from src.leaflogic.components.agents.all_agents.web_research_agent import WebResearchAgent
 from src.leaflogic.components.agents.all_agents.price_fetching_agent import PriceFetchingAgent
 from src.leaflogic.utils.email_utils import SendReport2Email
+from datetime import time
 
 app = Flask(__name__)
 
@@ -17,8 +18,8 @@ app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 YOLO_DIR = os.path.join(BASE_DIR, "yolov5")
 RUNS_DIR = os.path.join(YOLO_DIR, "runs", "detect")
-WEIGHTS_PATH = os.path.join(BASE_DIR, "best.pt")  # Path to model weights
-DETECTED_OBJECTS_PATH = os.path.join(BASE_DIR, "detected_objects.txt")  # Path to detected objects file
+WEIGHTS_PATH = os.path.join(BASE_DIR, "best.pt")
+DETECTED_OBJECTS_PATH = os.path.join(BASE_DIR, "detected_objects.txt")
 
 # Initialize email utility
 send_email = SendReport2Email().send_email_via_smtp
@@ -128,33 +129,8 @@ def read_detected_objects(file_path):
         logger.error(f"Error reading detected objects: {str(e)}")
         raise CustomException(sys, e)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def execute_research_and_report(plant_names):
-    """Executes research tasks and generates a structured report for each plant.
-
-    Args:
-        plant_names (list): A list of plant names to research.
-
-    Returns:
-        dict: Research results categorized by plant name.
-    """
+    """Executes research tasks and generates a structured report for each plant."""
     research_results = {}
     try:
         if not plant_names:
@@ -169,39 +145,12 @@ def execute_research_and_report(plant_names):
             }
 
         return research_results
-
     except Exception as e:
+        logger.error(f"Error in execute_research_and_report: {str(e)}")
         raise Exception(f"Error in execute_research_and_report: {str(e)}")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def generate_summarized_report(research_results):
-    """Generates a structured and easy-to-read summarized report from research results.
-
-    Args:
-        research_results (dict): A dictionary containing research data for each plant.
-
-    Returns:
-        str: A formatted summary report of the research.
-    """
+    """Generates a structured and easy-to-read summarized report from research results."""
     try:
         if not research_results:
             return "No research results to summarize."
@@ -210,53 +159,20 @@ def generate_summarized_report(research_results):
         
         for plant, results in research_results.items():
             summarized_report += f"🌱 **{plant.capitalize()}**\n"
-            summarized_report += f"📌 **General Information:** {results.get('general', 'No data available')}\n"
-            summarized_report += f"🩺 **Health Benefits & Risks:** {results.get('health', 'No data available')}\n"
-            summarized_report += f"🌤 **Growing Season & Conditions:** {results.get('season', 'No data available')}\n"
-            summarized_report += f"💰 **Market Prices & Trends:** {results.get('price', 'No data available')}\n"
+            # Convert Task objects to strings explicitly
+            summarized_report += f"📌 **General Information:** {str(results.get('general', 'No data available'))}\n"
+            summarized_report += f"🩺 **Health Benefits & Risks:** {str(results.get('health', 'No data available'))}\n"
+            summarized_report += f"🌤 **Growing Season & Conditions:** {str(results.get('season', 'No data available'))}\n"
+            summarized_report += f"💰 **Market Prices & Trends:** {str(results.get('price', 'No data available'))}\n"
             summarized_report += "-" * 50 + "\n\n"
 
         return summarized_report
-
     except Exception as e:
+        logger.error(f"Error in generate_summarized_report: {str(e)}")
         raise Exception(f"Error in generate_summarized_report: {str(e)}")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def research_overall_web(plant_name: str):
-    """
-    Conducts web research on a plant, gathering details on:
-    - Scientific name, origin, and growing regions
-    - Uses, benefits, and growth conditions
-    - Common pests, diseases, and economic significance
-    - Relevant images formatted as ![Description](https://full-image-url)
-
-    Returns:
-    - A structured research task with AI-powered web search.
-
-    Raises:
-    - Exception on failure.
-    """
-
+    """Conducts web research on a plant."""
     try:
         agent = WebResearchAgent.initialize_web_research_agent()
         task = Task.create(
@@ -271,24 +187,9 @@ def research_overall_web(plant_name: str):
             ),
         )
         return task
-
     except Exception as e:
+        logger.error(f"Error in research_overall_web for {plant_name}: {e}")
         raise Exception(f"Error in research_overall_web for {plant_name}: {e}")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def research_health(plant_name: str):
     """Research health-related information about the plant."""
@@ -309,25 +210,8 @@ def research_health(plant_name: str):
         )
         return task
     except Exception as e:
+        logger.error(f"Error in research_health: {e}")
         raise Exception(f"Error in research_health: {e}")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def research_season(plant_name: str):
     """Research seasonal growth and farming details of the plant."""
@@ -348,28 +232,11 @@ def research_season(plant_name: str):
         )
         return task
     except Exception as e:
+        logger.error(f"Error in research_season: {e}")
         raise Exception(f"Error in research_season: {e}")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def research_price(plant_name: str):
-    """Research market price details of the plant, including the lowest available price."""
+    """Research market price details of the plant."""
     try:
         agent = PriceFetchingAgent.initialize_price_fetching_agent(query=plant_name)
         task = Task.create(
@@ -377,7 +244,7 @@ def research_price(plant_name: str):
             context=f"Plant: {plant_name}",
             instruction=(
                 f"Fetch {plant_name} market prices:\n"
-                f"- Online vs. offline price comparisons\n"
+                f"- Online price rates\n"
                 f"- Cheapest price {plant_name} is available at\n"
                 f"- Identify the **lowest available price** and where it is found\n"
                 f"Provide accurate, up-to-date market data."
@@ -385,16 +252,8 @@ def research_price(plant_name: str):
         )
         return task
     except Exception as e:
+        logger.error(f"Error in research_price: {e}")
         raise Exception(f"Error in research_price: {e}")
-
-
-
-
-
-
-
-
-
 
 # Route for the home page
 @app.route("/")
@@ -405,26 +264,20 @@ def index():
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Get the image data from the request
         data = request.json["image"]
         image_data = base64.b64decode(data)
         logger.info("Image data received and decoded.")
 
-        # Process the image and get the results
         labels_text, error, processed_image = process_prediction(image_data, "uploaded_image.jpg")
         if error:
             logger.error(f"Error in process_prediction: {error}")
             return jsonify({"error": error, "image": None}), 500
 
-        # Read detected objects from the file
         detected_objects = read_detected_objects(DETECTED_OBJECTS_PATH)
         logger.info(f"Detected objects: {detected_objects}")
 
-        # Initialize research results and summarized report
         research_results = {}
         summarized_report = "No detected objects to generate a report."
-
-        # If objects are detected, perform research and generate a report
         if detected_objects:
             logger.info("Starting research and report generation.")
             try:
@@ -433,15 +286,19 @@ def predict():
                 logger.info("Research and report generation completed.")
             except Exception as e:
                 logger.error(f"Error in research and report generation: {str(e)}")
-                # Continue even if research fails, but return the image and detected objects
 
-        # Return the results as JSON
+        # Convert Task objects to strings in research_results for JSON serialization
+        serialized_research_results = {
+            plant: {key: str(value) for key, value in data.items()}
+            for plant, data in research_results.items()
+        }
+
         return jsonify(
             {
                 "labels_text": labels_text,
-                "image": processed_image,  # Ensure this is always included
+                "image": processed_image,
                 "detected_objects": detected_objects,
-                "research_results": research_results,
+                "research_results": serialized_research_results,
                 "summarized_report": summarized_report,
             }
         )
@@ -461,7 +318,6 @@ def send_report():
             logger.error("Email or summarized report missing in request.")
             return {"error": "Email and summarized report are required."}, 400
 
-        # Send the email
         subject = "Your Summarized Report from Leaflogic"
         body = f"Here is your summarized report:\n\n{summarized_report}"
         logger.info(f"Sending email to: {email}")
@@ -475,16 +331,37 @@ def send_report():
     except Exception as e:
         logger.error(f"Error in send_report endpoint: {str(e)}")
         return {"error": str(e)}, 500
-    
 
+@app.route("/end-program", methods=["POST"])
+def end_program():
+    """Endpoint to shut down the application."""
+    try:
+        logger.info("Received request to shut down the application.")
+        
+        def shutdown_server():
+            time.sleep(1)
+            try:
+                func = request.environ.get('werkzeug.server.shutdown')
+                if func is not None:
+                    func()
+                    logger.info("Application shutdown via werkzeug function.")
+                    return
+            except:
+                pass
+            try:
+                import os
+                logger.info("Application shutdown via os._exit.")
+                os._exit(0)
+            except:
+                pass
 
-    
+        import threading
+        threading.Thread(target=shutdown_server).start()
+        
+        return {"message": "Server shutting down..."}, 200
+    except Exception as e:
+        logger.error(f"Error in end_program endpoint: {str(e)}")
+        return {"error": str(e)}, 500
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-
-
-
