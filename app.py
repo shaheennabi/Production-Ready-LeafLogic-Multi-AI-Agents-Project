@@ -240,55 +240,43 @@ def generate_summarized_report(research_results):
 
 
 
+
+
 def research_overall_web(plant_name: str):
     """
-    Conducts an in-depth web research on the given plant and gathers comprehensive details.
-
-    Goal:
-    - To collect and summarize high-quality information about a plant species from trusted web sources.
-
-    Attributes:
-    - Scientific Name: The botanical classification of the plant.
-    - History & Origin: Where the plant originates from, its historical significance, and domestication details.
-    - Major Growing Regions: Countries and climates where the plant thrives.
-    - Uses & Benefits: Agricultural, medicinal, nutritional, and industrial applications.
-    - Growth Conditions: Soil type, temperature, humidity, and watering requirements.
-    - Common Pests & Diseases: Typical threats and prevention strategies.
-    - Cultural & Economic Significance: Traditional and commercial importance in different regions.
-    - Relevant Images: Well-labeled images of the plant formatted as ![Description](https://full-image-url).
+    Conducts web research on a plant, gathering details on:
+    - Scientific name, origin, and growing regions
+    - Uses, benefits, and growth conditions
+    - Common pests, diseases, and economic significance
+    - Relevant images formatted as ![Description](https://full-image-url)
 
     Returns:
-    - A structured research task that gathers this information using an AI-powered web research agent.
+    - A structured research task with AI-powered web search.
 
     Raises:
-    - Exception: If the research process encounters an error.
+    - Exception on failure.
     """
 
     try:
-        # Initialize the research agent
         agent = WebResearchAgent.initialize_web_research_agent()
-
-        # Create and execute the research task
         task = Task.create(
             agent=agent,
             context=f"Plant Name: {plant_name}",
             instruction=(
-                f"Conduct thorough research on {plant_name} and provide structured information on:\n"
-                f"- **Scientific Name**: Botanical classification.\n"
-                f"- **History & Origin**: Historical significance and domestication.\n"
-                f"- **Major Growing Regions**: Suitable climates and geographical distribution.\n"
-                f"- **Uses & Benefits**: Applications in agriculture, medicine, and industry.\n"
-                f"- **Growth Conditions**: Soil type, temperature, humidity, and watering needs.\n"
-                f"- **Common Pests & Diseases**: Common threats and mitigation strategies.\n"
-                f"- **Cultural & Economic Significance**: Importance in different regions.\n"
-                f"- **Relevant Images**: Provide high-quality images formatted as ![Description](https://full-image-url).\n"
+                f"Research {plant_name} and provide details on:\n"
+                f"- Scientific classification, origin, and regions\n"
+                f"- Uses, benefits, and growth conditions\n"
+                f"- Pests, diseases, and economic significance\n"
+                f"- Provide relevant images (![Description](https://full-image-url))\n"
             ),
         )
-
         return task
 
     except Exception as e:
-        raise Exception(f"Error in research_overall_web for {plant_name}: {str(e)}")
+        raise Exception(f"Error in research_overall_web for {plant_name}: {e}")
+
+
+
 
 
 
@@ -303,35 +291,27 @@ def research_overall_web(plant_name: str):
 
 
 def research_health(plant_name: str):
-    """Research health-related information about the plant.
-
-    Args:
-        plant_name (str): The name of the plant to research.
-
-    Returns:
-        Task: The research task instance containing health-related insights.
-    """
+    """Research health-related information about the plant."""
     try:
         agent = WebResearchAgent.initialize_web_research_agent()
-
         task = Task.create(
             agent=agent,
-            context=f"Plant Name: {plant_name}",
+            context=f"Plant: {plant_name}",
             instruction=(
-                f"Research the health aspects of {plant_name}, including:\n"
-                f"- Key health benefits and medicinal uses.\n"
-                f"- Potential risks, side effects, and toxicity levels.\n"
-                f"- Nutritional value (vitamins, minerals, and compounds).\n"
-                f"- Common medical or traditional remedies using {plant_name}.\n"
-                f"- Scientific studies or expert insights supporting health claims.\n"
-                f"Provide structured and well-referenced information."
+                f"Research health aspects of {plant_name}, including:\n"
+                f"- Benefits & medicinal uses\n"
+                f"- Risks & toxicity\n"
+                f"- Nutritional value\n"
+                f"- Traditional remedies\n"
+                f"- Scientific studies\n"
+                f"Provide structured, referenced insights."
             ),
         )
-
         return task
-
     except Exception as e:
-        raise Exception(f"Error in research_health for {plant_name}: {str(e)}")
+        raise Exception(f"Error in research_health: {e}")
+
+
 
 
 
@@ -350,35 +330,26 @@ def research_health(plant_name: str):
 
 
 def research_season(plant_name: str):
-    """Research seasonal growth and farming details of the plant.
-
-    Args:
-        plant_name (str): The name of the plant to research.
-
-    Returns:
-        Task: The research task instance with seasonal farming insights.
-    """
+    """Research seasonal growth and farming details of the plant."""
     try:
         agent = WebResearchAgent.initialize_web_research_agent()
-
         task = Task.create(
             agent=agent,
-            context=f"Plant Name: {plant_name}",
+            context=f"Plant: {plant_name}",
             instruction=(
-                f"Research the optimal growth conditions for {plant_name}, covering:\n"
-                f"- Ideal planting and harvesting seasons.\n"
-                f"- Climate, temperature, and humidity requirements.\n"
-                f"- Best soil types, nutrients, and fertilizers.\n"
-                f"- Farming practices for maximizing yield.\n"
-                f"- Alternative uses or storage methods for off-seasons.\n"
-                f"Provide reliable agricultural data and expert recommendations."
+                f"Research {plant_name}'s optimal growth conditions:\n"
+                f"- Planting & harvesting seasons\n"
+                f"- Climate, temperature, humidity\n"
+                f"- Soil, nutrients, fertilizers\n"
+                f"- Best farming practices\n"
+                f"- Off-season storage & uses\n"
+                f"Provide expert-backed agricultural insights."
             ),
         )
-
         return task
-
     except Exception as e:
-        raise Exception(f"Error in research_season for {plant_name}: {str(e)}")
+        raise Exception(f"Error in research_season: {e}")
+
 
 
 
@@ -398,35 +369,23 @@ def research_season(plant_name: str):
 
 
 def research_price(plant_name: str):
-    """Research market price details of the plant.
-
-    Args:
-        plant_name (str): The name of the plant to research.
-
-    Returns:
-        Task: The research task instance with market pricing insights.
-    """
+    """Research market price details of the plant, including the lowest available price."""
     try:
         agent = PriceFetchingAgent.initialize_price_fetching_agent(query=plant_name)
-
         task = Task.create(
             agent=agent,
-            context=f"Plant Name: {plant_name}",
+            context=f"Plant: {plant_name}",
             instruction=(
-                f"Gather market price information for {plant_name}, focusing on:\n"
-                f"- Price comparisons across online and offline markets.\n"
-                f"- Cost per kilogram vs. per pound for different quality grades.\n"
-                f"- Price variations based on country, state, or region (prioritize user location).\n"
-                f"- Factors affecting pricing (seasonality, demand, supply, and quality).\n"
-                f"Provide accurate, up-to-date data from reliable sources."
+                f"Fetch {plant_name} market prices:\n"
+                f"- Online vs. offline price comparisons\n"
+                f"- Cheapest price {plant_name} is available at\n"
+                f"- Identify the **lowest available price** and where it is found\n"
+                f"Provide accurate, up-to-date market data."
             ),
         )
-
         return task
-
     except Exception as e:
-        raise Exception(f"Error in research_price for {plant_name}: {str(e)}")
-
+        raise Exception(f"Error in research_price: {e}")
 
 
 

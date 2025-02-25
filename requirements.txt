@@ -10,5 +10,8 @@ ipykernel
 openai
 google-search-results
 flask-markdown
+langchain-core
+langchain-community
+langchain-openai
 
 -e .
