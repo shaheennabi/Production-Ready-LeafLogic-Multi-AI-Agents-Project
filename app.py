@@ -3,7 +3,7 @@ import os
 import base64
 import sys
 import logging
-import time  # Correct import for time.sleep
+import time
 from src.leaflogic.logger import logging
 from src.leaflogic.exception import CustomException
 from src.leaflogic.utils import get_label_by_index
@@ -250,10 +250,12 @@ def predict():
         detected_objects = read_detected_objects(DETECTED_OBJECTS_PATH)
         logger.info(f"Detected objects: {detected_objects}")
 
+        research_started = False
         research_results = {}
         summarized_report = "No detected objects to generate a report."
         if detected_objects:
             logger.info("Starting research and report generation.")
+            research_started = True
             try:
                 research_results = execute_research_and_report(detected_objects)
                 summarized_report = generate_summarized_report(research_results)
@@ -274,6 +276,7 @@ def predict():
                 "detected_objects": detected_objects,
                 "research_results": serialized_research_results,
                 "summarized_report": summarized_report,
+                "research_started": research_started,
             }
         )
     except Exception as e:
@@ -310,7 +313,7 @@ def end_program():
     try:
         logger.info("Received request to shut down the application.")
         def shutdown_server():
-            time.sleep(1)  # Correct usage of time.sleep
+            time.sleep(1)
             try:
                 func = request.environ.get('werkzeug.server.shutdown')
                 if func is not None:
@@ -321,7 +324,7 @@ def end_program():
                     sys.exit(0)
             except Exception as e:
                 logger.error(f"Shutdown error: {str(e)}")
-                sys.exit(0)  # Fallback to sys.exit if werkzeug fails
+                sys.exit(0)
         import threading
         threading.Thread(target=shutdown_server).start()
         return {"message": "Server shutting down..."}, 200

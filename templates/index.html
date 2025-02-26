@@ -98,7 +98,7 @@
         }
         .research-content {
             color: #e0e0e0;
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1.8;
             padding: 10px;
         }
@@ -118,6 +118,13 @@
             color: #ffffff;
             margin-top: 10px;
             margin-bottom: 5px;
+            font-size: 20px;
+        }
+        .summarized-report h3 {
+            font-size: 28px; /* Larger summary title */
+        }
+        .summarized-report .research-content {
+            font-size: 20px; /* Larger summary text */
         }
         h2 {
             font-size: 28px;
@@ -421,7 +428,7 @@
 
     <!-- Popup for agents running -->
     <div id="agent-popup">
-        <p>Fasten your seatbelt! Agents are running...</p>
+        <p>Fasten your seatbelt! Agents are running thankue</p>
     </div>
 
     <script>
@@ -465,8 +472,7 @@
                         if (res.labels_text) {
                             $("#detected-labels").html(res.labels_text.replace(/\n/g, '<br>'));
                             
-                            // Show popup when research starts
-                            if (res.research_results || res.summarized_report) {
+                            if (res.research_started) {
                                 showAgentPopup();
                             }
 
@@ -519,10 +525,10 @@
             for (const plant in results) {
                 const capitalizedPlant = plant.charAt(0).toUpperCase() + plant.slice(1);
                 const plantData = results[plant];
-                generalContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.general)}`;
-                healthContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.health)}`;
-                seasonContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.season)}`;
-                priceContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.price)}`;
+                generalContent += `<h6>${capitalizedPlant}</h6>${formatResearchContent(plantData.general)}`;
+                healthContent += `<h6>${capitalizedPlant}</h6>${formatResearchContent(plantData.health)}`;
+                seasonContent += `<h6>${capitalizedPlant}</h6>${formatResearchContent(plantData.season)}`;
+                priceContent += `<h6>${capitalizedPlant}</h6>${formatResearchContent(plantData.price)}`;
             }
 
             $("#general-research").html(generalContent || "<p>No general information available.</p>");
@@ -538,36 +544,50 @@
             try {
                 let paragraphs = content.split(/\n+/);
                 let formattedContent = '';
+                let inImageSection = false;
+
                 paragraphs.forEach(paragraph => {
                     paragraph = paragraph.trim();
                     if (paragraph !== "") {
-                        // Handle headings with # or ##
-                        if (paragraph.match(/^#{1,2}\s/)) {
-                            paragraph = paragraph.replace(/^#{1,2}\s/, '');
+                        // Handle headings by stripping hashtags
+                        if (paragraph.match(/^#{1,3}\s+/)) {
+                            paragraph = paragraph.replace(/^#{1,3}\s+/, '');
                             formattedContent += `<h6>${paragraph}</h6>`;
                         }
-                        // Handle image URLs
-                        else if (paragraph.match(/^https?:\/\/\S+\.(jpg|jpeg|png|gif)$/i)) {
+                        // Detect "Relevant Images" section
+                        else if (paragraph.toLowerCase().includes("relevant images")) {
+                            inImageSection = true;
+                            formattedContent += `<h6>${paragraph}</h6>`;
+                        }
+                        // Handle image URLs in the "Relevant Images" section
+                        else if (inImageSection && paragraph.match(/^https?:\/\/\S+\.(jpg|jpeg|png|gif)$/i)) {
                             formattedContent += `<img src="${paragraph}" alt="Research image" class="img-fluid">`;
                         }
-                        // Handle Markdown images and bold text
+                        // End "Relevant Images" section if no more URLs
+                        else if (inImageSection && !paragraph.match(/^https?:\/\/\S+\.(jpg|jpeg|png|gif)$/i)) {
+                            if (formattedContent.endsWith('<h6>Relevant Images:</h6>')) {
+                                formattedContent += `<p>No images available.</p>`;
+                            }
+                            inImageSection = false;
+                            formattedContent += `<p>${replaceMarkdownBold(paragraph)}</p>`;
+                        }
+                        // Handle regular paragraphs with bold text
                         else {
-                            let textWithImages = replaceMarkdownImages(paragraph);
-                            let textWithBold = replaceMarkdownBold(textWithImages);
-                            formattedContent += `<p>${textWithBold}</p>`;
+                            formattedContent += `<p>${replaceMarkdownBold(paragraph)}</p>`;
                         }
                     }
                 });
+
+                // If "Relevant Images" section was started but no images were provided
+                if (inImageSection && formattedContent.endsWith('<h6>Relevant Images:</h6>')) {
+                    formattedContent += `<p>No images available.</p>`;
+                }
+
                 return formattedContent;
             } catch (e) {
                 log("Error formatting content", e);
                 return "<p>Error formatting content.</p>";
             }
-        }
-
-        function replaceMarkdownImages(text) {
-            const regex = /!\[([^\]]+)\]\((https?:\/\/\S+)\)/g;
-            return text.replace(regex, '<img src="$2" alt="$1" class="img-fluid">');
         }
 
         function replaceMarkdownBold(text) {
