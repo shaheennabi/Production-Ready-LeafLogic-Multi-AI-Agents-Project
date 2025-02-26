@@ -1,5 +1,4 @@
-requests 
-from_root
+requests
 boto3
 python-dotenv
 flask
@@ -10,8 +9,9 @@ ipykernel
 openai
 google-search-results
 flask-markdown
-langchain-core
-langchain-community
-langchain-openai
+torch
+torchvision
+opencv-python
+numpy
+from_root
 
--e .
