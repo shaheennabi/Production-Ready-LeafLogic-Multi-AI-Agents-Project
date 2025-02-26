@@ -290,26 +290,32 @@ def send_report():
     try:
         data = request.json
         email = data.get("email")
-        summarized_report_html = data.get("summarized_report")
+        # Fix key mismatch: check for both "summarized_report" and "summarized_report_text"
+        summarized_report_html = data.get("summarized_report") or data.get("summarized_report_text")
 
         if not email or not summarized_report_html:
             logger.error("Email or summarized report missing in request.")
             return {"error": "Email and summarized report are required."}, 400
 
-        # Convert HTML to plain text for compatibility with send_email
-        summarized_report_text = summarized_report_html.replace('<h2>', '\n').replace('</h2>', '\n') \
-            .replace('<h3>', '\n').replace('</h3>', '\n') \
-            .replace('<h4>', '\n').replace('</h4>', '\n') \
+        # Clean HTML to plain text and improve formatting
+        summarized_report_text = summarized_report_html \
+            .replace('<h2>', '\n\n').replace('</h2>', '\n') \
+            .replace('<h3>', '\n\n').replace('</h3>', '\n') \
+            .replace('<h4>', '\n').replace('</h4>', '') \
             .replace('<p>', '').replace('</p>', '\n') \
             .replace('<br>', '\n').replace('<hr>', '\n---\n') \
-            .replace('<strong>', '*').replace('</strong>', '*') \
-            .replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+            .replace('<strong>', '').replace('</strong>', '') \
+            .replace('&', '&').replace('<', '<').replace('>', '>') \
+            .replace('###', '').replace('**', '').strip()
 
-        subject = "Your Summarized Report from Leaflogic"
+        # Remove extra newlines and clean up
+        summarized_report_text = '\n'.join(line.strip() for line in summarized_report_text.splitlines() if line.strip())
+
+        subject = "Your Leaflogic Plant Research Report"
         body = f"Here is your summarized report:\n\n{summarized_report_text}"
         logger.info(f"Sending email to: {email}")
 
-        if send_email(email, subject, body):  # No is_html parameter
+        if send_email(email, subject, body):
             logger.info("Email sent successfully.")
             return {"message": "Report sent successfully!"}, 200
         else:
