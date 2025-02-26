@@ -8,7 +8,9 @@ https://huggingface.co/datasets/devshaheen/100_crops_plants_object_detection_25k
 ```
 
 ---
-working on Agents currently...
+## Project Training and Agents Work Completed...
+  *  testing in docker container then deployment on Aws Lambda.
+    *   stay tuned.
 
 ## License 📜  
 
