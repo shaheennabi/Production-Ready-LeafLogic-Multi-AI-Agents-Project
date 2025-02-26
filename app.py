@@ -138,14 +138,17 @@ def generate_summarized_report(research_results):
     try:
         if not research_results:
             return "No research results to summarize."
-        summarized_report = "🌿 **Plant Research Summary** 🌿\n\n"
+        summarized_report = "<h2>🌿 Plant Research Summary 🌿</h2><br>\n"
         for plant, results in research_results.items():
-            summarized_report += f"🌱 **{plant.capitalize()}**\n"
-            summarized_report += f"📌 **General Information:** {results.get('general', 'No data available')}\n"
-            summarized_report += f"🩺 **Health Benefits & Risks:** {results.get('health', 'No data available')}\n"
-            summarized_report += f"🌤 **Growing Season & Conditions:** {results.get('season', 'No data available')}\n"
-            summarized_report += f"💰 **Market Prices & Trends:** {results.get('price', 'No data available')}\n"
-            summarized_report += "-" * 50 + "\n\n"
+            summarized_report += f"<h3>🌱 {plant.capitalize()}</h3><br>\n"
+            summarized_report += f"<h4>📌 General Information</h4><br>\n<p>{'<br>'.join(str(results.get('general', 'No data available')).splitlines())}</p><br>\n"
+            summarized_report += "<hr>\n"
+            summarized_report += f"<h4>🩺 Health Benefits & Risks</h4><br>\n<p>{'<br>'.join(str(results.get('health', 'No data available')).splitlines())}</p><br>\n"
+            summarized_report += "<hr>\n"
+            summarized_report += f"<h4>🌤 Growing Season & Conditions</h4><br>\n<p>{'<br>'.join(str(results.get('season', 'No data available')).splitlines())}</p><br>\n"
+            summarized_report += "<hr>\n"
+            summarized_report += f"<h4>💰 Market Prices & Trends</h4><br>\n<p>{'<br>'.join(str(results.get('price', 'No data available')).splitlines())}</p><br>\n"
+            summarized_report += "<hr>\n"
         return summarized_report
     except Exception as e:
         logger.error(f"Error in generate_summarized_report: {str(e)}")
@@ -162,7 +165,7 @@ def research_overall_web(plant_name: str):
                 f"- Scientific classification, origin, and regions\n"
                 f"- Uses, benefits, and growth conditions\n"
                 f"- Pests, diseases, and economic significance\n"
-                f"- Provide relevant images (![Description](https://full-image-url))\n"
+                f"- Provide relevant images related to {plant_name}(![Description](https://full-image-url))\n"
             ),
         )
         return task
@@ -182,7 +185,6 @@ def research_health(plant_name: str):
                 f"- Risks & toxicity\n"
                 f"- Nutritional value\n"
                 f"- Traditional remedies\n"
-                f"- Scientific studies\n"
                 f"Provide structured, referenced insights."
             ),
         )
@@ -288,17 +290,26 @@ def send_report():
     try:
         data = request.json
         email = data.get("email")
-        summarized_report = data.get("summarized_report")
+        summarized_report_html = data.get("summarized_report")
 
-        if not email or not summarized_report:
+        if not email or not summarized_report_html:
             logger.error("Email or summarized report missing in request.")
             return {"error": "Email and summarized report are required."}, 400
 
+        # Convert HTML to plain text for compatibility with send_email
+        summarized_report_text = summarized_report_html.replace('<h2>', '\n').replace('</h2>', '\n') \
+            .replace('<h3>', '\n').replace('</h3>', '\n') \
+            .replace('<h4>', '\n').replace('</h4>', '\n') \
+            .replace('<p>', '').replace('</p>', '\n') \
+            .replace('<br>', '\n').replace('<hr>', '\n---\n') \
+            .replace('<strong>', '*').replace('</strong>', '*') \
+            .replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
         subject = "Your Summarized Report from Leaflogic"
-        body = f"Here is your summarized report:\n\n{summarized_report}"
+        body = f"Here is your summarized report:\n\n{summarized_report_text}"
         logger.info(f"Sending email to: {email}")
 
-        if send_email(email, subject, body):
+        if send_email(email, subject, body):  # No is_html parameter
             logger.info("Email sent successfully.")
             return {"message": "Report sent successfully!"}, 200
         else:
@@ -314,17 +325,8 @@ def end_program():
         logger.info("Received request to shut down the application.")
         def shutdown_server():
             time.sleep(1)
-            try:
-                func = request.environ.get('werkzeug.server.shutdown')
-                if func is not None:
-                    func()
-                    logger.info("Application shutdown via werkzeug function.")
-                else:
-                    logger.info("Werkzeug shutdown not available, using sys.exit.")
-                    sys.exit(0)
-            except Exception as e:
-                logger.error(f"Shutdown error: {str(e)}")
-                sys.exit(0)
+            logger.info("Shutting down server.")
+            os._exit(0)
         import threading
         threading.Thread(target=shutdown_server).start()
         return {"message": "Server shutting down..."}, 200

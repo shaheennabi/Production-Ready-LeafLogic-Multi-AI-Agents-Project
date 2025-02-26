@@ -483,7 +483,7 @@
                             }
                             
                             if (res.summarized_report) {
-                                $("#summarized-report-content").html(formatResearchContent(res.summarized_report));
+                                $("#summarized-report-content").html(res.summarized_report);
                             } else {
                                 $("#summarized-report-content").html("<p>No summarized report available.</p>");
                             }
@@ -525,10 +525,10 @@
             for (const plant in results) {
                 const capitalizedPlant = plant.charAt(0).toUpperCase() + plant.slice(1);
                 const plantData = results[plant];
-                generalContent += `<h6>${capitalizedPlant}</h6>${formatResearchContent(plantData.general)}`;
-                healthContent += `<h6>${capitalizedPlant}</h6>${formatResearchContent(plantData.health)}`;
-                seasonContent += `<h6>${capitalizedPlant}</h6>${formatResearchContent(plantData.season)}`;
-                priceContent += `<h6>${capitalizedPlant}</h6>${formatResearchContent(plantData.price)}`;
+                generalContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.general)}`;
+                healthContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.health)}`;
+                seasonContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.season)}`;
+                priceContent += `<h6 style="font-weight: bold;">${capitalizedPlant}</h6>${formatResearchContent(plantData.price)}`;
             }
 
             $("#general-research").html(generalContent || "<p>No general information available.</p>");
@@ -549,36 +549,35 @@
                 paragraphs.forEach(paragraph => {
                     paragraph = paragraph.trim();
                     if (paragraph !== "") {
-                        // Handle headings by stripping hashtags
-                        if (paragraph.match(/^#{1,3}\s+/)) {
-                            paragraph = paragraph.replace(/^#{1,3}\s+/, '');
+                        if (paragraph.match(/^#{1,4}\s+/)) {
+                            paragraph = paragraph.replace(/^#{1,4}\s+/, '');
+                            if (paragraph.toLowerCase().includes("relevant images")) {
+                                inImageSection = true;
+                            }
                             formattedContent += `<h6>${paragraph}</h6>`;
                         }
-                        // Detect "Relevant Images" section
-                        else if (paragraph.toLowerCase().includes("relevant images")) {
-                            inImageSection = true;
-                            formattedContent += `<h6>${paragraph}</h6>`;
+                        else if (paragraph.match(/!\[.*?\]\(https?:\/\/\S+\)/)) {
+                            const regex = /!\[(.*?)\]\((https?:\/\/\S+)\)/g;
+                            paragraph = paragraph.replace(regex, '<img src="$2" alt="$1" class="img-fluid">');
+                            formattedContent += paragraph;
                         }
-                        // Handle image URLs in the "Relevant Images" section
                         else if (inImageSection && paragraph.match(/^https?:\/\/\S+\.(jpg|jpeg|png|gif)$/i)) {
                             formattedContent += `<img src="${paragraph}" alt="Research image" class="img-fluid">`;
                         }
-                        // End "Relevant Images" section if no more URLs
-                        else if (inImageSection && !paragraph.match(/^https?:\/\/\S+\.(jpg|jpeg|png|gif)$/i)) {
-                            if (formattedContent.endsWith('<h6>Relevant Images:</h6>')) {
-                                formattedContent += `<p>No images available.</p>`;
-                            }
-                            inImageSection = false;
-                            formattedContent += `<p>${replaceMarkdownBold(paragraph)}</p>`;
-                        }
-                        // Handle regular paragraphs with bold text
                         else {
-                            formattedContent += `<p>${replaceMarkdownBold(paragraph)}</p>`;
+                            if (inImageSection && !paragraph.match(/^https?:\/\/\S+\.(jpg|jpeg|png|gif)$/i)) {
+                                if (formattedContent.endsWith('<h6>Relevant Images:</h6>')) {
+                                    formattedContent += `<p>No images available.</p>`;
+                                }
+                                inImageSection = false;
+                            }
+                            paragraph = paragraph.replace(/(https?:\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
+                            paragraph = paragraph.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                            formattedContent += `<p>${paragraph}</p>`;
                         }
                     }
                 });
 
-                // If "Relevant Images" section was started but no images were provided
                 if (inImageSection && formattedContent.endsWith('<h6>Relevant Images:</h6>')) {
                     formattedContent += `<p>No images available.</p>`;
                 }
@@ -588,11 +587,6 @@
                 log("Error formatting content", e);
                 return "<p>Error formatting content.</p>";
             }
-        }
-
-        function replaceMarkdownBold(text) {
-            const regex = /\*\*(.+?)\*\*/g;
-            return text.replace(regex, '<strong>$1</strong>');
         }
 
         $("#fileinput").change(function () {
