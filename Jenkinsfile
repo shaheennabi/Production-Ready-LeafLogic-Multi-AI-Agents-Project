@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         AWS_REGION = 'us-east-1'
-        ECR_REPO = '445567117176.dkr.ecr.us-east-1.amazonaws.com/leaflogic'
+        ECR_REPO = 'your ecr repo id'
         IMAGE_TAG = 'latest'
     }
 

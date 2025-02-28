@@ -177,7 +177,7 @@ yolov5/
 artifacts/
 
 .venv_new/
-best.pt
+
 data/
 detected_objects.txt
 uploaded_image.jpg
