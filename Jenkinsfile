@@ -17,38 +17,38 @@ pipeline {
         stage('Build and Push to ECR') {
             steps {
                 withCredentials([
-                    string(credentialsId: 'aws_access_key_id', variable: 'aws_access_key_id'),
-                    string(credentialsId: 'aws_secret_access_key', variable: 'aws_secret_access_key'),
-                    string(credentialsId: 'openai_api_key', variable: 'openai_api_key'),
-                    string(credentialsId: 'serper_api_key', variable: 'serper_api_key'),
-                    string(credentialsId: 'sender_password', variable: 'sender_password'),
-                    string(credentialsId: 'sender_email', variable: 'sender_email'),
-                    string(credentialsId: 'exa_api_key', variable: 'exa_api_key')
+                    string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY'),
+                    string(credentialsId: 'openai_api_key', variable: 'OPENAI_API_KEY'),
+                    string(credentialsId: 'serper_api_key', variable: 'SERPER_API_KEY'),
+                    string(credentialsId: 'sender_password', variable: 'SENDER_PASSWORD'),
+                    string(credentialsId: 'sender_email', variable: 'SENDER_EMAIL'),
+                    string(credentialsId: 'exa_api_key', variable: 'EXA_API_KEY')
                 ]) {
                     script {
-                        sh '''
+                        sh """
                         # Configure AWS CLI
-                        aws configure set aws_access_key_id $aws_access_key_id
-                        aws configure set aws_secret_access_key $aws_secret_access_key
-                        aws configure set region $AWS_REGION
+                        aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+                        aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+                        aws configure set region ${AWS_REGION}
 
                         # Login to AWS ECR
-                        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
+                        aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO}
 
                         # Build Docker Image with Build Args for Credentials
-                        docker build -t leaflogic-app:${IMAGE_TAG} \
-                        --build-arg OPENAI_API_KEY=$openai_api_key \
-                        --build-arg SERPER_API_KEY=$serper_api_key \
-                        --build-arg SENDER_PASSWORD=$sender_password \
-                        --build-arg SENDER_EMAIL=$sender_email \
-                        --build-arg EXA_API_KEY=$exa_api_key .
+                        docker build -t leaflogic-app:${IMAGE_TAG} \\
+                            --build-arg OPENAI_API_KEY=${OPENAI_API_KEY} \\
+                            --build-arg SERPER_API_KEY=${SERPER_API_KEY} \\
+                            --build-arg SENDER_PASSWORD=${SENDER_PASSWORD} \\
+                            --build-arg SENDER_EMAIL=${SENDER_EMAIL} \\
+                            --build-arg EXA_API_KEY=${EXA_API_KEY} .
 
                         # Tag Image for ECR
-                        docker tag leaflogic-app:${IMAGE_TAG} $ECR_REPO:${IMAGE_TAG}
+                        docker tag leaflogic-app:${IMAGE_TAG} ${ECR_REPO}:${IMAGE_TAG}
 
                         # Push to ECR
-                        docker push $ECR_REPO:${IMAGE_TAG}
-                        '''
+                        docker push ${ECR_REPO}:${IMAGE_TAG}
+                        """
                     }
                 }
             }
@@ -56,26 +56,37 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                script {
-                    sh '''
-                    # Authenticate with ECR
-                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 445567117176.dkr.ecr.us-east-1.amazonaws.com
+                withCredentials([
+                    string(credentialsId: 'openai_api_key', variable: 'OPENAI_API_KEY'),
+                    string(credentialsId: 'serper_api_key', variable: 'SERPER_API_KEY'),
+                    string(credentialsId: 'sender_password', variable: 'SENDER_PASSWORD'),
+                    string(credentialsId: 'sender_email', variable: 'SENDER_EMAIL'),
+                    string(credentialsId: 'exa_api_key', variable: 'EXA_API_KEY')
+                ]) {
+                    script {
+                        sh """
+                        # Authenticate with AWS ECR
+                        aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO}
 
-                    # Stop and remove old container if it exists
-                    docker ps -q --filter "name=leaflogic-app" | grep -q . && docker stop leaflogic-app && docker rm leaflogic-app || true
+                        # Stop and remove old container if it exists
+                        if docker ps -q --filter "name=leaflogic-app" | grep -q .; then
+                            docker stop leaflogic-app
+                            docker rm leaflogic-app
+                        fi
 
-                    # Pull latest image from ECR
-                    docker pull 445567117176.dkr.ecr.us-east-1.amazonaws.com/leaflogic:latest
+                        # Pull latest image from ECR
+                        docker pull ${ECR_REPO}:${IMAGE_TAG}
 
-                    # Run the container
-                    docker run -d --name leaflogic-app -p 5000:5000 \
-                    -e OPENAI_API_KEY=$openai_api_key \
-                    -e SERPER_API_KEY=$serper_api_key \
-                    -e SENDER_PASSWORD=$sender_password \
-                    -e SENDER_EMAIL=$sender_email \
-                    -e EXA_API_KEY=$exa_api_key \
-                    445567117176.dkr.ecr.us-east-1.amazonaws.com/leaflogic:latest
-                    '''
+                        # Run the container with environment variables
+                        docker run -d --name leaflogic-app -p 5000:5000 \\
+                            -e OPENAI_API_KEY=${OPENAI_API_KEY} \\
+                            -e SERPER_API_KEY=${SERPER_API_KEY} \\
+                            -e SENDER_PASSWORD=${SENDER_PASSWORD} \\
+                            -e SENDER_EMAIL=${SENDER_EMAIL} \\
+                            -e EXA_API_KEY=${EXA_API_KEY} \\
+                            ${ECR_REPO}:${IMAGE_TAG}
+                        """
+                    }
                 }
             }
         }
@@ -83,10 +94,10 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline execution completed!'
+            echo '✅ Pipeline execution completed!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo '❌ Pipeline failed!'
         }
     }
 }
