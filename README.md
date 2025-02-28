@@ -10,7 +10,7 @@ https://huggingface.co/datasets/devshaheen/100_crops_plants_object_detection_25k
 ---
 ## Project Training and Agents Work Completed...
   *  deployment pending, rest is done.
-    *   stay tuned.
+    *   stay tuned...
 
 ## License 📜  
 
