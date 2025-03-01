@@ -77,81 +77,128 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 # - Amazon ECR
 # - Pipeline
 
-# Add AWS credentials to Jenkins (manual via Jenkins UI)
+# Add AWS and API credentials to Jenkins (manual via Jenkins UI)
 # Navigate: Manage Jenkins > Manage Credentials > System > Global Credentials > Add Credentials
-# Kind: AWS Credentials
-# ID: aws-credentials
-# Access Key ID: <your-aws-access-key-id>
-# Secret Access Key: <your-aws-secret-access-key>
+# Add each as 'Secret text' with respective IDs:
+# - ID: aws_access_key_id, Secret: <your-aws-access-key-id>
+# - ID: aws_secret_access_key, Secret: <your-aws-secret-access-key>
+# - ID: openai_api_key, Secret: <your-openai-api-key>
+# - ID: serper_api_key, Secret: <your-serper-api-key>
+# - ID: sender_password, Secret: <your-sender-password>
+# - ID: sender_email, Secret: <your-sender-email>
+# - ID: exa_api_key, Secret: <your-exa-api-key>
 
 # Authenticate Docker with ECR (replace with your ECR URI and region)
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 123456789012.dkr.ecr.us-east-1.amazonaws.com
 
 # Create Jenkins Pipeline (manual via Jenkins UI)
 # New Item > Pipeline > Name: LeafLogic-CICD > Pipeline script:
+# Paste this updated Jenkinsfile:
 pipeline {
     agent any
+
+    environment {
+        AWS_REGION = 'us-east-1'  # AWS region for ECR and deployment
+        ECR_REPO = 'your ecr repo uri'  # Your ECR repository URI
+        IMAGE_TAG = 'latest'  # Tag for the Docker image
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git url: 'https://github.com/yourusername/leaflogic-project.git', branch: 'main'
+                # Pull code from your GitHub repository
+                git url: 'https://github.com/your project repo url', branch: 'main'
             }
         }
-        stage('Build Docker Image') {
+
+        stage('Build and Push to ECR') {
             steps {
-                script {
-                    def app = docker.build("leaflogic-app:${env.BUILD_NUMBER}")
-                }
-            }
-        }
-        stage('Push to ECR') {
-            steps {
-                script {
-                    docker.withRegistry('https://123456789012.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws-credentials') {
-                        docker.image("leaflogic-app:${env.BUILD_NUMBER}").push()
-                        docker.image("leaflogic-app:${env.BUILD_NUMBER}").push('latest')
+                withCredentials([
+                    string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY'),
+                    string(credentialsId: 'openai_api_key', variable: 'OPENAI_API_KEY'),
+                    string(credentialsId: 'serper_api_key', variable: 'SERPER_API_KEY'),
+                    string(credentialsId: 'sender_password', variable: 'SENDER_PASSWORD'),
+                    string(credentialsId: 'sender_email', variable: 'SENDER_EMAIL'),
+                    string(credentialsId: 'exa_api_key', variable: 'EXA_API_KEY')
+                ]) {
+                    script {
+                        sh '''
+                        # Configure AWS CLI with credentials
+                        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+                        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+                        aws configure set region $AWS_REGION
+
+                        # Login to AWS ECR
+                        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
+
+                        # Build Docker image with API keys as build arguments
+                        docker build -t leaflogic-app:$IMAGE_TAG \
+                            --build-arg OPENAI_API_KEY="$OPENAI_API_KEY" \
+                            --build-arg SERPER_API_KEY="$SERPER_API_KEY" \
+                            --build-arg SENDER_PASSWORD="$SENDER_PASSWORD" \
+                            --build-arg SENDER_EMAIL="$SENDER_EMAIL" \
+                            --build-arg EXA_API_KEY="$EXA_API_KEY" \
+                            .
+
+                        # Tag the image for ECR
+                        docker tag leaflogic-app:$IMAGE_TAG $ECR_REPO:$IMAGE_TAG
+
+                        # Push the image to ECR
+                        docker push $ECR_REPO:$IMAGE_TAG
+                        '''
                     }
                 }
             }
         }
-        stage('Deploy') {
+
+        stage('Deploy to EC2') {
             steps {
-                sh '''
-                docker stop leaflogic-app || true
-                docker rm leaflogic-app || true
-                docker run -d --name leaflogic-app -p 80:5000 \
-                -e OPENAI_API_KEY=$OPENAI_API_KEY \
-                -e SERPER_API_KEY=$SERPER_API_KEY \
-                -e EXA_API_KEY=$EXA_API_KEY \
-                -e SENDER_PASSWORD=$SENDER_PASSWORD \
-                -e SENDER_EMAIL=$SENDER_EMAIL \
-                123456789012.dkr.ecr.us-east-1.amazonaws.com/leaflogic-app:latest
-                '''
+                withCredentials([
+                    string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY'),
+                    string(credentialsId: 'openai_api_key', variable: 'OPENAI_API_KEY'),
+                    string(credentialsId: 'serper_api_key', variable: 'SERPER_API_KEY'),
+                    string(credentialsId: 'sender_password', variable: 'SENDER_PASSWORD'),
+                    string(credentialsId: 'sender_email', variable: 'SENDER_EMAIL'),
+                    string(credentialsId: 'exa_api_key', variable: 'EXA_API_KEY')
+                ]) {
+                    script {
+                        sh '''
+                        # Authenticate with ECR
+                        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REPO
+
+                        # Stop and remove any existing container named leaflogic-app
+                        docker stop leaflogic-app || true
+                        docker rm leaflogic-app || true
+
+                        # Pull the latest image from ECR
+                        docker pull $ECR_REPO:$IMAGE_TAG
+
+                        # Run the container with API keys as environment variables
+                        docker run -d --name leaflogic-app -p 80:5000 \
+                            -e OPENAI_API_KEY="$OPENAI_API_KEY" \
+                            -e SERPER_API_KEY="$SERPER_API_KEY" \
+                            -e SENDER_PASSWORD="$SENDER_PASSWORD" \
+                            -e SENDER_EMAIL="$SENDER_EMAIL" \
+                            -e EXA_API_KEY="$EXA_API_KEY" \
+                            $ECR_REPO:$IMAGE_TAG
+                        '''
+                    }
+                }
             }
         }
     }
+
+    post {
+        always {
+            echo '✅ Pipeline execution completed!'
+        }
+        failure {
+            echo '❌ Pipeline failed!'
+        }
+    }
 }
-
-# Required GitHub Repository Secrets (add via Jenkins UI or GitHub Secrets)
-# Navigate: Manage Jenkins > Manage Credentials > System > Global Credentials > Add Credentials
-# Add each as 'Secret text' with respective IDs
-# AWS_ACCESS_KEY_ID: Your AWS IAM access key
-# AWS_SECRET_ACCESS_KEY: Your AWS IAM secret key
-# AWS_DEFAULT_REGION: e.g., us-east-1
-# AWS_ECR_REPO_URI: e.g., 123456789012.dkr.ecr.us-east-1.amazonaws.com/leaflogic-app
-# OPENAI_API_KEY: Your OpenAI API key
-# SERPER_API_KEY: Your Serper API key
-# EXA_API_KEY: Your Exa API key
-# SENDER_PASSWORD: Your email sender password
-# SENDER_EMAIL: Your email sender address
-# SSH_KEY: Your private SSH key (if needed for GitHub access)
-
-# Configure GitHub Webhook (manual via GitHub UI)
-# In your GitHub repo > Settings > Webhooks > Add Webhook
-# Payload URL: http://3.85.221.27:8080/github-webhook/
-# Content type: application/json
-# Events: Select "Push events"
-# Save the webhook
 
 # Ensure Docker permissions for Jenkins
 # Check Docker socket permissions
@@ -162,3 +209,16 @@ sudo usermod -aG docker jenkins
 sudo systemctl restart jenkins
 # Verify Docker works with Jenkins user
 sudo -u jenkins docker ps
+
+
+
+# Required GitHub Repository Secrets (add via Jenkins UI)
+# Navigate: Manage Jenkins > Manage Credentials > System > Global Credentials > Add Credentials
+# Add each as 'Secret text' with respective IDs:
+# - ID: aws_access_key_id, Secret: Your AWS IAM access key
+# - ID: aws_secret_access_key, Secret: Your AWS IAM secret key
+# - ID: openai_api_key, Secret: Your OpenAI API key
+# - ID: serper_api_key, Secret: Your Serper API key
+# - ID: sender_password, Secret: Your email sender password
+# - ID: sender_email, Secret: Your email sender address
+# - ID: exa_api_key, Secret: Your Exa API key
