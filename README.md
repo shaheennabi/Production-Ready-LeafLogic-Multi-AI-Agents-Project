@@ -369,7 +369,68 @@ Since the README will become extensive, we'll focus on the key components and th
      - The research must provide **accurate and current** market data.  
 
 
-### **let's now see the `agents` and `tools` these tasks use**
+### **let's now see the `agents` these tasks use**
+
+### web_research_agent
+
+<img width="866" alt="web re" src="https://github.com/user-attachments/assets/c791d3f1-3623-4bbb-a17a-311633e1fdeb" />
+
+The `WebResearchAgent` gathers key details about crops and plants using online sources.  
+
+- **Agent Role & Goal**  
+  - Acts as a **"Crop and Plant Research Agent"**, focused on collecting classification, uses, and growth data.  
+  - Uses a structured, data-driven approach.  
+
+- **LLM & Tools**  
+  - Powered by `LoadModel.load_openai_model()`.  
+  - Utilizes:  
+    - `WikiArticles.fetch_articles` → Wikipedia data.  
+    - `WikiImages.search_images` → Plant images.  
+    - `ExaSearch.search_web` → Web-based insights.  
+
+- **Error Handling**  
+  - If initialization fails, an exception is raised.  
+
+This agent ensures accurate and structured plant research.  
+
+### price_fetching_agent
+
+<img width="863" alt="price fe" src="https://github.com/user-attachments/assets/e80cef93-3ec7-4a63-8d76-f0d1da575d13" />
+
+The `PriceFetchingAgent` helps find and compare the best prices for crops and plants across different markets.   
+
+- **Agent Role & Goal**  
+  - Acts as a **"Price Research Agent"**, specializing in market price analysis.  
+  - Focuses on cost-conscious and data-driven price comparisons.  
+
+- **LLM & Tools**  
+  - Powered by `LoadModel.load_openai_model()`.  
+  - Utilizes:  
+    - `ExaShoppingSearch.search_web` → General price lookup.  
+    - `SerperShoppingSearch.search_web` → Shopping-specific price comparisons.  
+
+- **Error Handling**  
+  - Raises an exception if initialization fails.
+
+### **now let's see the `model` these `agents`  use**
+
+**openai_gpt3.5_turbo model**
+
+<img width="814" alt="d" src="https://github.com/user-attachments/assets/7b53c186-3f6b-4bb2-8a40-d7f44df6606a" />
+
+The `LoadModel` class is responsible for loading the OpenAI GPT-3.5-turbo model when required.    
+
+- **Model Initialization**  
+  - Loads `OpenaiModels.gpt_3_5_turbo` from `taskflowai`.  
+  - Ensures API keys are validated **only when called**, preventing unnecessary checks.  
+
+- **Logging & Error Handling**  
+  - Logs successful model loading.  
+  - Catches and logs errors, raising an exception if loading fails.  
+
+### **now let's talk about the `tools` these `agents` have access to.
+
+
 
 
 
