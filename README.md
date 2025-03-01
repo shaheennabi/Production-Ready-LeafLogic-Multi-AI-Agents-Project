@@ -279,8 +279,14 @@ To gather insights on detected objects, `execute_research_and_report()` is invok
 The research findings are stored in `research_results`, and the `generate_summaried_report()` function compiles a final summarized report.
 
 This structured approach ensures an efficient pipeline, from object detection to AI-powered analysis and reporting.
-*allmost every function in `app.py` is invoked by `/predict` route*, after all of it the report is sent to email -> user provides. 
 
+*almost every function in `app.py` is invoked by `/predict` route*, after all of it the report is sent to email -> user provides. 
+
+### **Now, let's talk about each portion step-by-step**
+
+You can explore `app.py` to see how functions like `get_latest_exp_folder()`, `run_yolo_detection()`, `process_prediction()`, and `read_detected_objects()` work. Additionally, also look at how `execute_research_and_report()` sequentially executes tasks and how `generate_summaried_report()` compiles the final report.  (not too difficult)
+
+Since the README will become extensive, we'll focus on the key components and their underlying structure, such as:  **`research_overall_web`**, **`research_health`**, **`research_season`**, **`research_price`**.
 
 
 
