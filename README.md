@@ -174,6 +174,7 @@ After downloading the dataset from **S3** as `leaflogic_dataset.zip`, it is stor
 
 After **data ingestion**, we prepare the base model by configuring `yolov5s.yaml` into `custom_yolov5s.yaml`. This involves updating the **number of categories (nc)** from `data.yaml` and defining essential parameters such as the **backbone, head, and other configurations** for training.
 
+*This is the shot of only `prepare_basemodel` for more go to `src/leaflogic/components/prepare_base_model`
 <img width="818" alt="Screenshot 2025-03-01 101223" src="https://github.com/user-attachments/assets/fa500189-bba4-4bc5-9a09-253a3f49af7f" />
 
 - **Initialization (`__init__` Method)**:  
@@ -194,14 +195,51 @@ After **data ingestion**, we prepare the base model by configuring `yolov5s.yaml
 <img width="818" alt="wr1" src="https://github.com/user-attachments/assets/cea223d0-b84f-4ea5-abf0-ed9ea9272c84" />
 <img width="812" alt="wr2" src="https://github.com/user-attachments/assets/184f09f6-db55-4b34-85f1-e11298f1d07e" />
 
-*back to `prepare_basemodel`
+*back to `prepare_basemodel`*
 - **Model Preparation (`prepare_model` Method)**:  
   - Calls `update_model_config()` to generate the custom YOLOv5 config.  
   - Returns an artifact containing the path to the updated configuration file.  
   - Ensures all changes are logged for tracking and debugging. 
 
-### Model Trainer
-A
+###  Model Trainer
+After preparing the base model, we proceed to **training**. This stage utilizes the `data_ingestion` and `prepare_base_model` artifacts to train the model effectively.
+
+  
+
+*These are the shots of only `initiate_model_trainer` for more go to `src/leaflogic/components/model_training`
+<img width="848" alt="mt" src="https://github.com/user-attachments/assets/04069879-a048-48e5-bc8e-5cfeca989738" />
+<img width="806" alt="mt2" src="https://github.com/user-attachments/assets/eb6abdd5-f009-45b3-96f8-d980fb6660f1" />
+
+During this stage:
+- We **relocate** dataset files (`train`, `valid`, `test`, `data.yaml`) to the root directory to simplify file path management during training.  
+- We **initiate the training** process using YOLOv5, specifying the dataset, model architecture, training parameters, and hardware configurations.  
+- After training, we **move the best-trained model (`best.pt`)** to the root directory for easier access.  
+- Finally, we **clean up unnecessary files** from the root directory to maintain a structured workspace. 
+
+ *code overview* 
+ 
+- **Initialization (`__init__` Method)**:  
+  - Loads the **data ingestion** and **base model preparation** artifacts.  
+  - Retrieves essential file paths such as `data.yaml`, the updated model config, and the model trainer directory.  
+  - Ensures that `data.yaml` and the model config exist before proceeding.  
+
+- **Moving Data for Training (`move_data_files_to_root` Method)**:  
+  - Moves `data.yaml`, `train`, `valid`, and `test` directories from `feature_store_path` to the root directory.  
+  - This ensures compatibility with the training script.  
+
+- **Model Training (`initiate_model_trainer` Method)**:  
+  - Moves data files to the root directory for ease of training.  
+  - Runs the **YOLOv5 training script** with the correct configurations.  
+  - Saves the **best model (`best.pt`)** to the root directory for easier access.  
+  - Deletes unnecessary files (`data.yaml`, `train`, `valid`, `test`) after training is complete.  
+
+- **Post-Training Cleanup (`delete_data_files_from_root` Method)**:  
+  - Removes `data.yaml`, `train`, `valid`, and `test` directories from the root after training.  
+  - Ensures a clean working environment.  
+
+
+
+
 
 
 
