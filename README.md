@@ -246,6 +246,36 @@ During this stage:
 Now that we have successfully trained our model, let's move on to the **prediction pipeline** and **AI agents**. This phase involves using the trained model to detect objects in images and leveraging AI agents to fetch relevant insights about the detected crops/plants.  
 
 ### ** now let's talk about our Prediction Pipeline + AI Agents**
+
+*This is how **Prediction Pipeline + AI Agents** looks like* 
+
+![CI_CD Diagram (1)](https://github.com/user-attachments/assets/753c187e-e67f-4162-a4c3-e1a959a69113)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 
