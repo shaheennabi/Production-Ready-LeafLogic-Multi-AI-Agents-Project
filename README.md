@@ -289,7 +289,23 @@ You can explore `app.py` to see how functions like `get_latest_exp_folder()`, `r
 Since the README will become extensive, we'll focus on the key components and their underlying structure, such as:  **`research_overall_web`**, **`research_health`**, **`research_season`**, **`research_price`**.
 
 
+### research_overall_web task
 
+<img width="815" alt="research" src="https://github.com/user-attachments/assets/d9ed07f5-fa67-443d-addc-8ba95ef29824" />
+
+1. **Agent Initialization**  
+   - It initializes the `WebResearchAgent` using `WebResearchAgent.initialize_web_research_agent()`.  
+   - This agent is designed to search the web and gather relevant information efficiently.  
+
+2. **Task Creation**  
+   - A `Task` object is created using `Task.create()`, where:  
+     - The **agent** is assigned to perform the task.  
+     - The **context** includes the plant’s name for reference.  
+     - The **instruction** specifies details to be researched, such as:  
+       - Scientific classification, origin, and regions.  
+       - Uses, benefits, and growth conditions.  
+       - Common pests, diseases, and economic significance.  
+       - Fetching **relevant images** related to the plant.  
 
 
 
