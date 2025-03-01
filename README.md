@@ -428,10 +428,72 @@ The `LoadModel` class is responsible for loading the OpenAI GPT-3.5-turbo model 
   - Logs successful model loading.  
   - Catches and logs errors, raising an exception if loading fails.  
 
-### **now let's talk about the `tools` these `agents` have access to.
+### **now let's talk about the `tools` these `agents` have access to** 
 
+### exa_search or exa_shopping_search tool  (these two are mostly similar) **not much differece** *defined it seperately* 
 
+<img width="821" alt="exa " src="https://github.com/user-attachments/assets/366d301f-b323-47ac-a6da-0c4db9ea918b" />
 
+The `ExaSearch` class provides a web search functionality using the Exa API.  
+
+- **Search Execution**  
+  - Calls `WebTools.exa_search()` to fetch search results (imported from taskflowai).  
+  - Allows specifying `num_results` (default: 5).  
+
+- **API Key Validation**  
+  - Ensures `EXA_API_KEY` is set in environment variables before execution.  
+
+- **Error Handling**  
+  - Logs failures and returns `"No data available"` if an error occurs.  
+
+### search_articles tool
+
+<img width="860" alt="articles" src="https://github.com/user-attachments/assets/1487e20d-8e5b-4587-bc5a-a9e49dc92cae" />
+
+The `WikiArticles` class enables fetching Wikipedia articles related to a given query.   
+
+- **Article Retrieval**  
+  - Uses `WikipediaTools.search_articles()` to fetch relevant articles (imported from taskflowai).  
+
+- **Logging & Validation**  
+  - Logs the query and number of articles retrieved.  
+  - Warns if no articles are found.  
+
+- **Error Handling**  
+  - Catches exceptions and logs errors while ensuring failures are properly raised. 
+
+### search_images tool
+
+<img width="851" alt="images" src="https://github.com/user-attachments/assets/697de039-e8d4-40d7-8ff3-2604b8bcb3fa" />
+
+The `WikiImages` class is responsible for fetching relevant images from Wikipedia based on a given query.  
+
+- **Image Search**  
+  - Uses `WikipediaTools.search_images()` to retrieve images related to the query (imported from taskflowai).  
+
+- **Logging & Validation**  
+  - Logs the query and number of images found.  
+  - Warns if no images are available.  
+
+- **Error Handling**  
+  - Captures exceptions and logs errors to ensure smooth execution. 
+
+### serper_shopping_search tool
+*Note: when I was building this project Serper API was down or wasn't working for me (try it)* 
+
+<img width="821" alt="ser" src="https://github.com/user-attachments/assets/7c351e2c-2087-47db-815d-7f460de0e47b" />
+
+The `SerperShoppingSearch` class enables price research using the Serper API but falls back on `ExaShopping` due to API downtime during project development.  
+
+- **Web Search Execution**  
+  - Uses `WebTools.serper_search()` to fetch shopping-related search results.  
+
+- **API Key Management**  
+  - Loads the API key from environment variables or a `.env` file.  
+  - Raises an error if the API key is missing.  
+
+- **Error Handling**  
+  - Logs and raises exceptions if the search fails. 
 
 
 
