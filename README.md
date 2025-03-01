@@ -624,8 +624,22 @@ Handles **graceful server shutdown** when triggered from the UI.
    - The EC2 instance pulls the latest Docker image from ECR.
    - The existing container is stopped and replaced with the new version.
    - The Flask application is restarted with the updated image.
-  
-**Note:**  
+
+### **Jenkins Credentials Setup**
+Make sure you have added the necessary secrets to Jenkins:
+
+1. Go to **Manage Jenkins** > **Manage Credentials** > **System** > **Global Credentials** > **Add Credentials**.
+2. Add the following credentials:
+
+   - **aws_access_key_id**: Your AWS IAM access key  
+   - **aws_secret_access_key**: Your AWS IAM secret key  
+   - **openai_api_key**: Your OpenAI API key  
+   - **serper_api_key**: Your Serper API key  
+   - **sender_password**: Your email sender password  
+   - **sender_email**: Your email sender address  
+   - **exa_api_key**: Your Exa API key  
+
+### **Note:**  
 - The `Jenkinsfile` is located in the root directory and defines the CI/CD pipeline.  
 - The `scripts.sh` file in the root directory contains commands to install Docker, Jenkins, and AWS CLI on the EC2 instance.  
 
