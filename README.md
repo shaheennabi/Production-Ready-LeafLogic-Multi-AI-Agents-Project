@@ -59,6 +59,7 @@ The project followed a structured approach to ensure efficient execution and hig
 #### Framework Selection
 
 - Chose **Object Detection with YOLOv5**, trained on an **A100 GPU** with a **self-annotated dataset** of **25K images**, which we later **open-sourced** for the community.
+- For your AI Agents pipeline, we used taskflowai framework to build these (as it's high-quality open-source support framework-used to build Multi_AI Agents system).
 
 #### Model Selection
 
@@ -80,7 +81,7 @@ The project followed a structured approach to ensure efficient execution and hig
 
 #### Testing and Delivery
 
-- Conducted rigorous testing to validate accuracy and reliability.
+- Conducted rigorous testing to validate accuracy and reliability (in containers etc).
 - Delivered the project on time, exceeding quality expectations.
 
 ---
