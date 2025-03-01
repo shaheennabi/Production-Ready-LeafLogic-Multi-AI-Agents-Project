@@ -115,11 +115,18 @@ The project followed a structured approach to ensure efficient execution and hig
 
 
 ---
-## System Design or Project Pipeline
+## 🌿 System Design & Project Pipeline  
 
-Let's seperate the big or complex pipeline into 2 haves 
-1. Training  Pipeline
-2. Prediction Pipeline + Agents
+To simplify the complexity of our pipeline, we divide it into two main components:  
+
+1. **Training Pipeline**  
+2. **Prediction Pipeline + AI Agents**  
+
+### 🔧 Training Pipeline  
+  
+*This is how **Training Pipeline** looks like*  
+
+![CI_CD Diagram](https://github.com/user-attachments/assets/5e55752c-655e-401b-bd3a-628652c5b162)
 
 
 
