@@ -2,7 +2,7 @@
 
 # Problem Statement
 
-**Note:** This project simulates an industry-standard scenario where we, a team of three contributors at XYZ Company, are developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.
+***Note:** This project simulates an industry-standard scenario where we, a team of three contributors at XYZ Company, are developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.*
 
 ## High-Level Note
 Concepts related to AI agents, their pipelines, methodologies, and automated research processes have already been discussed. You can find these details in the *docs* folder for further exploration.
@@ -29,6 +29,81 @@ As a team of three contributors, our mission is to build a high-quality, scalabl
 
 This system is designed to deliver seamless plant identification and detailed research findings, ensuring that users have access to verified and comprehensive information. By integrating advanced Object Detection and AI Agents, we aim to create a reliable solution that empowers users with knowledge and prevents misinformation in the market.
 
+
+## 🎯 Project Goals
+
+### Deliver a System to Meet Client Needs
+
+- Create a system to provide accurate and instant plant/crop insights, ensuring users receive reliable information.
+
+### Build a Modular Architecture
+
+- Design the system to support scalability and future upgrades, making modifications seamless.
+
+### Testing and Quality Assurance
+
+- Ensure the system’s reliability and accuracy through rigorous testing.
+
+### Cost-Effective Measures
+
+- Optimize API and model-related costs without compromising performance.
+
+---
+
+## ✨💚 Our Approach
+
+The project followed a structured approach to ensure efficient execution and high-quality results.
+
+### Steps in Our Approach
+
+#### Framework Selection
+
+- Chose **Object Detection with YOLOv5**, trained on an **A100 GPU** with a **self-annotated dataset** of **25K images**, which we later **open-sourced** for the community.
+
+#### Model Selection
+
+- **OpenAI GPT-3.5 Turbo** was chosen for:
+  - **Tool-Calling Excellence**: Best ability to call tools and manage multi-agent tasks seamlessly.
+  - **Token Management**: Optimized context handling and reasoning.
+  - **Report Generation**: Efficiently processing and generating structured reports.
+- **LLaMA & Google Models** were tested but failed in reasoning, token management, and memory performance.
+- **OpenAI o1 Series Models** offered strong performance but were too expensive for this project.
+- **Groq Inference Engine** was also tested but did not meet the project’s performance indicators.
+
+#### System Design and Development
+
+- Built a **modular architecture**, ensuring future adaptability and easy upgrades.
+
+#### Cost Optimization
+
+- Minimized API costs by **choosing GPT-3.5 Turbo** and optimizing system performance.
+
+#### Testing and Delivery
+
+- Conducted rigorous testing to validate accuracy and reliability.
+- Delivered the project on time, exceeding quality expectations.
+
+---
+
+## 🚧 Challenges Encountered
+
+### 1. Model & API Cost
+
+- Running inference and AI agents on cloud infrastructure was **cost-intensive**, requiring optimizations.
+
+### 2. Training on a Large Dataset
+
+- **Training on 25K images** with **A100 GPU** required substantial resources and time.
+
+### 3. Cloud Inference Costs
+
+- Running the **entire pipeline on the cloud** every time a user pings the system was expensive.
+
+### 4. Data Annotation Process
+
+- Annotation of **25K images** was a **time-consuming** and **labor-intensive** task, requiring collaboration among contributors.
+
+---
 
 
 
