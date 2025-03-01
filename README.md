@@ -279,6 +279,7 @@ To gather insights on detected objects, `execute_research_and_report()` is invok
 The research findings are stored in `research_results`, and the `generate_summaried_report()` function compiles a final summarized report.
 
 This structured approach ensures an efficient pipeline, from object detection to AI-powered analysis and reporting.
+*allmost every function in `app.py` is invoked by `/predict` route*, after all of it the report is sent to email -> user provides. 
 
 
 
