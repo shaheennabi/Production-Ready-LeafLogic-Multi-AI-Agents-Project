@@ -128,7 +128,7 @@ To simplify the complexity of our pipeline, we divide it into two main component
 
 ![CI_CD Diagram](https://github.com/user-attachments/assets/5e55752c-655e-401b-bd3a-628652c5b162)
 
-First, we will retrieve data from **S3** as part of the **Data Ingestion Process** using this script.  
+First, we will retrieve data from **S3** as part of the **Data Ingestion Process** using this script from `utils`.  
 
 
 <img width="820" alt="s3_config" src="https://github.com/user-attachments/assets/2ec531d4-c595-4762-9e7f-53e7a69a33a0" />
@@ -140,12 +140,30 @@ First, we will retrieve data from **S3** as part of the **Data Ingestion Process
   - Logs the start and completion of the download process for better visibility.
   - Handles errors gracefully by raising a `CustomException` on failure.
 
-- The `run()` method 
+- The `run()` method acts as an entry point to execute the download seamlessly
 
+After downloading the dataset from **S3** as `leaflogic_dataset.zip`, it is stored in the **data_ingestion_dir**. The script then extracts the dataset into the **feature_store_path**, ensuring the data is properly organized for further processing.
 
+*This is the shot of only `initiate_data_ingestion` for more go to `src/leaflogic/components/data_ingestion`
+<img width="570" alt="Screenshot 2025-03-01 100131" src="https://github.com/user-attachments/assets/fb8b707d-b8fa-4b0a-af05-c0a015b5605f" />
 
+- **Initialization (`__init__` Method)**:  
+  - Sets up the data ingestion directory.  
+  - Logs initialization status.  
 
+- **Data Download (`download_data` Method)**:  
+  - Downloads the dataset from **S3** and saves it as `leaflogic_dataset.zip`.  
+  - Uses **S3FileDownloader** to fetch the file.  
 
+- **Data Extraction (`extract_zip_file` Method)**:  
+  - Extracts `leaflogic_dataset.zip` into a temporary directory.  
+  - Moves only the relevant dataset (`leaflogic_dataset`) into the **feature_store_path**.  
+  - Cleans up temporary files after extraction.  
+
+- **Data Ingestion Pipeline (`initiate_data_ingestion` Method)**:  
+  - Calls the download and extraction methods in sequence.  
+  - Returns a **DataIngestionArtifact**, storing paths to the downloaded and extracted dataset.  
+  - Ensures proper logging and exception handling to track failures efficiently.  
 
 
 
