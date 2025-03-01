@@ -1,5 +1,5 @@
 # 🌿 Production-Ready-LeafLogic-Multi-AI-Agents-Project  🌱  
-
+*visitors: please wait for few seconds till readme loads (actually it's image heavy).*
 # Problem Statement
 
 ***Note:** This project was assigned to us by **iNeuron Intelligence Pvt Ltd**, where our team of three contributors is developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.*  
@@ -430,7 +430,7 @@ The `LoadModel` class is responsible for loading the OpenAI GPT-3.5-turbo model 
 
 ### **now let's talk about the `tools` these `agents` have access to** 
 
-### exa_search or exa_shopping_search tool  (these two are mostly similar) **not much differece** *defined it seperately* 
+### exa_search or exa_shopping_search tool  (these two are mostly similar) **not much difference** *defined it seperately* 
 
 <img width="821" alt="exa " src="https://github.com/user-attachments/assets/366d301f-b323-47ac-a6da-0c4db9ea918b" />
 
@@ -583,6 +583,13 @@ This route sends the **summarized research report** via email.
 3. **Creates email** – Uses `MIMEMultipart()` to format **subject & body**.  
 4. **Sends via Gmail SMTP** – Establishes a **TLS-secured connection**, logs in, and dispatches the email.  
 5. **Handles failures** – Logs errors and returns `False` if unsuccessful. 
+
+*this is how summary report looks that the `receipient receives`*
+
+<img width="738" alt="email1" src="https://github.com/user-attachments/assets/0c05a81d-1ec0-419f-94a8-2ef84693f373" />
+<img width="737" alt="email2" src="https://github.com/user-attachments/assets/0d74f7a6-21f9-4d32-8ba3-30c53c5730dc" />
+<img width="729" alt="email3" src="https://github.com/user-attachments/assets/5abf160a-7334-4901-8741-01c87e1a0005" />
+<img width="728" alt="email4" src="https://github.com/user-attachments/assets/25cb29c5-849b-4ce1-a28f-c86890349cf1" />
 
 ### **this is when `user` clicks `end program` in UI**
 
