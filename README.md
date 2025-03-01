@@ -115,7 +115,11 @@ The project followed a structured approach to ensure efficient execution and hig
 
 
 ---
+## System Design or Project Pipeline
 
+Let's seperate the big or complex pipeline into 2 haves 
+1. Training  Pipeline
+2. Prediction Pipeline + Agents
 
 
 
