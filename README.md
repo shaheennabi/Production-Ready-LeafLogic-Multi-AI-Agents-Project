@@ -115,7 +115,7 @@ The project followed a structured approach to ensure efficient execution and hig
 
 
 ---
-## 🌿 System Design & Project Pipeline  
+## 🌿 System Design or Project Pipeline  
 
 To simplify the complexity of our pipeline, we divide it into two main components:  
 
@@ -127,6 +127,20 @@ To simplify the complexity of our pipeline, we divide it into two main component
 *This is how **Training Pipeline** looks like*  
 
 ![CI_CD Diagram](https://github.com/user-attachments/assets/5e55752c-655e-401b-bd3a-628652c5b162)
+
+First, we will retrieve data from **S3** as part of the **Data Ingestion Process** using this script.  
+
+
+<img width="820" alt="s3_config" src="https://github.com/user-attachments/assets/2ec531d4-c595-4762-9e7f-53e7a69a33a0" />
+
+- The `download_file` method:
+  - Retrieves the file size using `head_object` for accurate progress tracking.
+  - Uses `TransferConfig` to enable efficient multipart downloads (5MB chunks).
+  - Implements a **progress callback** (`ProgressPercentage`) to log real-time updates.
+  - Logs the start and completion of the download process for better visibility.
+  - Handles errors gracefully by raising a `CustomException` on failure.
+
+- The `run()` method 
 
 
 
