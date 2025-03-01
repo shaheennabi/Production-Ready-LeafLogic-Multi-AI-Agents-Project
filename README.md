@@ -237,9 +237,9 @@ During this stage:
   - Removes `data.yaml`, `train`, `valid`, and `test` directories from the root after training.  
   - Ensures a clean working environment.  
 
+** and here the *training pipeline* ends **
 
-
-
+---
 
 
 
