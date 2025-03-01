@@ -59,7 +59,7 @@ The project followed a structured approach to ensure efficient execution and hig
 #### Framework Selection
 
 - Chose **Object Detection with YOLOv5**, trained on an **A100 GPU** with a **self-annotated dataset** of **25K images**, which we later **open-sourced** for the community.
-- For your AI Agents pipeline, we used taskflowai framework to build these (as it's high-quality open-source support framework-used to build Multi_AI Agents system).
+- For our AI Agents pipeline, we used taskflowai framework to build these (as it's high-quality open-source support framework-used to build Multi_AI Agent system).
 
 #### Model Selection
 
@@ -104,7 +104,29 @@ The project followed a structured approach to ensure efficient execution and hig
 
 - Annotation of **25K images** was a **time-consuming** and **labor-intensive** task, requiring collaboration among contributors.
 
+## 🌟 How We Fixed Challenges  
+
+### 🌟 Solutions Implemented
+
+- **Choosing GPT-3.5 Turbo**: A cost-effective alternative while maintaining performance.  
+- **Optimizing Training**: Trained the model on **100 epochs** with **25K images**, which was computationally intensive but proved effective.  
+- **Cloud Cost Optimization**: Leveraged **EC2 instances** to fetch the **Docker image** from **ECR**, reducing overall cloud costs.  
+- **Efficient Data Annotation**: Two contributors collaboratively annotated the dataset, significantly reducing annotation time and effort.  
+
+
 ---
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
