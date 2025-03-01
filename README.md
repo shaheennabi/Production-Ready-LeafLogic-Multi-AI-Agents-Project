@@ -495,8 +495,44 @@ The `SerperShoppingSearch` class enables price research using the Serper API but
 - **Error Handling**  
   - Logs and raises exceptions if the search fails. 
 
+### **now let's talk about the `predict` route inside `app.py` the main `endpoint`.
 
+<img width="818" alt="pred1" src="https://github.com/user-attachments/assets/8c6b0224-ef9c-492a-aa07-d8904932bfa4" />
 
+<img width="816" alt="pred2" src="https://github.com/user-attachments/assets/e1a39fc0-1a3d-4404-8df0-10356b3cf149" />
+
+### **Understanding the `/predict` Endpoint**  
+
+The `/predict` route handles image-based crop detection, processes predictions, and triggers AI-powered research for detected plants.  
+
+### **Step 1: Receiving and Decoding Image Data**  
+- The endpoint expects a **base64-encoded image** in the JSON request (`request.json["image"]`).  
+- The image is **decoded** using `base64.b64decode(data)`, preparing it for processing.  
+- A log entry confirms the image has been successfully received and decoded.
+
+### **Step 2: Object Detection and Processing**  
+- The decoded image is passed to `process_prediction()`, where:  
+  - The image is analyzed, and detected objects are identified.  
+  - The function returns `labels_text`, an error (if any), and a **processed image**.  
+- If an error occurs, the API returns a **500 error response**, logging the failure.
+
+### **Step 3: Reading Detected Objects**  
+- The function `read_detected_objects(DETECTED_OBJECTS_PATH)` reads from `detected_objects.txt`, which contains unique labels (plant names) identified during detection.  
+- The detected objects are logged for reference.
+
+### **Step 4: Research and Report Generation**  
+- If objects were detected, the system proceeds with **AI-driven research**:  
+  - `execute_research_and_report(detected_objects)` triggers research tasks for each plant, retrieving data on:
+    - **General Information** (`research_overall_web()`)
+    - **Health Benefits & Risks** (`research_health()`)
+    - **Growth Conditions & Farming** (`research_season()`)
+    - **Market Prices** (`research_price()`)
+  - Results are **structured into a dictionary** and stored in `research_results`.  
+  - `generate_summarized_report(research_results)` compiles a **summary** of all findings.
+
+- If an error occurs during research, it is logged but does not stop execution.
+
+### **now let's see the beautiful shots how it looks when exposing `port:5000` after running `app.py`
 
 
 
