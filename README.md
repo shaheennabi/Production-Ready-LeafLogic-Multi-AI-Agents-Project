@@ -122,11 +122,12 @@ To simplify the complexity of our pipeline, we divide it into two main component
 1. **Training Pipeline**  
 2. **Prediction Pipeline + AI Agents**  
 
-### 🔧 Training Pipeline  
-  
+### 🔧 Training Pipeline
+
 *This is how **Training Pipeline** looks like*  
 
-![CI_CD Diagram](https://github.com/user-attachments/assets/5e55752c-655e-401b-bd3a-628652c5b162)
+![CI_CD Diagram](https://github.com/user-attachments/assets/6edb279e-2b16-4c26-a478-d43e31d3dcb2)
+
 
 First, we will retrieve data from **S3** as part of the **Data Ingestion Process** using this script from `utils`.  
 
@@ -193,13 +194,14 @@ After **data ingestion**, we prepare the base model by configuring `yolov5s.yaml
 <img width="818" alt="wr1" src="https://github.com/user-attachments/assets/cea223d0-b84f-4ea5-abf0-ed9ea9272c84" />
 <img width="812" alt="wr2" src="https://github.com/user-attachments/assets/184f09f6-db55-4b34-85f1-e11298f1d07e" />
 
-*back to `rrepare_basemodel`
+*back to `prepare_basemodel`
 - **Model Preparation (`prepare_model` Method)**:  
   - Calls `update_model_config()` to generate the custom YOLOv5 config.  
   - Returns an artifact containing the path to the updated configuration file.  
   - Ensures all changes are logged for tracking and debugging. 
 
-
+### Model Trainer
+A
 
 
 
