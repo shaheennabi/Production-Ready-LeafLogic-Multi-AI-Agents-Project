@@ -251,7 +251,34 @@ Now that we have successfully trained our model, let's move on to the **predicti
 
 ![CI_CD Diagram (1)](https://github.com/user-attachments/assets/753c187e-e67f-4162-a4c3-e1a959a69113)
 
+first let me take you to the tour of `app.py` that is present in `root directory` that orchestrates the object detection and AI research pipeline. It first defines necessary paths and functions to handle detection, processing, and research execution.
 
+#### 1. Defining Paths and Functions  
+Before executing the pipeline, the script defines essential paths and utility functions to manage object detection and research processing.
+
+#### 2. Fetching the Latest Experiment Folder  
+The function `get_latest_exp_folder()` retrieves the most recent experiment folder stored in `yolov5/runs/detect`. This ensures that the latest detection results are used in the pipeline.
+
+#### 3. Running Object Detection  
+To perform object detection, the script executes `run_yolo_detection()`, which utilizes the `os.system` command to run the YOLO model. The detected results are stored inside `detected_objects.txt`.
+
+#### 4. Processing Predictions  
+The detected indices are mapped to category labels using `process_prediction()`. This function relies on `get_label_by_idex` from `utils`, which compares each detected index with the categories defined in `data.yaml`.
+
+#### 5. Reading Detected Objects  
+The function `read_detected_objects()` reads the detected object labels from `detected_objects.txt`. These labels are then passed to AI agents for further analysis.
+
+#### 6. Executing AI Research  
+To gather insights on detected objects, `execute_research_and_report()` is invoked. This function triggers multiple research tasks:  
+   - `research_overall_web` – General web research  
+   - `research_health` – Health-related information  
+   - `research_season` – Seasonal relevance  
+   - `research_price` – Market price analysis  
+
+#### 7. Saving and Summarizing Results  
+The research findings are stored in `research_results`, and the `generate_summaried_report()` function compiles a final summarized report.
+
+This structured approach ensures an efficient pipeline, from object detection to AI-powered analysis and reporting.
 
 
 
