@@ -147,7 +147,8 @@ First, we will retrieve data from **S3** as part of the **Data Ingestion Process
 After downloading the dataset from **S3** as `leaflogic_dataset.zip`, it is stored in the **data_ingestion_dir**. The script then extracts the dataset into the **feature_store_path**, ensuring the data is properly organized for further processing.
 
 *This is the shot of only `initiate_data_ingestion` for more go to `src/leaflogic/components/data_ingestion`
-<img width="570" alt="Screenshot 2025-03-01 100131" src="https://github.com/user-attachments/assets/fb8b707d-b8fa-4b0a-af05-c0a015b5605f" />
+<img width="815" alt="Screenshot 2025-03-01 101319" src="https://github.com/user-attachments/assets/3a41a758-72b1-4f56-8a89-8e77b4faf17f" />
+
 
 - **Initialization (`__init__` Method)**:  
   - Sets up the data ingestion directory.  
@@ -168,10 +169,35 @@ After downloading the dataset from **S3** as `leaflogic_dataset.zip`, it is stor
   - Ensures proper logging and exception handling to track failures efficiently.  
 
 
+### Prepare  BaseModel
 
+After **data ingestion**, we prepare the base model by configuring `yolov5s.yaml` into `custom_yolov5s.yaml`. This involves updating the **number of categories (nc)** from `data.yaml` and defining essential parameters such as the **backbone, head, and other configurations** for training.
 
+<img width="818" alt="Screenshot 2025-03-01 101223" src="https://github.com/user-attachments/assets/fa500189-bba4-4bc5-9a09-253a3f49af7f" />
 
+- **Initialization (`__init__` Method)**:  
+  - Loads the data ingestion artifacts.  
+  - Locates `data.yaml` to retrieve the number of classes (`nc`).  
+  - Ensures the file exists before proceeding.  
 
+- **Updating Model Configuration (`update_model_config` Method)**:  
+  - Reads `data.yaml` to extract the number of categories.  
+  - Loads the base YOLOv5 model config (`yolov5s.yaml`).  
+  - Updates the `nc` field along with other essential configurations.  
+  - Saves the modified configuration as `custom_yolov5s.yaml`,  
+    but for **preserving the original structure**, we have written a custom `write_yaml_file` function in `utils`.  
+    When modifying the `nc` parameter, the default YAML formatting would break, so this function ensures the correct structure is maintained.
+  
+*these are the shots of `write_yaml_file` for maintaining structure from `utils`  
+<img width="813" alt="wt" src="https://github.com/user-attachments/assets/ced94e0e-b236-4f3b-a0db-86ab8222b544" />
+<img width="818" alt="wr1" src="https://github.com/user-attachments/assets/cea223d0-b84f-4ea5-abf0-ed9ea9272c84" />
+<img width="812" alt="wr2" src="https://github.com/user-attachments/assets/184f09f6-db55-4b34-85f1-e11298f1d07e" />
+
+*back to `rrepare_basemodel`
+- **Model Preparation (`prepare_model` Method)**:  
+  - Calls `update_model_config()` to generate the custom YOLOv5 config.  
+  - Returns an artifact containing the path to the updated configuration file.  
+  - Ensures all changes are logged for tracking and debugging. 
 
 
 
