@@ -532,15 +532,73 @@ The `/predict` route handles image-based crop detection, processes predictions, 
 
 - If an error occurs during research, it is logged but does not stop execution.
 
-### **now let's see the beautiful shots how it looks when exposing `port:5000` after running `app.py`
+### **now let's see the beautiful shots how it looks when exposing `port:5000` after running `app.py`**
 
+<img width="941" alt="lf1" src="https://github.com/user-attachments/assets/8c7ef0d0-392d-4da9-bdff-5e87f573f788" />
+<img width="934" alt="lf2" src="https://github.com/user-attachments/assets/d63f6d55-2211-47d0-9048-cad8c237cddd" />
+<img width="938" alt="lf3" src="https://github.com/user-attachments/assets/a1c2557e-d099-4607-8b32-9820a8c061d8" />
+<img width="940" alt="lf4" src="https://github.com/user-attachments/assets/9489e011-bb8c-49a4-b282-ccdd84335329" />
+<img width="944" alt="lf5" src="https://github.com/user-attachments/assets/a1b0ac3a-5579-432c-be3f-39781c90b0ef" />
+<img width="938" alt="lf6" src="https://github.com/user-attachments/assets/157f3d20-68e3-4fbe-945c-0bc4585cae58" />
+<img width="941" alt="lf7" src="https://github.com/user-attachments/assets/d7cded3e-d818-4779-ae0f-6a27795ac548" />
+<img width="940" alt="lf8" src="https://github.com/user-attachments/assets/a8d0fc8b-380d-4b38-b238-794e6f7f2085" />
+<img width="944" alt="lf9" src="https://github.com/user-attachments/assets/12c4b367-5964-4d4b-b43c-11086b3960dc" />
+<img width="944" alt="lf10" src="https://github.com/user-attachments/assets/cbcbac0e-71af-4984-a0ed-e76e107c8de6" />
+<img width="946" alt="lf11" src="https://github.com/user-attachments/assets/1ca25e92-e9d4-42f3-8f62-b67a5c039d50" />
+<img width="944" alt="lf12" src="https://github.com/user-attachments/assets/b2d33c69-f344-49a5-b416-dce284588b7d" />
+<img width="942" alt="lf13" src="https://github.com/user-attachments/assets/ece79350-58fb-4f27-89c0-c60ea2125dde" />
+<img width="946" alt="lf14" src="https://github.com/user-attachments/assets/5bf34dbd-ead0-4a4c-b9b9-34acd3307093" />
+<img width="946" alt="lf15" src="https://github.com/user-attachments/assets/8809abe9-c71e-441a-a998-ed61063e34e8" />
+<img width="941" alt="lf16" src="https://github.com/user-attachments/assets/4d09dfe1-2761-45ad-a80f-a900e6953be5" />
+<img width="941" alt="lf17" src="https://github.com/user-attachments/assets/62a6c4d0-93dc-46d4-a085-5c2dcd88ad62" />
+<img width="944" alt="lf18" src="https://github.com/user-attachments/assets/c3fbda76-199b-4157-b6a7-c43aeea23977" />
+<img width="935" alt="lf19" src="https://github.com/user-attachments/assets/b8b80df2-e461-4ad2-8da9-8fab663e3c20" />
+<img width="936" alt="lf20" src="https://github.com/user-attachments/assets/0172f67e-ff7f-4984-bc1a-4b34a939ad17" />
+<img width="933" alt="lf21" src="https://github.com/user-attachments/assets/ed9ce333-b6b4-47df-b748-1723f5317ffb" />
+<img width="942" alt="lf22" src="https://github.com/user-attachments/assets/e8a7695e-3e54-4d2c-90cd-7ec1788c802a" />
+<img width="942" alt="lf23" src="https://github.com/user-attachments/assets/97a019d2-beb5-493f-92f4-8d34329a18fb" />
+<img width="944" alt="lf24" src="https://github.com/user-attachments/assets/cd8e2e4e-b763-486c-91eb-f27c1863832a" />
+<img width="941" alt="lf25" src="https://github.com/user-attachments/assets/e1ab6031-8ed9-4149-a077-14c6c2e15678" />
+<img width="958" alt="lf26" src="https://github.com/user-attachments/assets/0df3a151-7c88-479e-840d-9acc957dad8c" />
 
+### **now let's see the send_report in `app.py` that sends the email carrying your `summarized report`
 
+<img width="812" alt="em1" src="https://github.com/user-attachments/assets/6ff53c06-08ce-4a50-be64-9cc4adb12453" />
+<img width="803" alt="em2" src="https://github.com/user-attachments/assets/a86a1ea8-6caf-4fc2-862d-10f5d4fddc9e" />
 
+This route sends the **summarized research report** via email.  
 
+1. **Extracts request data** – Retrieves `email` and `summarized_report`, handling key mismatches.  
+2. **Formats the report** – Converts HTML into **plain text**, improving readability.  
+3. **Sends the email** – Uses `send_email()`, returning **200** on success or **500** on failure.  
+4. **Handles errors** – Logs exceptions and responds accordingly.
+
+*this is `send_email()` 
+
+<img width="815" alt="sem" src="https://github.com/user-attachments/assets/c7d81141-e1c4-483f-a9f5-1fac8e798e04" />
+<img width="803" alt="sem3" src="https://github.com/user-attachments/assets/9eb5e0ad-4649-476d-9ba8-9b9ed5ed7bd8" /> 
+
+1. **Loads credentials** – Fetches `SENDER_EMAIL` and `SENDER_PASSWORD` from environment variables.  
+2. **Validates credentials** – Ensures required SMTP details exist.  
+3. **Creates email** – Uses `MIMEMultipart()` to format **subject & body**.  
+4. **Sends via Gmail SMTP** – Establishes a **TLS-secured connection**, logs in, and dispatches the email.  
+5. **Handles failures** – Logs errors and returns `False` if unsuccessful. 
+
+### **this is when `user` clicks `end program` in UI**
+
+<img width="803" alt="end" src="https://github.com/user-attachments/assets/b19e3a9d-5205-4c1c-b2fb-3155a571de18" />
+
+Handles **graceful server shutdown** when triggered from the UI.  
+
+1. **Receives request** – Logs the shutdown initiation.  
+2. **Starts a separate thread** – Calls `shutdown_server()` to prevent request blocking.  
+3. **Delays execution** – Waits **1 second** before exiting.  
+4. **Forces server exit** – Calls `os._exit(0)` to terminate the application.  
+5. **Handles errors** – Logs any failures and returns an error response if needed. 
 
 
 ---
+### Welcome to Deployment and CICD related things
 
 
 
