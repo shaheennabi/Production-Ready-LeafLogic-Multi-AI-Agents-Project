@@ -264,8 +264,14 @@ The dataset is **open-source** and available on **Hugging Face**:
 🔗 **Please give credit** if you use this dataset—it took **1.5 months** to annotate all the images!  
 
 ### ✅ **Using the Pretrained Model**  
-To make things easier, I have already provided the **trained model (`best.pt`)** in the **project root directory**. You can use it directly for inference instead of retraining from scratch. Just check the **project files**, and you’ll find it ready to use!   
+To make things easier, I have already provided the **trained model (`best.pt`)** in the **project root directory**. You can use it directly for inference instead of retraining from scratch. Just check the **project files**, and you’ll find it ready to use! 🚀  
 
+### 🛠 **Train the Model Yourself**  
+If you want to train the model on a **larger epoch size**, I have already provided a **Colab Notebook** for training:  
+📂 **`notebooks/leaflogic_detection (soft).ipynb`**  
+
+Simply open the notebook in **Google Colab**, adjust the training parameters as needed, and run the training process! 🔥  
+--
 ### ** now let's talk about our Prediction Pipeline + AI Agents**
 
 
