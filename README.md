@@ -244,7 +244,9 @@ During this stage:
 
 Now that we have successfully trained our model, let's move on to the **prediction pipeline** and **AI agents**. This phase involves using the trained model to detect objects in images and leveraging AI agents to fetch relevant insights about the detected crops/plants.  
 
+### ** now let's talk about our Prediction Pipeline + AI Agents**
 ---
+### Guide for Developers 🌿🎇✨💚🎆🌱🎇✨💚🎆
 
 ### ⚠️ **Note for Developers**  
 
@@ -272,7 +274,7 @@ If you want to train the model on a **larger epoch size**, I have already provid
 
 Simply open the notebook in **Google Colab**, adjust the training parameters as needed, and run the training process! 🔥  
 --
-### ** now let's talk about our Prediction Pipeline + AI Agents**
+
 
 
 ## License 📜  
