@@ -142,6 +142,8 @@ First, we will retrieve data from **S3** as part of the **Data Ingestion Process
 
 - The `run()` method acts as an entry point to execute the download seamlessly
 
+###  Data Ingestion
+
 After downloading the dataset from **S3** as `leaflogic_dataset.zip`, it is stored in the **data_ingestion_dir**. The script then extracts the dataset into the **feature_store_path**, ensuring the data is properly organized for further processing.
 
 *This is the shot of only `initiate_data_ingestion` for more go to `src/leaflogic/components/data_ingestion`
