@@ -605,7 +605,7 @@ Handles **graceful server shutdown** when triggered from the UI.
 
 
 ---
-### Welcome to Deployment and CICD related things
+### Welcome to Deployment and CICD related things 💚🎆🌱
 
 *this is how deployment(CICD) looks like*
 
@@ -629,7 +629,7 @@ Handles **graceful server shutdown** when triggered from the UI.
 - The `Jenkinsfile` is located in the root directory and defines the CI/CD pipeline.  
 - The `scripts.sh` file in the root directory contains commands to install Docker, Jenkins, and AWS CLI on the EC2 instance.  
 
-
+---
 
 ### Guide for Developers 🌿🎇✨💚🎆🌱🎇✨💚🎆
 --
