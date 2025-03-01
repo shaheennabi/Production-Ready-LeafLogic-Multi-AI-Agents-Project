@@ -240,10 +240,33 @@ During this stage:
 ### ** and here the *training pipeline* ends **
 
 ---
+### 🔍 Prediction Pipeline + AI Agents  
 
+Now that we have successfully trained our model, let's move on to the **prediction pipeline** and **AI agents**. This phase involves using the trained model to detect objects in images and leveraging AI agents to fetch relevant insights about the detected crops/plants.  
 
+---
 
+### ⚠️ **Note for Developers**  
 
+The model I am using in this project **is not the one trained with the modular code approach**. Instead, I trained it separately on **Google Colab using an NVIDIA A100 GPU**.  
+
+Here are the training details:  
+- **Dataset**: 25,000 images  
+- **Epochs**: 100  
+- **Compute**: A100 GPU (Colab Pro)  
+
+If you want to train the model yourself, you are free to choose any **epoch size** based on your **compute resources (and budget 💰)**.  
+
+### 📢 **Dataset Information**  
+The dataset is **open-source** and available on **Hugging Face**:  
+📌 **[100 Crops & Plants Object Detection Dataset (25K Images)](https://huggingface.co/datasets/devshaheen/100_crops_plants_object_detection_25k_image_dataset)**  
+
+🔗 **Please give credit** if you use this dataset—it took **1.5 months** to annotate all the images!  
+
+### ✅ **Using the Pretrained Model**  
+To make things easier, I have already provided the **trained model (`best.pt`)** in the **project root directory**. You can use it directly for inference instead of retraining from scratch. Just check the **project files**, and you’ll find it ready to use!   
+
+### ** now let's talk about our Prediction Pipeline + AI Agents**
 
 
 ## License 📜  
