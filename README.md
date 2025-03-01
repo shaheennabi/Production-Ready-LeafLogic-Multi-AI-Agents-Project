@@ -369,7 +369,7 @@ Since the README will become extensive, we'll focus on the key components and th
      - The research must provide **accurate and current** market data.  
 
 
-
+### **let's now see the `agents` and `tools` these tasks use**
 
 
 
