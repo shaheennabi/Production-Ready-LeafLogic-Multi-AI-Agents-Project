@@ -607,6 +607,27 @@ Handles **graceful server shutdown** when triggered from the UI.
 ---
 ### Welcome to Deployment and CICD related things
 
+*this is how deployment(CICD) looks like*
+
+![CI_CD Diagram (3)](https://github.com/user-attachments/assets/4016020b-e3ef-49ad-ba9d-5d66a7603945)
+
+### **CI/CD Workflow**
+1. **Continuous Integration (CI)**:
+   - Trigger: A new commit is pushed to the `main` branch.
+   - Jenkins fetches the latest code from GitHub.
+   - Docker image is built with required environment variables.
+
+2. **Continuous Delivery (CD)**:
+   - The built image is tagged and pushed to **AWS Elastic Container Registry (ECR)**.
+
+3. **Continuous Deployment (CD)**:
+   - The EC2 instance pulls the latest Docker image from ECR.
+   - The existing container is stopped and replaced with the new version.
+   - The Flask application is restarted with the updated image.
+  
+**Note:**  
+- The `Jenkinsfile` is located in the root directory and defines the CI/CD pipeline.  
+- The `scripts.sh` file in the root directory contains commands to install Docker, Jenkins, and AWS CLI on the EC2 instance.  
 
 
 
