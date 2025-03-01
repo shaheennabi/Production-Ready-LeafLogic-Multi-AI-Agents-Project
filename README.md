@@ -147,7 +147,7 @@ First, we will retrieve data from **S3** as part of the **Data Ingestion Process
 
 After downloading the dataset from **S3** as `leaflogic_dataset.zip`, it is stored in the **data_ingestion_dir**. The script then extracts the dataset into the **feature_store_path**, ensuring the data is properly organized for further processing.
 
-*This is the shot of only `initiate_data_ingestion` for more go to `src/leaflogic/components/data_ingestion`
+*This is the shot of only `initiate_data_ingestion` for more go to `src/leaflogic/components/data_ingestion.py`
 <img width="815" alt="Screenshot 2025-03-01 101319" src="https://github.com/user-attachments/assets/3a41a758-72b1-4f56-8a89-8e77b4faf17f" />
 
 
@@ -174,7 +174,7 @@ After downloading the dataset from **S3** as `leaflogic_dataset.zip`, it is stor
 
 After **data ingestion**, we prepare the base model by configuring `yolov5s.yaml` into `custom_yolov5s.yaml`. This involves updating the **number of categories (nc)** from `data.yaml` and defining essential parameters such as the **backbone, head, and other configurations** for training.
 
-*This is the shot of only `prepare_basemodel` for more go to `src/leaflogic/components/prepare_base_model`
+*This is the shot of only `prepare_basemodel` for more go to `src/leaflogic/components/prepare_base_model.py`
 <img width="818" alt="Screenshot 2025-03-01 101223" src="https://github.com/user-attachments/assets/fa500189-bba4-4bc5-9a09-253a3f49af7f" />
 
 - **Initialization (`__init__` Method)**:  
@@ -206,7 +206,7 @@ After preparing the base model, we proceed to **training**. This stage utilizes 
 
   
 
-*These are the shots of only `initiate_model_trainer` for more go to `src/leaflogic/components/model_training`
+*These are the shots of only `initiate_model_trainer` for more go to `src/leaflogic/components/model_training.py`
 <img width="848" alt="mt" src="https://github.com/user-attachments/assets/04069879-a048-48e5-bc8e-5cfeca989738" />
 <img width="806" alt="mt2" src="https://github.com/user-attachments/assets/eb6abdd5-f009-45b3-96f8-d980fb6660f1" />
 
@@ -237,7 +237,7 @@ During this stage:
   - Removes `data.yaml`, `train`, `valid`, and `test` directories from the root after training.  
   - Ensures a clean working environment.  
 
-** and here the *training pipeline* ends **
+### ** and here the *training pipeline* ends **
 
 ---
 
