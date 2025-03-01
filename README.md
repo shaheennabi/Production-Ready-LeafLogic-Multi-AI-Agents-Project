@@ -309,9 +309,64 @@ Since the README will become extensive, we'll focus on the key components and th
 
 
 
+### research_health task
+
+<img width="820" alt="health" src="https://github.com/user-attachments/assets/7376e5da-be33-4eba-be36-668ab106f74b" />
+
+1. **Agent Initialization**  
+   - The function initializes the `WebResearchAgent` using `WebResearchAgent.initialize_web_research_agent()`.  
+   - This agent searches the web for reliable health-related information.  
+
+2. **Task Creation**  
+   - A `Task` object is created using `Task.create()`, where:  
+     - The **agent** is assigned to perform the task.  
+     - The **context** includes the plant’s name for better focus.  
+     - The **instruction** outlines key health aspects to research:  
+       - **Medicinal benefits** and traditional uses.  
+       - **Potential risks** and toxicity concerns.  
+       - **Nutritional value** and components.  
+       - **Traditional remedies** where applicable.  
+     - The gathered insights should be structured and referenced properly.
 
 
+### research_season task
 
+<img width="806" alt="season" src="https://github.com/user-attachments/assets/800e5bce-2d24-4706-a1c2-1da371e106d9" />
+
+#### **How it Works**  
+1. **Agent Initialization**  
+   - The function initializes the `WebResearchAgent` using `WebResearchAgent.initialize_web_research_agent()`.  
+   - This agent specializes in retrieving web-based agricultural knowledge.  
+
+2. **Task Creation**  
+   - A `Task` object is created via `Task.create()`, with:  
+     - The **agent** assigned to perform the research.  
+     - The **context** specifying the plant’s name for relevance.  
+     - The **instruction** outlining key seasonal aspects to explore:  
+       - **Planting & harvesting seasons** for optimal yield.  
+       - **Climate conditions** including temperature and humidity.  
+       - **Soil composition, nutrients, and fertilizers** best suited for growth.  
+       - **Best farming practices** to maximize productivity.  
+       - **Off-season storage & uses** to maintain quality and availability.  
+     - The research must be backed by expert agricultural sources.  
+
+### research_price task
+
+<img width="815" alt="price" src="https://github.com/user-attachments/assets/7dd2ec86-a4f9-493e-af67-0675b2f97e0f" />
+
+1. **Agent Initialization**  
+   - The function initializes the `PriceFetchingAgent` using `PriceFetchingAgent.initialize_price_fetching_agent(query=plant_name)`.  
+   - This agent specializes in fetching up-to-date pricing data from online sources.  
+
+2. **Task Creation**  
+   - A `Task` object is created via `Task.create()`, with:  
+     - The **agent** assigned to fetch pricing data.  
+     - The **context** specifying the plant’s name for relevance.  
+     - The **instruction** detailing the required price-related insights:  
+       - **Online price rates** across various marketplaces.  
+       - **Cheapest price available** for the plant.  
+       - **Identification of the lowest available price** and its source.  
+     - The research must provide **accurate and current** market data.  
 
 
 
