@@ -106,7 +106,7 @@ The project followed a structured approach to ensure efficient execution and hig
 
 ## 🌟 How We Fixed Challenges  
 
-### 🌟 Solutions Implemented
+#### Solutions Implemented
 
 - **Choosing GPT-3.5 Turbo**: A cost-effective alternative while maintaining performance.  
 - **Optimizing Training**: Trained the model on **100 epochs** with **25K images**, which was computationally intensive but proved effective.  
