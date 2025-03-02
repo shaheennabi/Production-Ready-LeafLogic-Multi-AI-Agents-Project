@@ -7,7 +7,7 @@
 
 ## 🌱 Building an Automated Plant and Crop Recognition System 🌿
 
-At XYZ Company, we were tasked with developing a powerful AI-driven system that could recognize up to 100 different types of plants and crops while fetching complete details about them from the internet. The goal was to enable users to identify plants and obtain reliable information effortlessly, reducing the chances of misleading sales practices in the plant market.
+At Ineuron Intelligence, we were tasked with developing a powerful AI-driven system that could recognize up to 100 different types of plants and crops while fetching complete details about them from the internet. The goal was to enable users to identify plants and obtain reliable information effortlessly, reducing the chances of misleading sales practices in the plant market.
 
 ### To achieve this, we leveraged a combination of:
 
