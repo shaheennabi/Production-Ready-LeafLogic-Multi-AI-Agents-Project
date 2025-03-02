@@ -5,12 +5,9 @@
 ***Note:** This project was assigned to us by **iNeuron Intelligence Pvt Ltd**, where our team of three contributors is developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.*  
 
 
-## High-Level Note
-Concepts related to AI agents, their pipelines, methodologies, and automated research processes have already been discussed. You can find these details in the *docs* folder for further exploration.
-
 ## 🌱 Building an Automated Plant and Crop Recognition System 🌿
 
-At XYZ Company, we were tasked with developing a powerful AI-driven system that could recognize up to 100 different types of plants and crops while fetching complete details about them from the internet. The goal was to enable users to identify plants and obtain reliable information effortlessly, reducing the chances of misleading sales practices in the plant market.
+At Ineuron Intelligence, we were tasked with developing a powerful AI-driven system that could recognize up to 100 different types of plants and crops while fetching complete details about them from the internet. The goal was to enable users to identify plants and obtain reliable information effortlessly, reducing the chances of misleading sales practices in the plant market.
 
 ### To achieve this, we leveraged a combination of:
 
@@ -127,7 +124,7 @@ To simplify the complexity of our pipeline, we divide it into two main component
 
 *This is how **Training Pipeline** looks like*  
 
-![CI_CD Diagram](https://github.com/user-attachments/assets/6edb279e-2b16-4c26-a478-d43e31d3dcb2)
+![training  pipeline](https://github.com/user-attachments/assets/6e70008f-ae61-4c3c-8d01-ba92485c2c14)
 
 
 First, we will retrieve data from **S3** as part of the **Data Ingestion Process** using this script from `utils`.  
