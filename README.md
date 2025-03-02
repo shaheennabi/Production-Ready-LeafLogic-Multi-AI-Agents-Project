@@ -642,7 +642,7 @@ Make sure you have added the necessary secrets to Jenkins:
 ### **Note:**  
 - The `Jenkinsfile` is located in the root directory and defines the CI/CD pipeline.  
 - The `scripts.sh` file in the root directory contains commands to install Docker, Jenkins, and AWS CLI on the EC2 instance.
-- 
+  
 **Reminder:** Running inference on EC2 requires more RAM, and the AWS Free Tier won’t be sufficient.  
 
 We have tested our Jenkins pipeline up to the Docker image build stage. However, during dependency installation and wheel setup, the Jenkins job either crashed or got stuck.  
@@ -718,41 +718,78 @@ Happy coding and building your agritech multi-AI-agent system! 🎉💚
 ### Project tree structure
 
 ```bash
-.
-├── PRODUCTION-READY-INSTRUCTION-FINETUNING-OF-META-Llama-3.2-3B Instruct
-├── .github/workflows/
-│   └── deploy.yml
-├── deployment/
-│   └── app.py
+├── Production-Ready-LeafLogic-Multi-AI-Agents-Project
+├── .github/
+│   └── FUNDING.yml
+├── data_preparation/
+│   ├── augmentation1.py
+│   ├── check_duplicates3.py
+│   ├── combine_augmented_and_raw_images2.py
+│   ├── naming_images.py
+│   ├── num_images.py
+│   └── serper_scrape.py
 ├── docs/
-│   ├── Agentic RAG Pipeline.md
-│   └── Types of Agentic RAG.md
+│   └── agents(anatomy & types).md
 ├── flowcharts/
-│   └── project_pipeline.png
+│   ├── CICD (deployment).jpg
+│   ├── prediction pipeline + ai agents.jpg
+│   └── training pipeline.jpg
 ├── log/
 │   └── timestamp(log)
 ├── notebooks/
-│   └── TripPlanner_Multi_AI_Agent_Experimental.ipynb  
-├── src/agentic/
-│   ├── agents/
-│   │   ├── reporter_agent.py
-│   │   ├── travel_agent.py
-│   │   └── web_research_agent.py
-│   ├── exception/
+│   ├── agents_notebook.ipynb  
+│   └── leaflogic_detection(soft).ipynb
+├── src/
+│   ├── leaflogic/
+│   │   ├── components/
+│   │   │   ├── agents/
+│   │   │   │   ├── all_agents/
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── price_fetching_agent.py
+│   │   │   │   │   └── web_research_agent.py
+│   │   │   │   └── tools/
+│   │   │   │       ├── __init__.py
+│   │   │   │       ├── exa_search.py
+│   │   │   │       ├── exa_shopping_search.py
+│   │   │   │       ├── search_articles.py
+│   │   │   │       └── serper_shopping_search.py
+│   │   │   ├── data_ingestion.py
+│   │   │   ├── model_training.py
+│   │   │   └── prepare_base_model.py
+│   │   ├── configuration/
+│   │   │   ├── __init__.py
+│   │   │   └── s3_configs.py
+│   │   ├── constant/
+│   │   │   └── __init__.py
+│   │   ├── entity/
+│   │   │   ├── __init__.py
+│   │   │   ├── artifacts_entity.py
+│   │   │   └── config_entity.py
+│   │   ├── exception/
+│   │   │   └── __init__.py
+│   │   ├── logger/
+│   │   │   └── __init__.py
+│   │   ├── pipeline/
+│   │   │   ├── __init__.py
+│   │   │   ├── prediction_pipeline.py
+│   │   │   └── training_pipeline.py
+│   │   ├── utils/
+│   │   │   ├── __init__.py
+│   │   │   └── email_utils.py
 │   │   └── __init__.py
-│   ├── logger/
-│   │   └── __init__.py
-│   ├── tools/
-│   │   ├── get_weather_data.py
-│   │   ├── search_articles.py
-│   │   ├── search_flights.py
-│   │   ├── search_images.py
-│   │   └── serper_search.py
-│   └── utils/
-│       ├── __init__.py
-│       └── main_utils.py
+│   └── __init__.py
+├── templates/
+│   └── index.html
+├── yolov5(cloned folder)
+├── .dockerignore
+├── .env  (ignored by git)
 ├── .gitignore
+├── app.py
+├── best.pt
 ├── demo.py
+├── detected_objects.txt (ignored by git)
+├── Dockerfile
+├── Jenkins
 ├── LICENSE
 ├── README.md
 ├── requirements.txt
@@ -761,13 +798,7 @@ Happy coding and building your agritech multi-AI-agent system! 🎉💚
 └── template.py
 ```
 
-
-
-
-
-
-
-
+This project is open-sourced, you can use this anywhere (even for commercial purposes etc)
 
 
 --
