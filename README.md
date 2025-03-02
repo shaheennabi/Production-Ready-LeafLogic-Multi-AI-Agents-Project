@@ -1,5 +1,5 @@
 # 🌿 Production-Ready-LeafLogic-Multi-AI-Agents-Project  🌱  
-
+*visitors: please wait for few seconds till readme loads (actually it's image heavy).*
 # Problem Statement
 
 ***Note:** This project was assigned to us by **iNeuron Intelligence Pvt Ltd**, where our team of three contributors is developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.*  
@@ -430,7 +430,7 @@ The `LoadModel` class is responsible for loading the OpenAI GPT-3.5-turbo model 
 
 ### **now let's talk about the `tools` these `agents` have access to** 
 
-### exa_search or exa_shopping_search tool  (these two are mostly similar) **not much differece** *defined it seperately* 
+### exa_search or exa_shopping_search tool  (these two are mostly similar) **not much difference** *defined it seperately* 
 
 <img width="821" alt="exa " src="https://github.com/user-attachments/assets/366d301f-b323-47ac-a6da-0c4db9ea918b" />
 
@@ -584,6 +584,13 @@ This route sends the **summarized research report** via email.
 4. **Sends via Gmail SMTP** – Establishes a **TLS-secured connection**, logs in, and dispatches the email.  
 5. **Handles failures** – Logs errors and returns `False` if unsuccessful. 
 
+*this is how summary report looks that the `receipient receives`*
+
+<img width="738" alt="email1" src="https://github.com/user-attachments/assets/0c05a81d-1ec0-419f-94a8-2ef84693f373" />
+<img width="737" alt="email2" src="https://github.com/user-attachments/assets/0d74f7a6-21f9-4d32-8ba3-30c53c5730dc" />
+<img width="729" alt="email3" src="https://github.com/user-attachments/assets/5abf160a-7334-4901-8741-01c87e1a0005" />
+<img width="728" alt="email4" src="https://github.com/user-attachments/assets/25cb29c5-849b-4ce1-a28f-c86890349cf1" />
+
 ### **this is when `user` clicks `end program` in UI**
 
 <img width="803" alt="end" src="https://github.com/user-attachments/assets/b19e3a9d-5205-4c1c-b2fb-3155a571de18" />
@@ -598,13 +605,47 @@ Handles **graceful server shutdown** when triggered from the UI.
 
 
 ---
-### Welcome to Deployment and CICD related things
+### Welcome to Deployment and CICD related things 💚🎆🌱
 
+*this is how deployment(CICD) looks like*
 
+![CI_CD Diagram (3)](https://github.com/user-attachments/assets/4016020b-e3ef-49ad-ba9d-5d66a7603945)
 
+### **CI/CD Workflow**
+1. **Continuous Integration (CI)**:
+   - Trigger: A new commit is pushed to the `main` branch.
+   - Jenkins fetches the latest code from GitHub.
+   - Docker image is built with required environment variables.
+
+2. **Continuous Delivery (CD)**:
+   - The built image is tagged and pushed to **AWS Elastic Container Registry (ECR)**.
+
+3. **Continuous Deployment (CD)**:
+   - The EC2 instance pulls the latest Docker image from ECR.
+   - The existing container is stopped and replaced with the new version.
+   - The Flask application is restarted with the updated image.
+
+### **Jenkins Credentials Setup**
+Make sure you have added the necessary secrets to Jenkins:
+
+1. Go to **Manage Jenkins** > **Manage Credentials** > **System** > **Global Credentials** > **Add Credentials**.
+2. Add the following credentials:
+
+   - **aws_access_key_id**: Your AWS IAM access key  
+   - **aws_secret_access_key**: Your AWS IAM secret key  
+   - **openai_api_key**: Your OpenAI API key  
+   - **serper_api_key**: Your Serper API key  
+   - **sender_password**: Your email sender password  
+   - **sender_email**: Your email sender address  
+   - **exa_api_key**: Your Exa API key  
+
+### **Note:**  
+- The `Jenkinsfile` is located in the root directory and defines the CI/CD pipeline.  
+- The `scripts.sh` file in the root directory contains commands to install Docker, Jenkins, and AWS CLI on the EC2 instance.  
+
+---
 
 ### Guide for Developers 🌿🎇✨💚🎆🌱🎇✨💚🎆
---
 
 ### ⚠️ **Note for Developers**  
 
@@ -629,7 +670,57 @@ To make things easier, I have already provided the **trained model (`best.pt`)**
 ### 🛠 **Train the Model Yourself**  
 If you want to train the model on a **larger epoch size**, I have already provided a **Colab Notebook** for training:  `notebooks/leaflogic_detection (soft).ipynb ` 
 
-Simply open the notebook in **Google Colab**, adjust the training parameters as needed, and run the training process! 🔥  
+To train the model, open the notebook in **Google Colab**, adjust the training parameters as needed, and run the training process! 🔥  
+
+### **Dear Developers, ** 
+
+To create a similar project, set up your environment using Python 3.10 or above with Conda:  
+```bash  
+conda create -p your_env_name python=3.10
+```
+Activate the env:
+```bash
+conda activate your_env_path  
+```
+Then, install the required packages:
+```bash
+pip install -r requirements.txt  
+```
+
+You can also Run Inside a Docker Container.
+
+The image is available on Docker Hub:  
+- **Prerequisite**: Ensure Docker Desktop is installed and running on your system.
+  
+- Pull the image:  
+```bash
+  docker pull devshaheen/leaflog
+```
+- Run the container on port 5000:  
+```bash
+  docker run -it -p 5000:5000 devshaheen/leaflog
+```
+
+
+I recommend using TaskflowAI here because of its modularity design, which is crucial for building scalable AI/ML applications. When productionizing AI or ML apps, having a modular design from the beginning is essential.
+You can fork this repo as TaskflowAI is simple and easy to understand. Here is the documentation link: [TaskflowAI Documentation](https://www.taskflowai.org/). Feel free to explore more or contribute. It provides tools to work with multi-AI agents and multi-agent system design easily, and there are also other frameworks such as Langchain's **langgraph**, **crewai**, **phi-data** etc, you can use those too.
+
+
+Happy coding and building your agritech multi-AI-agent system! 🎉💚
+
+### Project tree structure
+
+
+
+
+
+
+
+
+
+
+
+
 --
 
 
