@@ -5,9 +5,6 @@
 ***Note:** This project was assigned to us by **iNeuron Intelligence Pvt Ltd**, where our team of three contributors is developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.*  
 
 
-## High-Level Note
-Concepts related to AI agents, their pipelines, methodologies, and automated research processes have already been discussed. You can find these details in the *docs* folder for further exploration.
-
 ## 🌱 Building an Automated Plant and Crop Recognition System 🌿
 
 At XYZ Company, we were tasked with developing a powerful AI-driven system that could recognize up to 100 different types of plants and crops while fetching complete details about them from the internet. The goal was to enable users to identify plants and obtain reliable information effortlessly, reducing the chances of misleading sales practices in the plant market.
