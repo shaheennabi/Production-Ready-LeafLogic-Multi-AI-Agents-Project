@@ -646,7 +646,6 @@ Make sure you have added the necessary secrets to Jenkins:
 ---
 
 ### Guide for Developers 🌿🎇✨💚🎆🌱🎇✨💚🎆
---
 
 ### ⚠️ **Note for Developers**  
 
@@ -671,7 +670,56 @@ To make things easier, I have already provided the **trained model (`best.pt`)**
 ### 🛠 **Train the Model Yourself**  
 If you want to train the model on a **larger epoch size**, I have already provided a **Colab Notebook** for training:  `notebooks/leaflogic_detection (soft).ipynb ` 
 
-Simply open the notebook in **Google Colab**, adjust the training parameters as needed, and run the training process! 🔥  
+To train the model, open the notebook in **Google Colab**, adjust the training parameters as needed, and run the training process! 🔥  
+
+### **Dear Developers, ** 
+
+To create a similar project, set up your environment using Python 3.10 or above with Conda:  
+```bash  
+conda create -p your_env_name python=3.10
+```
+Activate the env:
+```bash
+conda activate your_env_path  
+```
+Then, install the required packages:
+```bash
+pip install -r requirements.txt  
+```
+
+You can also Run Inside a Docker Container
+The image is available on Docker Hub:  
+- **Prerequisite**: Ensure Docker Desktop is installed and running on your system.
+  
+- Pull the image:  
+```bash
+  docker pull devshaheen/leaflog
+```
+- Run the container on port 5000:  
+```bash
+  docker run -it -p 5000:5000 devshaheen/leaflog
+```
+
+
+I recommend using TaskflowAI here because of its modularity design, which is crucial for building scalable AI/ML applications. When productionizing AI or ML apps, having a modular design from the beginning is essential.
+You can fork this repo as TaskflowAI is simple and easy to understand. Here is the documentation link: [TaskflowAI Documentation](https://www.taskflowai.org/). Feel free to explore more or contribute. It provides tools to work with multi-AI agents and multi-agent system design easily, and there are also other frameworks such as Langchain's **langgraph**, **crewai**, **phi-data** etc, you can use those too.
+
+
+Happy coding and building your agritech multi-AI-agent system! 🎉💚
+
+### Project tree structure
+
+
+
+
+
+
+
+
+
+
+
+
 --
 
 
