@@ -687,7 +687,8 @@ Then, install the required packages:
 pip install -r requirements.txt  
 ```
 
-You can also Run Inside a Docker Container
+You can also Run Inside a Docker Container.
+
 The image is available on Docker Hub:  
 - **Prerequisite**: Ensure Docker Desktop is installed and running on your system.
   
