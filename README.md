@@ -652,9 +652,9 @@ If you encounter any issues beyond this point in the Jenkins stages, please repo
 
 ---
 
-### Guide for Developers 🌿🎇✨💚🎆🌱🎇✨💚🎆
+## Guide for Developers 🌿🎇✨💚🎆🌱🎇✨💚🎆
 
-### ⚠️ **Note for Developers**  
+#### ⚠️ **Note for Developers**  
 
 The model I am using in this project **is not the one trained with the modular code approach**. Instead, I trained it separately on **Google Colab using an NVIDIA A100 GPU**.  
 
