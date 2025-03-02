@@ -124,7 +124,7 @@ To simplify the complexity of our pipeline, we divide it into two main component
 
 *This is how **Training Pipeline** looks like*  
 
-![CI_CD Diagram](https://github.com/user-attachments/assets/6edb279e-2b16-4c26-a478-d43e31d3dcb2)
+![training  pipeline](https://github.com/user-attachments/assets/6e70008f-ae61-4c3c-8d01-ba92485c2c14)
 
 
 First, we will retrieve data from **S3** as part of the **Data Ingestion Process** using this script from `utils`.  
