@@ -641,7 +641,14 @@ Make sure you have added the necessary secrets to Jenkins:
 
 ### **Note:**  
 - The `Jenkinsfile` is located in the root directory and defines the CI/CD pipeline.  
-- The `scripts.sh` file in the root directory contains commands to install Docker, Jenkins, and AWS CLI on the EC2 instance.  
+- The `scripts.sh` file in the root directory contains commands to install Docker, Jenkins, and AWS CLI on the EC2 instance.
+- 
+**Reminder:** Running inference on EC2 requires more RAM, and the AWS Free Tier won’t be sufficient.  
+
+We have tested our Jenkins pipeline up to the Docker image build stage. However, during dependency installation and wheel setup, the Jenkins job either crashed or got stuck.  
+
+If you encounter any issues beyond this point in the Jenkins stages, please report them as an issue in this repository, and we will address them as soon as possible (ASAP).
+
 
 ---
 
@@ -710,7 +717,49 @@ Happy coding and building your agritech multi-AI-agent system! 🎉💚
 
 ### Project tree structure
 
-
+```bash
+.
+├── PRODUCTION-READY-INSTRUCTION-FINETUNING-OF-META-Llama-3.2-3B Instruct
+├── .github/workflows/
+│   └── deploy.yml
+├── deployment/
+│   └── app.py
+├── docs/
+│   ├── Agentic RAG Pipeline.md
+│   └── Types of Agentic RAG.md
+├── flowcharts/
+│   └── project_pipeline.png
+├── log/
+│   └── timestamp(log)
+├── notebooks/
+│   └── TripPlanner_Multi_AI_Agent_Experimental.ipynb  
+├── src/agentic/
+│   ├── agents/
+│   │   ├── reporter_agent.py
+│   │   ├── travel_agent.py
+│   │   └── web_research_agent.py
+│   ├── exception/
+│   │   └── __init__.py
+│   ├── logger/
+│   │   └── __init__.py
+│   ├── tools/
+│   │   ├── get_weather_data.py
+│   │   ├── search_articles.py
+│   │   ├── search_flights.py
+│   │   ├── search_images.py
+│   │   └── serper_search.py
+│   └── utils/
+│       ├── __init__.py
+│       └── main_utils.py
+├── .gitignore
+├── demo.py
+├── LICENSE
+├── README.md
+├── requirements.txt
+├── scripts.sh
+├── setup.py
+└── template.py
+```
 
 
 
