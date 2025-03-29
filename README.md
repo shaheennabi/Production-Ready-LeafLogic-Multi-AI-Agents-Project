@@ -2,12 +2,10 @@
 *visitors: please wait for few seconds till readme loads (actually it's image heavy).*
 # Problem Statement
 
-***Note:** This is an internship project, where our team of three contributors is developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.*  
-
 
 ## 🌱 Building an Automated Plant and Crop Recognition System 🌿
 
-At Ineuron Intelligence, we were tasked with developing a powerful AI-driven system that could recognize up to 100 different types of plants and crops while fetching complete details about them from the internet. The goal was to enable users to identify plants and obtain reliable information effortlessly, reducing the chances of misleading sales practices in the plant market.
+We were tasked with developing a powerful AI-driven system that could recognize up to 100 different types of plants and crops while fetching complete details about them from the internet. The goal was to enable users to identify plants and obtain reliable information effortlessly, reducing the chances of misleading sales practices in the plant market.
 
 ### To achieve this, we leveraged a combination of:
 
