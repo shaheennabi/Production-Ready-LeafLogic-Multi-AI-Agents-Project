@@ -2,7 +2,7 @@
 *visitors: please wait for few seconds till readme loads (actually it's image heavy).*
 # Problem Statement
 
-***Note:** This project was assigned to us by **iNeuron Intelligence Pvt Ltd**, where our team of three contributors is developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.*  
+***Note:** This is an internship project, where our team of three contributors is developing an intelligent system capable of recognizing various plants and crops while providing users with accurate and detailed information about them. This system is designed to prevent misinformation and overpricing in the market by ensuring users can verify plant details instantly.*  
 
 
 ## 🌱 Building an Automated Plant and Crop Recognition System 🌿
